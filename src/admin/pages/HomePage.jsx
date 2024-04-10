@@ -1,9 +1,14 @@
+import { Typography } from "@mui/material"
+import MailOutline from '@mui/icons-material/MailOutline';
 
 
 export const HomePage = () => {
     return (
         <>
-            <h1>HomePage Admin</h1>
+            <Typography variant="h1">
+                HomePage Admin
+            </Typography>
+            <MailOutline />
         </>
     );
 }
