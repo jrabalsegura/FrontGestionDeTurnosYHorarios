@@ -1,9 +1,10 @@
 import React from 'react';
+import { AppRouter } from './router/AppRouter';
 
 export const GestionApp = () => {
   return (
     <>
-      <h1>GestionApp</h1>
+      <AppRouter />
     </>
   );
 }
