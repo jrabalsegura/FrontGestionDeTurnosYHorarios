@@ -10,7 +10,7 @@ export const LoginPage = () => {
                 direction={{ xs: 'column', md: 'row' }} // Stacks on small screens, side by side on medium and larger screens
                 alignItems="center"
                 justifyContent="space-around"
-                sx={{ minHeight: '100vh', backgroundColor: 'primary.main', padding: 4 }}
+                sx={{ minHeight: '100vh', padding: 4 }}
             >
 
                 <Grid item
@@ -29,10 +29,10 @@ export const LoginPage = () => {
                         flexDirection: 'column',
                         justifyContent: 'center', // Centers content vertically
                         alignItems: 'center',
-                        height: 292
+                        height: { xs:292 }
                     }}
                 >
-                    <Typography variant="h3" sx={{ mb: 1, textAlign: 'center' }}>
+                    <Typography variant="h3" sx={{ mb: 1, textAlign: 'center', fontFamily: 'Comic Sans MS' }}>
                         Sistema de Gestión de Turnos y Horarios
                     </Typography>
 
@@ -44,11 +44,12 @@ export const LoginPage = () => {
                         backgroundColor: 'white', 
                         padding: 3, 
                         borderRadius: 2, 
-                        width: {md: 450, lg: 450, xl: 450},
+                        width: {md: 350, lg: 350, xl: 350},
                         display: 'flex',
                         flexDirection: 'column',
-                        justifyContent: 'center', // Centers content vertically
-                        alignItems: 'center' // Centers content horizontally
+                        justifyContent: 'space-around', // Centers content vertically
+                        alignItems: 'center',
+                        height: {md: 600} // Centers content horizontally
                     }}
                 >
                     <Typography variant="h5" sx={{ mb: 1 }}>
@@ -67,7 +68,7 @@ export const LoginPage = () => {
                                     variant="standard"
                                 />
                             </Grid>
-                            <Grid item xs={12} sx={{ mt: 2 }}>
+                            <Grid item xs={12} sx={{ mt: 5 }}>
                                 <TextField 
                                     label="Contraseña"
                                     type="password"
@@ -77,8 +78,8 @@ export const LoginPage = () => {
                                 />
                             </Grid>
 
-                            <Grid container spacing={2} sx={{ mb: 2, mt: 1 }} justifyContent="center">
-                                <Grid item xs={12} sm={6}>
+                            <Grid container spacing={2} sx={{ mb: 2, mt: 5 }} justifyContent="center">
+                                <Grid item xs={12}>
                                     <Button variant="contained" fullWidth>
                                         <Typography>
                                             Login
