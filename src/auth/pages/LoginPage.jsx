@@ -15,10 +15,19 @@ export const LoginPage = () => {
                 <Grid item
                     className="box-shadow"
                     xs={3}
-                    sx={{ backgroundColor: 'white', padding: 3, borderRadius: 2, width: {md: 450} }}
+                    sx={{ 
+                        backgroundColor: 'white', 
+                        padding: 3, 
+                        borderRadius: 2, 
+                        width: {md: 450},
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center', // Centers content vertically
+                        alignItems: 'center' // Centers content horizontally
+                    }}
                 >
                     <Typography variant="h5" sx={{ mb: 1 }}>
-                        Login
+                        Accede a tu área privada
                     </Typography>
 
                     <form>
@@ -30,6 +39,7 @@ export const LoginPage = () => {
                                     type="text"
                                     placeholder="username"
                                     fullWidth
+                                    variant="standard"
                                 />
                             </Grid>
                             <Grid item xs={12} sx={{ mt: 2 }}>
@@ -38,6 +48,7 @@ export const LoginPage = () => {
                                     type="password"
                                     placeholder="password"
                                     fullWidth
+                                    variant="standard"
                                 />
                             </Grid>
 
