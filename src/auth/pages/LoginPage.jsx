@@ -1,4 +1,4 @@
-import { Google } from "@mui/icons-material";
+import { Google, StayPrimaryLandscape } from "@mui/icons-material";
 import { Button, Typography, Grid, TextField } from "@mui/material";
 
 export const LoginPage = () => {
@@ -20,7 +20,7 @@ export const LoginPage = () => {
                     //lg={4}
                     //xl={3}
                     sx={{ 
-                        backgroundColor: 'white', 
+                        backgroundColor: "secondary.light", 
                         padding: 3, 
                         borderRadius: 2, 
                         width: { xs: '100%', md: 600, lg: 600, xl: 600 }, 
@@ -41,7 +41,7 @@ export const LoginPage = () => {
                 <Grid item
                     className="box-shadow"
                     sx={{ 
-                        backgroundColor: 'white', 
+                        backgroundColor: 'secondary.light', 
                         padding: 3, 
                         borderRadius: 2, 
                         width: {md: 350, lg: 350, xl: 350},
