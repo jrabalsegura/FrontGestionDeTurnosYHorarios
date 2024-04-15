@@ -1,14 +1,13 @@
 import { Grid, Typography } from "@mui/material"
 
-export const NothingSelectedView = () => {
+export const CalcularNominaView = () => {
     return (
         <>
             <Grid item xs={12}>
                 <Typography variant="h5" sx={{ color: 'white' }}>
-                    Seleccione una opción
+                    Calcular nómina
                 </Typography>
             </Grid>
         </>
     )
 }
-
