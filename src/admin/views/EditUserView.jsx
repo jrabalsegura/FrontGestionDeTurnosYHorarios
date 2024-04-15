@@ -1,0 +1,77 @@
+import { Button, Grid, TextField, Typography } from "@mui/material"
+
+export const AddUserView = () => {
+    return (
+        <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justifyContent="flex-start"
+            backgroundColor="secondary.light"
+            sx={{ minHeight: 'calc(100vh - 120px)', padding: 4, borderRadius: 3 }}
+        >
+            
+                <Typography variant="h5" sx={{ mb: 1 }}>
+                    Editar Usuario
+                </Typography>
+
+                <form>
+
+                    <Grid container justifyContent="center">
+                        <Grid item xs={12} sx={{ mt: 2 }}>
+                            <TextField 
+                                label="Nombre"
+                                type="text"
+                                placeholder="nombre"
+                                fullWidth
+                                variant="standard"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sx={{ mt: 5 }}>
+                            <TextField 
+                                label="Username"
+                                type="text"
+                                placeholder="username"
+                                fullWidth
+                                variant="standard"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sx={{ mt: 5 }}>
+                            <TextField 
+                                label="Contraseña"
+                                type="password"
+                                placeholder="password"
+                                fullWidth
+                                variant="standard"
+                            />
+                        </Grid>
+
+                        <Grid item xs={12} sx={{ mt: 5 }}>
+                            <TextField 
+                                label="Salario acordado"
+                                type="number"
+                                placeholder="(opcional)"
+                                fullWidth
+                                variant="standard"
+                            />
+                        </Grid>
+
+                        <Grid container spacing={2} sx={{ mb: 2, mt: 5 }} justifyContent="center"style={{ width: '30%' }}>
+                            <Grid item xs={12}>
+                                <Button variant="contained" fullWidth>
+                                    <Typography>
+                                        Confirmar
+                                    </Typography>
+                                </Button>
+                            </Grid>
+                            
+                        </Grid>
+                    </Grid>
+
+                </form>
+                
+        </Grid>
+    )
+}
+

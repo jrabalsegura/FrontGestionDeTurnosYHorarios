@@ -4,11 +4,11 @@ import { grey, orange, teal, deepPurple } from '@mui/material/colors';
 export const mainTheme = createTheme({
     palette: {
         primary: {
-            main: teal[700], // A modern, soothing teal
+            main: teal[500], // A modern, soothing teal
             contrastText: '#ffffff'
         },
         secondary: {
-            main: deepPurple[100], // A vibrant, contemporary purple
+            main: deepPurple[50], // A vibrant, contemporary purple
             contrastText: '#ffffff'
         },
         error: {
@@ -20,7 +20,8 @@ export const mainTheme = createTheme({
         },
         text: {
             primary: grey[900], // Very dark grey for high contrast text
-            secondary: grey[600] // Medium grey for secondary text
+            secondary: grey[600], // Medium grey for secondary text
+            light: grey[50]
         }
     }
 });
