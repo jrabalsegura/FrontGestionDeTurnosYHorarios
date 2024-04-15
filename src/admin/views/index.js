@@ -5,4 +5,5 @@ export * from './EditUserView'
 export * from './CalcularNominaView'
 export * from './SeeNominaView'
 export * from './CalcularFiniquitoView'
+export * from './SeeFiniquitoView'
 
