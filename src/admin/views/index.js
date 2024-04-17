@@ -6,4 +6,8 @@ export * from './CalcularNominaView'
 export * from './SeeNominaView'
 export * from './CalcularFiniquitoView'
 export * from './SeeFiniquitoView'
+export * from './AsignarTurnosView'
+export * from './GestionarVacacionesView'
+export * from './ConsultarRegistroView'
+export * from './ShowNotificacionesView'
 

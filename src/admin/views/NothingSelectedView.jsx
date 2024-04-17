@@ -4,7 +4,7 @@ export const NothingSelectedView = () => {
     return (
         <>
             <Grid item xs={12}>
-                <Typography variant="h5" sx={{ color: 'white' }}>
+                <Typography variant="h5">
                     Seleccione una opción
                 </Typography>
             </Grid>

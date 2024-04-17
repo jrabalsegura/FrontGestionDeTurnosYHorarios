@@ -1,6 +1,6 @@
-import { Grid, Typography } from "@mui/material"
+import { Grid} from "@mui/material"
 import { AdminLayout } from "../layout/AdminLayout";
-import { AddUserView, EditUserView, NothingSelectedView, ShowUsersView, CalcularNominaView, SeeNominaView, CalcularFiniquitoView, SeeFiniquitoView } from "../views";
+import { AddUserView, ShowNotificacionesView, ConsultarRegistroView, EditUserView, GestionarVacacionesView, NothingSelectedView, ShowUsersView, CalcularNominaView, SeeNominaView, CalcularFiniquitoView, SeeFiniquitoView, AsignarTurnosView } from "../views";
 
 
 export const HomePage = () => {
@@ -23,7 +23,11 @@ export const HomePage = () => {
                 {/* <CalcularNominaView /> */}
                 {/* <SeeNominaView /> */}
                 {/* <CalcularFiniquitoView /> */}
-                <SeeFiniquitoView />
+                {/* <SeeFiniquitoView /> */}
+                {/* <AsignarTurnosView /> */}
+                {/* <GestionarVacacionesView /> */}
+                {/* <ConsultarRegistroView /> */}
+                <ShowNotificacionesView />
 
             </Grid>
             
