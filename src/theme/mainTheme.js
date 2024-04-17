@@ -5,10 +5,12 @@ export const mainTheme = createTheme({
     palette: {
         primary: {
             main: teal[500], // A modern, soothing teal
-            contrastText: '#ffffff'
+            contrastText: '#ffffff',
+            extralight: teal[300]
         },
         secondary: {
             main: deepPurple[50], // A vibrant, contemporary purple
+            dark: deepPurple[100],
             contrastText: '#ffffff'
         },
         error: {

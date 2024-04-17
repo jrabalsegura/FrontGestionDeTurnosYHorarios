@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import { EmployeeLayout } from "../layout/EmployeeLayout";
 import { NothingSelectedView, EditUserView, CalendarView } from "../views";
+import { Modal } from "../component";
 
 export const HomePage = () => {
     return (
@@ -16,7 +17,8 @@ export const HomePage = () => {
             >
                 {/* <NothingSelectedView /> */}
                 {/* <EditUserView /> */}
-                <CalendarView />
+                {/* <CalendarView /> */}
+                <Modal />
             </Grid>
         </EmployeeLayout>
     );
