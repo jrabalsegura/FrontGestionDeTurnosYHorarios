@@ -14,6 +14,7 @@ export const Modal = () => {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'start',
+            boxShadow: '2px 2px 2px black',
             gap: 2,
         }}>
             <TextField variant="outlined" color="primary" placeholder="Motivo de la ausencia" sx={{ border: '2px solid', borderRadius: 2}}
@@ -30,6 +31,7 @@ export const Modal = () => {
                 color: 'primary.dark',
                 border: '2px solid black',
                 borderRadius: 2,
+                boxShadow: '2px 2px 2px black',
                 '&:hover': {
                     color: 'black',
                     border: '2px solid black'
@@ -47,6 +49,7 @@ export const Modal = () => {
                 border: '2px solid black',
                 borderRadius: 2,
                 marginTop: 8,
+                boxShadow: '2px 2px 2px black',
                 '&:hover': {
                     color: 'black',
                     border: '2px solid black'
