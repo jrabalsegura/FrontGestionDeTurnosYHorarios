@@ -25,5 +25,16 @@ export const mainTheme = createTheme({
             secondary: grey[600], // Medium grey for secondary text
             light: grey[50]
         }
-    }
+    },
+    breakpoints: {
+        values: {
+          xs: 0,
+          mobile: 450,
+          sm: 600,
+          tablet: 720,
+          md: 900,
+          lg: 1200,
+          xl: 1536,
+        },
+      },
 });

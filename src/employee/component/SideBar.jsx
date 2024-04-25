@@ -6,13 +6,13 @@ export const SideBar = ({ drawerWidth = 240 }) => {
     return (
         <Box
             component='nav'
-            sx={{ width: drawerWidth, flexShrink: {sm: 0}}}
+            sx={{ width: drawerWidth, flexShrink: {sm: 0}, display: { xs: 'none', tablet: 'block' }}}
         >
             <Drawer
                 variant="permanent"
                 open
                 sx={{
-                    display: { xs: 'block'},
+                    
                     '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
                 }}
             >
