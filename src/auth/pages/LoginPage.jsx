@@ -1,7 +1,24 @@
-import { Google, StayPrimaryLandscape } from "@mui/icons-material";
+
 import { Button, Typography, Grid, TextField } from "@mui/material";
+import { useForm } from "../../hooks/useForm";
+import { useAuthStore } from "../../hooks/useAuthStore";
+
+const loginFormFields = {
+    username: '',
+    password: ''
+}
 
 export const LoginPage = () => {
+
+    const { username, password, onInputChange } = useForm(loginFormFields);
+
+    const {startLogin } = useAuthStore();
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+        startLogin({username, password})
+    }
+
     return (
         <>
             <Grid
@@ -56,7 +73,7 @@ export const LoginPage = () => {
                         Accede a tu área privada
                     </Typography>
 
-                    <form>
+                    <form onSubmit={onSubmit}>
 
                         <Grid container>
                             <Grid item xs={12} sx={{ mt: 2 }}>
@@ -66,6 +83,9 @@ export const LoginPage = () => {
                                     placeholder="username"
                                     fullWidth
                                     variant="standard"
+                                    name="username"
+                                    value={username}
+                                    onChange={onInputChange}
                                 />
                             </Grid>
                             <Grid item xs={12} sx={{ mt: 5 }}>
@@ -75,12 +95,15 @@ export const LoginPage = () => {
                                     placeholder="password"
                                     fullWidth
                                     variant="standard"
+                                    name="password"
+                                    value={password}
+                                    onChange={onInputChange}
                                 />
                             </Grid>
 
                             <Grid container spacing={2} sx={{ mb: 2, mt: 5 }} justifyContent="center">
                                 <Grid item xs={12}>
-                                    <Button variant="contained" fullWidth>
+                                    <Button type="submit" variant="contained" fullWidth>
                                         <Typography>
                                             Login
                                         </Typography>
