@@ -2,18 +2,20 @@ import { Calculate, CalendarMonth, HolidayVillage, Paid, Person} from "@mui/icon
 import { Box, Drawer, Toolbar, Typography, List, ListItem, ListItemText, ListItemButton, ListItemIcon, Grid } from "@mui/material"
 
 
-export const SideBar = ({ drawerWidth = 240 }) => {
+export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
     return (
         <Box
             component='nav'
-            sx={{ width: drawerWidth, flexShrink: {sm: 0}, display: { xs: 'none', tablet: 'block' }}}
+            sx={{ width: drawerWidth, flexShrink: {sm: 0}}}
         >
             <Drawer
                 variant="permanent"
                 open
                 sx={{
-                    
-                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
+                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth},
+                    position: 'fixed',
+                    top: { xs: openSidebar ? '64px' : '0px', tablet: '0px' },
+                    zIndex: 1
                 }}
             >
                 <Toolbar>
@@ -23,7 +25,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                 </Toolbar>
 
                 <List>
-                     <ListItem key={'edit'} disablePadding>
+                     <ListItem key={'edit'} disablePadding onClick={setOpenSidebar}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Person />
@@ -34,7 +36,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'turnos'} disablePadding>
+                    <ListItem key={'turnos'} disablePadding onClick={setOpenSidebar}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <CalendarMonth />
@@ -45,7 +47,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'nominas'} disablePadding>
+                    <ListItem key={'nominas'} disablePadding onClick={setOpenSidebar}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Paid />
@@ -56,7 +58,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'calculadora'} disablePadding>
+                    <ListItem key={'calculadora'} disablePadding onClick={setOpenSidebar}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Calculate />
@@ -67,7 +69,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'vacaciones'} disablePadding>
+                    <ListItem key={'vacaciones'} disablePadding onClick={setOpenSidebar}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <HolidayVillage />

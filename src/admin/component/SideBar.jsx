@@ -2,18 +2,24 @@ import { AppRegistration, Forest, FunctionsOutlined, PercentOutlined, Person,Sch
 import { Box, Drawer, Toolbar, Typography, List, ListItem, ListItemText, ListItemButton, ListItemIcon, Grid } from "@mui/material"
 
 
-export const SideBar = ({ drawerWidth = 240 }) => {
+export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
     return (
         <Box
             component='nav'
-            sx={{ width: drawerWidth, flexShrink: {sm: 0}}}
+            sx={{ width: drawerWidth, 
+                flexShrink: {sm: 0}, 
+                display: { xs: openSidebar ? 'block' : 'none', tablet: 'block' },
+                position: 'relative'
+            }}
         >
             <Drawer
                 variant="permanent"
                 open
                 sx={{
-                    display: { xs: 'block'},
-                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
+                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth},
+                    position: 'fixed',
+                    top: { xs: openSidebar ? '64px' : '0px', tablet: '0px' },
+                    zIndex: 1
                 }}
             >
                 <Toolbar>
@@ -23,7 +29,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                 </Toolbar>
 
                 <List>
-                     <ListItem key={'users'} disablePadding>
+                     <ListItem key={'users'} disablePadding onClick={setOpenSidebar}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Person />
@@ -34,7 +40,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'nomina'} disablePadding>
+                    <ListItem key={'nomina'} disablePadding onClick={setOpenSidebar}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <PercentOutlined />
@@ -45,7 +51,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'finiquito'} disablePadding>
+                    <ListItem key={'finiquito'} disablePadding onClick={setOpenSidebar}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <FunctionsOutlined />
@@ -56,7 +62,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'turnos'} disablePadding>
+                    <ListItem key={'turnos'} disablePadding onClick={setOpenSidebar}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Schedule />
@@ -67,7 +73,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'vacaciones'} disablePadding>
+                    <ListItem key={'vacaciones'} disablePadding onClick={setOpenSidebar}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Forest />
@@ -78,7 +84,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'registro'} disablePadding>
+                    <ListItem key={'registro'} disablePadding onClick={setOpenSidebar}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <AppRegistration />

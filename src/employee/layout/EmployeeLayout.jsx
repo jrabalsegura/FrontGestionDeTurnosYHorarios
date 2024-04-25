@@ -1,17 +1,27 @@
 import { Box, Toolbar } from "@mui/material";
 import { NavBar, SideBar } from "../component";
+import { useState } from "react";
 
 const drawerWidth = 240;
 
 export const EmployeeLayout = ({ children }) => {
+
+    //Add state that will be used to toggle the sidebar
+    const [openSidebar, setOpenSidebar] = useState(false);
+
+    const handleDrawerToggle = () => {
+        console.log('handleDrawerToggle');
+        setOpenSidebar(!openSidebar);
+    }
+
     return (
         <Box sx={{ display: 'flex' }}>
             
             {/* Navbar */}
-            <NavBar drawerWidth={drawerWidth} />
+            <NavBar drawerWidth={drawerWidth} setOpenSidebar={handleDrawerToggle} />
 
             {/* Sidebar */}
-            <SideBar drawerWidth={drawerWidth} />
+            <SideBar drawerWidth={drawerWidth} openSidebar={openSidebar} setOpenSidebar={handleDrawerToggle} />
 
 
             {/* Main */}

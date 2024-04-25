@@ -2,7 +2,7 @@ import { MenuOutlined, LogoutOutlined, NotificationsOutlined } from "@mui/icons-
 import { AppBar, Toolbar, IconButton, Grid, Typography, Badge } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-export const NavBar = ({ drawerWidth = 240 }) => {
+export const NavBar = ({ drawerWidth = 240, setOpenSidebar }) => {
     const theme = useTheme();
     return (
         <AppBar
@@ -16,6 +16,7 @@ export const NavBar = ({ drawerWidth = 240 }) => {
                     color="inherit"
                     edge="start"
                     sx={{ mr: 2, display: { tablet: 'none' } }}
+                    onClick={setOpenSidebar}
                 >
                     <MenuOutlined />
                 </IconButton>

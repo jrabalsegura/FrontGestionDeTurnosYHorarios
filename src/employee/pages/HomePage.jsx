@@ -4,6 +4,7 @@ import { NothingSelectedView, EditUserView, NominasView, CalendarView, Calculado
 import { Modal } from "../component";
 
 export const HomePage = () => {
+
     return (
         <EmployeeLayout>
             <Grid

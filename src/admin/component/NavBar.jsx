@@ -1,7 +1,7 @@
 import { MenuOutlined, LogoutOutlined, NotificationsOutlined } from "@mui/icons-material";
 import { AppBar, Toolbar, IconButton, Grid, Typography, Badge } from "@mui/material";
 
-export const NavBar = ({ drawerWidth = 240 }) => {
+export const NavBar = ({ drawerWidth = 240, setOpenSidebar }) => {
     return (
         <AppBar
             position="fixed"
@@ -13,14 +13,15 @@ export const NavBar = ({ drawerWidth = 240 }) => {
                 <IconButton
                     color="inherit"
                     edge="start"
-                    sx={{ mr: 2, display: { sm: 'none' } }}
+                    sx={{ mr: 2, display: { tablet: 'none' } }}
+                    onClick={setOpenSidebar}
                 >
                     <MenuOutlined />
                 </IconButton>
 
                 <Grid container direction='row' justifyContent='space-between' alignItems='center'>
                     <Grid container direction='row' justifyContent='space-between' alignItems='center' xs={8} mobile={6} md={4}>
-                        <Typography variant="h6" noWrap component='div' xs={'none'} mobile={'block'}>AdminPage</Typography>
+                        <Typography variant="h6" noWrap component='div' sx={{display: { xs: 'none', mobile: 'block' }}}>AdminPage</Typography>
                         <Typography variant="p" noWrap component='div'>Name</Typography>
                     </Grid>
                     <Grid container direction='row' justifyContent='space-between' alignItems='center' xs={4} mobile={3} lg={1}>
