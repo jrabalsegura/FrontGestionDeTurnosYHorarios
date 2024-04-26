@@ -1,8 +1,12 @@
 import { Calculate, CalendarMonth, HolidayVillage, Paid, Person} from "@mui/icons-material"
 import { Box, Drawer, Toolbar, Typography, List, ListItem, ListItemText, ListItemButton, ListItemIcon, Grid } from "@mui/material"
-
+import { useDispatch } from "react-redux";
+import { setEditUserView, setCalendarView, setNominasView, setCalculadoraView, setSolicitarVacacionesView } from "../../store/employee/employeeScreenSlice";
 
 export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
+
+    const dispatch = useDispatch();
+
     return (
         <Box
             component='nav'
@@ -25,7 +29,7 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                 </Toolbar>
 
                 <List>
-                     <ListItem key={'edit'} disablePadding onClick={setOpenSidebar}>
+                     <ListItem key={'edit'} disablePadding onClick={() => {setOpenSidebar(); dispatch(setEditUserView())}}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Person />
@@ -36,7 +40,7 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'turnos'} disablePadding onClick={setOpenSidebar}>
+                    <ListItem key={'turnos'} disablePadding onClick={() => {setOpenSidebar(); dispatch(setCalendarView())}}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <CalendarMonth />
@@ -47,7 +51,7 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'nominas'} disablePadding onClick={setOpenSidebar}>
+                    <ListItem key={'nominas'} disablePadding onClick={() => {setOpenSidebar(); dispatch(setNominasView())}}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Paid />
@@ -58,7 +62,7 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'calculadora'} disablePadding onClick={setOpenSidebar}>
+                    <ListItem key={'calculadora'} disablePadding onClick={() => {setOpenSidebar(); dispatch(setCalculadoraView())}}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Calculate />
@@ -69,7 +73,7 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'vacaciones'} disablePadding onClick={setOpenSidebar}>
+                    <ListItem key={'vacaciones'} disablePadding onClick={() => {setOpenSidebar(); dispatch(setSolicitarVacacionesView())}}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <HolidayVillage />

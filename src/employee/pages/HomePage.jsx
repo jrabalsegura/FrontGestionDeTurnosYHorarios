@@ -2,8 +2,30 @@ import { Grid } from "@mui/material";
 import { EmployeeLayout } from "../layout/EmployeeLayout";
 import { NothingSelectedView, EditUserView, NominasView, CalendarView, CalculadoraView, SolicitarVacacionesView } from "../views";
 import { Modal } from "../component";
+import { useSelector } from "react-redux";
 
 export const HomePage = () => {
+
+    const { screen, props } = useSelector(state => state.employeeScreen);
+
+    const renderView = () => {
+        switch (screen) {
+            case 'nothingSelectedView':
+                return <NothingSelectedView />;
+            case 'editUserView':
+                return <EditUserView />;
+            case 'calendarView':
+                return <CalendarView />;
+            case 'nominasView':
+                return <NominasView />;
+            case 'calculadoraView':
+                return <CalculadoraView />;
+            case 'solicitarVacacionesView':
+                return <SolicitarVacacionesView />;
+            default:
+                return <NothingSelectedView />;
+        }
+    }
 
     return (
         <EmployeeLayout>
@@ -22,7 +44,9 @@ export const HomePage = () => {
                 {/* <Modal /> */}
                 {/* <NominasView /> */}
                 {/* <CalculadoraView /> */}
-                <SolicitarVacacionesView />
+                {/*<SolicitarVacacionesView />*/}
+
+                {renderView()}
             </Grid>
         </EmployeeLayout>
     );

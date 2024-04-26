@@ -1,8 +1,12 @@
 import { MenuOutlined, LogoutOutlined, NotificationsOutlined } from "@mui/icons-material";
 import { AppBar, Toolbar, IconButton, Grid, Typography, Badge } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { useDispatch } from "react-redux";
+import { setNothingSelectedView } from "../../store/employee/employeeScreenSlice";
 
 export const NavBar = ({ drawerWidth = 240, setOpenSidebar }) => {
+
+    const dispatch = useDispatch();
     const theme = useTheme();
     return (
         <AppBar
@@ -23,7 +27,7 @@ export const NavBar = ({ drawerWidth = 240, setOpenSidebar }) => {
 
                 <Grid container direction='row' justifyContent='space-between' alignItems='center'>
                     <Grid container direction='row' justifyContent='space-between' alignItems='center' xs={8} mobile={6} md={4}>
-                        <Typography variant="h6" noWrap component='div' sx={{display: { xs: 'none', mobile: 'block' }}}>EmployeePage</Typography>
+                        <Typography variant="h6" noWrap component='div' sx={{cursor: 'pointer', display: { xs: 'none', mobile: 'block' }}} onClick={() => {dispatch(setNothingSelectedView())}}>EmployeePage</Typography>
                         <Typography variant="p" noWrap component='div'>Name</Typography>
                     </Grid>
                     <Grid container direction='row' justifyContent='space-between' alignItems='center' xs={4} mobile={3} md={2} xl={1}>

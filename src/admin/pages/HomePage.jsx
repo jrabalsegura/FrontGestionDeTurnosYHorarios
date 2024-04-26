@@ -30,7 +30,7 @@ export const HomePage = () => {
             case 'showNotificacionesView':
                 return <ShowNotificacionesView />;
             default:
-                return null;
+                return <NothingSelectedView />;
         }
     };
 
