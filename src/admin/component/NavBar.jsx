@@ -1,7 +1,10 @@
 import { MenuOutlined, LogoutOutlined, NotificationsOutlined } from "@mui/icons-material";
 import { AppBar, Toolbar, IconButton, Grid, Typography, Badge } from "@mui/material";
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 export const NavBar = ({ drawerWidth = 240, setOpenSidebar }) => {
+
+    const { startLogout, user} = useAuthStore();
     return (
         <AppBar
             position="fixed"
@@ -22,15 +25,15 @@ export const NavBar = ({ drawerWidth = 240, setOpenSidebar }) => {
                 <Grid container direction='row' justifyContent='space-between' alignItems='center'>
                     <Grid container direction='row' justifyContent='space-between' alignItems='center' xs={8} mobile={6} md={4}>
                         <Typography variant="h6" noWrap component='div' sx={{display: { xs: 'none', mobile: 'block' }}}>AdminPage</Typography>
-                        <Typography variant="p" noWrap component='div'>Name</Typography>
+                        <Typography variant="p" noWrap component='div'>{user.name}</Typography>
                     </Grid>
-                    <Grid container direction='row' justifyContent='space-between' alignItems='center' xs={4} mobile={3} lg={1}>
+                    <Grid container direction='row' justifyContent='space-between' alignItems='center' xs={4} mobile={3} md={2} xl={1}>
                         <Badge badgeContent={2} color="error" sx={{ '& .MuiBadge-badge': { right: 8, top: 13 }}}>
                             <IconButton sx={{color: 'white'}}>
                                 <NotificationsOutlined />                           
                             </IconButton>
                         </Badge>
-                        <IconButton color="error">
+                        <IconButton color="error" onClick={startLogout}>
                             <LogoutOutlined />
                         </IconButton>
                     </Grid>

@@ -1,8 +1,12 @@
 import { AppRegistration, Forest, FunctionsOutlined, PercentOutlined, Person,Schedule} from "@mui/icons-material"
 import { Box, Drawer, Toolbar, Typography, List, ListItem, ListItemText, ListItemButton, ListItemIcon, Grid } from "@mui/material"
-
+import { useDispatch } from "react-redux";
+import { setShowUsersView } from "../../store/admin/adminScreenSlice";
 
 export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
+
+    const dispatch = useDispatch();
+
     return (
         <Box
             component='nav'
@@ -29,7 +33,7 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                 </Toolbar>
 
                 <List>
-                     <ListItem key={'users'} disablePadding onClick={setOpenSidebar}>
+                     <ListItem key={'users'} disablePadding onClick={() => { setOpenSidebar(); dispatch(setShowUsersView()); }}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Person />

@@ -2,6 +2,8 @@
 import { Button, Typography, Grid, TextField } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import { useAuthStore } from "../../hooks/useAuthStore";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 const loginFormFields = {
     username: '',
@@ -12,12 +14,18 @@ export const LoginPage = () => {
 
     const { username, password, onInputChange } = useForm(loginFormFields);
 
-    const {startLogin } = useAuthStore();
+    const {startLogin, errorMessage } = useAuthStore();
 
     const onSubmit = (e) => {
         e.preventDefault()
         startLogin({username, password})
     }
+
+    useEffect(() => {
+        if(errorMessage) {
+            Swal.fire('Error en la autenticación', errorMessage, 'error')
+        }
+    }, [errorMessage])
 
     return (
         <>

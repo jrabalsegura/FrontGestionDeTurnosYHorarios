@@ -26,7 +26,7 @@ export const NavBar = ({ drawerWidth = 240, setOpenSidebar }) => {
                         <Typography variant="h6" noWrap component='div' sx={{display: { xs: 'none', mobile: 'block' }}}>EmployeePage</Typography>
                         <Typography variant="p" noWrap component='div'>Name</Typography>
                     </Grid>
-                    <Grid container direction='row' justifyContent='space-between' alignItems='center' xs={4} mobile={3} lg={1}>
+                    <Grid container direction='row' justifyContent='space-between' alignItems='center' xs={4} mobile={3} md={2} xl={1}>
                         <Badge badgeContent={2} color="error" sx={{ '& .MuiBadge-badge': { right: 8, top: 13 }}}>
                             <IconButton sx={{color: 'white'}}>
                                 <NotificationsOutlined />                           

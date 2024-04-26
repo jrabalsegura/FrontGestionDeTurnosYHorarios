@@ -8,6 +8,15 @@ const gestionApi = axios.create({
 });
 
 // Add a request interceptor
+gestionApi.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers['x-token'] = token;
+        }
+        return config;
+    }
+)
 
 export default gestionApi;
 
