@@ -1,7 +1,7 @@
 import { AppRegistration, Forest, FunctionsOutlined, PercentOutlined, Person,Schedule} from "@mui/icons-material"
 import { Box, Drawer, Toolbar, Typography, List, ListItem, ListItemText, ListItemButton, ListItemIcon, Grid } from "@mui/material"
 import { useDispatch } from "react-redux";
-import { setShowUsersView } from "../../store/admin/adminScreenSlice";
+import { setShowUsersView, setCalcularNominaView, setCalcularFiniquitoView, setAsignarTurnosView, setGestionarVacacionesView, setConsultarRegistroView } from "../../store/admin/adminScreenSlice";
 
 export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
 
@@ -44,7 +44,7 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'nomina'} disablePadding onClick={setOpenSidebar}>
+                    <ListItem key={'nomina'} disablePadding onClick={() => { setOpenSidebar(); dispatch(setCalcularNominaView()); }}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <PercentOutlined />
@@ -55,7 +55,7 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'finiquito'} disablePadding onClick={setOpenSidebar}>
+                    <ListItem key={'finiquito'} disablePadding onClick={() => { setOpenSidebar(); dispatch(setCalcularFiniquitoView()); }}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <FunctionsOutlined />
@@ -66,7 +66,7 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'turnos'} disablePadding onClick={setOpenSidebar}>
+                    <ListItem key={'turnos'} disablePadding onClick={() => { setOpenSidebar(); dispatch(setAsignarTurnosView()); }}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Schedule />
@@ -77,7 +77,7 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'vacaciones'} disablePadding onClick={setOpenSidebar}>
+                    <ListItem key={'vacaciones'} disablePadding onClick={() => { setOpenSidebar(); dispatch(setGestionarVacacionesView()); }}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <Forest />
@@ -88,7 +88,7 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                         </ListItemButton>                      
                     </ListItem>
 
-                    <ListItem key={'registro'} disablePadding onClick={setOpenSidebar}>
+                    <ListItem key={'registro'} disablePadding onClick={() => { setOpenSidebar(); dispatch(setConsultarRegistroView()); }}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <AppRegistration />

@@ -13,6 +13,22 @@ export const HomePage = () => {
                 return <NothingSelectedView />;
             case 'showUsersView':
                 return <ShowUsersView />;
+            case 'calcularNominaView':
+                return <CalcularNominaView />;
+            case 'seeNominaView':
+                return <SeeNominaView />;
+            case 'calcularFiniquitoView':
+                return <CalcularFiniquitoView />;
+            case 'seeFiniquitoView':
+                return <SeeFiniquitoView />;
+            case 'asignarTurnosView':
+                return <AsignarTurnosView />;
+            case 'gestionarVacacionesView':
+                return <GestionarVacacionesView />;
+            case 'consultarRegistroView':
+                return <ConsultarRegistroView />;
+            case 'showNotificacionesView':
+                return <ShowNotificacionesView />;
             default:
                 return null;
         }
