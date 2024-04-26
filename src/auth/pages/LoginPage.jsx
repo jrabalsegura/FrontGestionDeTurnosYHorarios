@@ -10,9 +10,20 @@ const loginFormFields = {
     password: ''
 }
 
+const formValidations = {
+    username: [
+        value => value.trim().length > 0, // Checks that the username is not empty
+        'Username is required'
+    ],
+    password: [
+        value => value.length >= 6, // Checks that the password has at least 6 characters
+        'Password must be at least 6 characters'
+    ]
+};
+
 export const LoginPage = () => {
 
-    const { username, password, onInputChange } = useForm(loginFormFields);
+    const { username, password, onInputChange } = useForm(loginFormFields, formValidations);
 
     const {startLogin, errorMessage } = useAuthStore();
 
