@@ -1,6 +1,6 @@
-
 import { Button, Typography, Grid, TextField } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
+import { useFocus } from "../../hooks/useFocus";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
@@ -23,9 +23,12 @@ const formValidations = {
 
 export const LoginPage = () => {
 
-    const { username, password, onInputChange } = useForm(loginFormFields, formValidations);
+    const { username, password, onInputChange, isFormValid, usernameValid, passwordValid } = useForm(loginFormFields, formValidations);
 
     const {startLogin, errorMessage } = useAuthStore();
+
+    const [usernameRef, usernameIsFocused] = useFocus();
+    const [passwordRef, passwordIsFocused] = useFocus();
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -105,7 +108,11 @@ export const LoginPage = () => {
                                     name="username"
                                     value={username}
                                     onChange={onInputChange}
+                                    inputRef={usernameRef}
                                 />
+                                <div style={{ height: '24px' }}>
+                                    {usernameIsFocused && usernameValid && <Typography variant="p" color="error">Username is required</Typography>}
+                                </div>
                             </Grid>
                             <Grid item xs={12} sx={{ mt: 5 }}>
                                 <TextField 
@@ -117,12 +124,16 @@ export const LoginPage = () => {
                                     name="password"
                                     value={password}
                                     onChange={onInputChange}
+                                    inputRef={passwordRef}
                                 />
+                                <div style={{ height: '24px' }}>
+                                    {passwordIsFocused && passwordValid && <Typography variant="p" color="error">Password must be at least 6 characters</Typography>}
+                                </div>
                             </Grid>
 
                             <Grid container spacing={2} sx={{ mb: 2, mt: 5 }} justifyContent="center">
                                 <Grid item xs={12}>
-                                    <Button type="submit" variant="contained" fullWidth>
+                                    <Button type="submit" variant="contained" fullWidth disabled={!isFormValid}>
                                         <Typography>
                                             Login
                                         </Typography>
