@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUsers } from "../helpers";
 import { useForm } from "../../hooks/useForm";
+import { setSeeNominaView } from "../../store/admin/adminScreenSlice";
+
 
 const initialForm = {
     user: ''
@@ -31,6 +33,10 @@ export const CalcularNominaView = () => {
         console.log(users);
     }, []);
 
+    const handleSubmit = () => {
+        dispatch(setSeeNominaView(user));
+    }
+
     return (
         <>
             <Grid item xs={12}>
@@ -56,7 +62,7 @@ export const CalcularNominaView = () => {
 
                 <Grid container spacing={2} sx={{ mb: 2, mt: 8}} justifyContent="center">
                     <Grid item xs={12}>
-                        <Button variant="contained" fullWidth disabled={!isFormValid}>
+                        <Button variant="contained" fullWidth disabled={!isFormValid} onClick={handleSubmit}>
                             <Typography>
                                 Calcular
                             </Typography>
