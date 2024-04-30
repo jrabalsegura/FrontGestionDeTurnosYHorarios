@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authSlice, adminScreenSlice, employeeScreenSlice } from './';
+import { authSlice } from './';
+import { adminScreenSlice } from './admin/adminScreenSlice';
+import { employeeScreenSlice } from './employee/employeeScreenSlice';
 
 export const store = configureStore({
     reducer: {

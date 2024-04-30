@@ -13,6 +13,10 @@ export const HomePage = () => {
                 return <NothingSelectedView />;
             case 'showUsersView':
                 return <ShowUsersView />;
+            case 'editUserView':
+                return <EditUserView />;
+            case 'addUserView':
+                return <AddUserView />;
             case 'calcularNominaView':
                 return <CalcularNominaView />;
             case 'seeNominaView':

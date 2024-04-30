@@ -1,74 +1,71 @@
 import { Add, Delete, Edit } from "@mui/icons-material"
 import { Fab, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material"
 import { useTheme } from "@mui/material/styles"
+import { getUsers } from "../helpers"
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setEditUserView, setAddUserView } from "../../store/admin/adminScreenSlice";
+import gestionApi from "../../api/gestionApi";
+
+
 
 export const ShowUsersView = () => {
     const theme = useTheme()
+    const [users, setUsers] = useState([]);
+    const dispatch = useDispatch();
+
+    const handleDelete = async (user) => {
+        console.log(user._id)
+
+        try {
+            const response = await gestionApi.delete(`/employees/${user._id}`);
+            console.log(response);
+            // Update the users state to filter out the deleted user
+            setUsers(users.filter(u => u.id !== user.id));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const fetchedUsers = await getUsers();
+            setUsers(fetchedUsers);
+        };
+        fetchUsers();
+    }, []);
+
     return (
         <>
             <List sx={{ width: '100%'}}>
-                <ListItem key={'1'} sx={{ 
-                    width: '100%', 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    border: `3px solid ${theme.palette.primary.main}`, 
-                    borderRadius: 3, 
-                    padding: 2,
-                    marginBottom: 2 
-                    }}>
-                    <ListItemText primary="Jose Ruiz"sx={{ width: '80%'}} />
-                    <Grid container sx={{ width: '20%' }} justifyContent="flex-end">
-                        <ListItemIcon>
-                            <Edit/>
-                        </ListItemIcon>
-                        <ListItemIcon>
-                            <Delete />
-                        </ListItemIcon>
-                    </Grid>
-                </ListItem>
 
-                <ListItem key={'1'} sx={{ 
-                    width: '100%', 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    border: `3px solid ${theme.palette.primary.main}`, 
-                    borderRadius: 3, 
-                    padding: 2,
-                    marginBottom: 2 
-                    }}>
-                    <ListItemText primary="Leonie Cañas"  sx={{ width: '80%' }}/>
-                    <Grid container sx={{ width: '20%' }} justifyContent="flex-end">
-                        <ListItemIcon>
-                            <Edit />
-                        </ListItemIcon>
-                        <ListItemIcon>
-                            <Delete />
-                        </ListItemIcon>
-                    </Grid>
-                </ListItem>
+                {/* Map users to the listItems */}
+                {users.map(user => (
+                    <ListItem key={user.id} sx={{ 
+                        width: '100%', 
+                        display: 'flex', 
+                        justifyContent: 'space-between', 
+                        border: `3px solid ${theme.palette.primary.main}`, 
+                        borderRadius: 3, 
+                        padding: 2,
+                        marginBottom: 2 
+                        }}>
+                        <ListItemText primary={user.name}sx={{ width: '80%'}} />
+                        <Grid container sx={{ width: '20%' }} justifyContent="flex-end">
+                            <ListItemIcon sx={{ cursor: 'pointer' }} onClick={() => dispatch(setEditUserView(user))}>
+                                <Edit/>
+                            </ListItemIcon>
+                            <ListItemIcon sx={{ cursor: 'pointer' }} onClick={() => {handleDelete(user)}}>
+                                <Delete />
+                            </ListItemIcon>
+                        </Grid>
+                    </ListItem>
+                ))}
 
-                <ListItem key={'1'} sx={{ 
-                    width: '100%', 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    border: `3px solid ${theme.palette.primary.main}`, 
-                    borderRadius: 3, 
-                    padding: 2,
-                    marginBottom: 2 
-                    }}>
-                    <ListItemText primary="Alicia García" sx={{ width: '80%' }} />
-                    <Grid container sx={{ width: '20%' }} justifyContent="flex-end">
-                        <ListItemIcon>
-                            <Edit />
-                        </ListItemIcon>
-                        <ListItemIcon>
-                            <Delete />
-                        </ListItemIcon>
-                    </Grid>
-                </ListItem>
+                
             </List>
 
-            <Fab color="primary" aria-label="add" sx={{ marginTop: 4 }}>
+            <Fab color="primary" aria-label="add" sx={{ marginTop: 4 }} onClick={() => {dispatch(setAddUserView())}}>
                 <Add color="secondary.light" />
             </Fab>
         </>
