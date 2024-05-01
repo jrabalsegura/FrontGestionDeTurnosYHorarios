@@ -1,9 +1,19 @@
 import { Button, Grid, Typography } from "@mui/material"
+import { useSelector } from "react-redux"
+import { usePDF } from "react-to-pdf"
+import { calcFiniquito } from "../../helpers/calcFiniquito"
 
 
 export const SeeFiniquitoView = () => {
+
+    const {props} = useSelector(state => state.adminScreen)
+    console.log(props)
+    const { toPDF, targetRef} = usePDF({filename: 'finiquito.pdf'})
+
+    const {baseSallary, months, totalVacation, pago} = calcFiniquito(props.hourlySallary, props.startDate,props.holidays)
+
     return (
-        <Grid width="70%">
+        <Grid width="70%" ref={targetRef}>
             <Grid sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -11,7 +21,7 @@ export const SeeFiniquitoView = () => {
                 justifyContent: 'space-between',
                 marginTop: 5
             }}>
-                <Typography variant="h4">Leonie Cañas</Typography>
+                <Typography variant="h4">{props.name}</Typography>
                 <Typography variant="h6">Cálculo finiquito</Typography>
             </Grid>
 
@@ -35,7 +45,7 @@ export const SeeFiniquitoView = () => {
                     justifyContent: 'space-around'
                 }}>
                     <Typography variant="h6" width="70%">Salario base: </Typography>
-                    <Typography variant="h6" width="30%" textAlign={'end'}>1500 €</Typography>
+                    <Typography variant="h6" width="30%" textAlign={'end'}>{baseSallary} €</Typography>
                 </Grid>
 
                 <Grid sx={{
@@ -47,7 +57,7 @@ export const SeeFiniquitoView = () => {
                     marginTop: 2
                 }}>
                     <Typography variant="h6" width="70%">Meses trabajados: </Typography>
-                    <Typography variant="h6" width="30%" textAlign={'end'}>38 meses</Typography>
+                    <Typography variant="h6" width="30%" textAlign={'end'}>{months} meses</Typography>
                 </Grid>
 
                 <Grid sx={{
@@ -59,7 +69,7 @@ export const SeeFiniquitoView = () => {
                     marginTop: 2
                 }}>
                     <Typography variant="h6" width="70%">Liquidación vacaciones: </Typography>
-                    <Typography variant="h6" width="30%" textAlign={'end'}>330,15 €</Typography>
+                    <Typography variant="h6" width="30%" textAlign={'end'}>{totalVacation} €</Typography>
                 </Grid>
 
                 <Grid sx={{
@@ -71,13 +81,13 @@ export const SeeFiniquitoView = () => {
                     marginTop: 5
                 }}>
                     <Typography variant="h6" width="70%">Pago: </Typography>
-                    <Typography variant="h6" width="30%" textAlign={'end'}>4656,20 €</Typography>
+                    <Typography variant="h6" width="30%" textAlign={'end'}>{pago} €</Typography>
                 </Grid>
 
             </Grid>
 
             <Grid container spacing={2} sx={{ mb: 2, mt: 8}} justifyContent="center" alignItems="center" width="100%">                
-                <Button variant="contained" sx={{width: '40%'}}>
+                <Button variant="contained" sx={{width: '40%'}} onClick={toPDF}>
                     <Typography>
                         Descargar
                     </Typography>

@@ -55,7 +55,7 @@ export const CalcularNominaView = () => {
                         onChange={onInputChange}                    
                     >
                         {users.map(user => (
-                            <MenuItem key={user._id} value={user.name}>{user.name}</MenuItem>
+                            <MenuItem key={user._id} value={user}>{user.name}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>

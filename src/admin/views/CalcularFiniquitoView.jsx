@@ -1,6 +1,43 @@
 import { Grid, Typography, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material"
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setSeeFiniquitoView } from "../../store/admin/adminScreenSlice";
+import { useForm } from "../../hooks/useForm";
+import { getUsers } from "../helpers";
+
+const initialForm = {
+    user: ''
+}
+
+const formValidation = {
+    user: [
+        value => value !== "",
+        "Selecciona un empleado"
+    ]
+}
 
 export const CalcularFiniquitoView = () => {
+
+    const [users, setUsers] = useState([]);
+    const dispatch = useDispatch();
+
+    const {user, onInputChange, isFormValid, userValid} = useForm(initialForm, formValidation);
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const fetchedUsers = await getUsers();
+            setUsers(fetchedUsers);
+        };
+        fetchUsers();
+        console.log(users);
+    }, []);
+
+    const handleSubmit = () => {
+        dispatch(setSeeFiniquitoView(user));
+    }
+
+
+
     return (
         <>
             <Grid item xs={12}>
@@ -13,19 +50,20 @@ export const CalcularFiniquitoView = () => {
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={"Leonie Cañas"}
+                        value={user}
+                        name="user"
                         label="Selecciona un empleado"
-                        onChange={() => {console.log("Working")}}
+                        onChange={onInputChange}
                     >
-                        <MenuItem value={"Jose Ruiz"}>Jose Ruiz</MenuItem>
-                        <MenuItem value={"Leonie Cañas"}>Leonie Cañas</MenuItem>
-                        <MenuItem value={"Alicia García"}>Alicia García</MenuItem>
+                        {users.map(user => (
+                            <MenuItem key={user._id} value={user}>{user.name}</MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
 
                 <Grid container spacing={2} sx={{ mb: 2, mt: 8}} justifyContent="center">
                     <Grid item xs={12}>
-                        <Button variant="contained" fullWidth>
+                        <Button variant="contained" fullWidth disabled={!isFormValid} onClick={handleSubmit}>
                             <Typography>
                                 Calcular
                             </Typography>
