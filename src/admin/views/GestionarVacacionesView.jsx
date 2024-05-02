@@ -1,23 +1,22 @@
 import { List, ListItem, Grid, Typography, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useState, useEffect } from "react";
-import { getNotifications } from "../helpers";
+
 import gestionApi from "../../api/gestionApi";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchNotifications, removeNotificacion } from "../../store/admin/notificacionesSlice";
+
 
 export const GestionarVacacionesView = () => {
     const theme = useTheme()
-    const [notifications, setNotifications] = useState([]);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        const fetchNotifications = async () => {
-            const fetchedNotifications = await getNotifications();
-            setNotifications(fetchedNotifications);
-        };
-        fetchNotifications();
-    }, []);
+        dispatch(fetchNotifications());
+    }, [dispatch]);
 
-    
-
+    const notifications = useSelector(state => state.notificaciones.notificaciones);
     //Filter notifications because I just need the type: "holidays"
     const holidays = notifications.filter(notification => notification.type === 'holiday');
 
@@ -44,7 +43,7 @@ export const GestionarVacacionesView = () => {
         try {
             const response = await gestionApi.delete(`/notificaciones/${id}`);
             console.log(response);
-            setNotifications(notifications.filter(notification => notification._id !== id));
+            dispatch(removeNotificacion(id));
         } catch (error) {
             console.log(error);
         }
