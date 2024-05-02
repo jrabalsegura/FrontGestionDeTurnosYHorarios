@@ -46,8 +46,7 @@ export const GestionarVacacionesView = () => {
             dispatch(removeNotificacion(id));
         } catch (error) {
             console.log(error);
-        }
-        
+        }       
     }
 
     return (

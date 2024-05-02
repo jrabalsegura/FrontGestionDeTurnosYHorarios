@@ -3,6 +3,7 @@ import { useTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import gestionApi from "../../api/gestionApi";
 import { format } from 'date-fns'; // Added import for date-fns format function
+import { downloadFile } from "../../helpers/downloadFile";
 
 export const ConsultarRegistroView = () => {
     const theme = useTheme();
@@ -48,7 +49,7 @@ export const ConsultarRegistroView = () => {
 
             </List>
 
-            <Button variant="contained" sx={{ width: "30%" }}>
+            <Button variant="contained" sx={{ width: "30%" }} onClick={() => downloadFile('events.txt')}>
                 <Typography>
                     Descargar
                 </Typography>

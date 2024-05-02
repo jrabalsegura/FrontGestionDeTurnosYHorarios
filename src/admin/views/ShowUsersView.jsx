@@ -50,8 +50,8 @@ export const ShowUsersView = () => {
                         padding: 2,
                         marginBottom: 2 
                         }}>
-                        <ListItemText primary={user.name}sx={{ width: '80%'}} />
-                        <Grid container sx={{ width: '20%' }} justifyContent="flex-end">
+                        <ListItemText primary={user.name} sx={{ width: { xs: '60%', lg: '80%' } }} />
+                        <Grid container sx={{ width: { xs: '40%', lg: '20%' } }} justifyContent="flex-end">
                             <ListItemIcon sx={{ cursor: 'pointer' }} onClick={() => dispatch(setEditUserView(user))}>
                                 <Edit/>
                             </ListItemIcon>
