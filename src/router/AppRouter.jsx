@@ -24,13 +24,13 @@ export const AppRouter = () => {
                     ) : 
                     (status === 'authenticated' && user.name === 'admin') ?
                         <>
-                            <Route path='/admin/' element={<AdminRoutes />} />
+                            <Route path='/admin/*' element={<AdminRoutes />} />
                             <Route path='/*' element={<Navigate to='/admin' />} />
                         </>
                      :
                     (status === 'authenticated' && user.name !== 'admin') ?
                         <>
-                            <Route path='/employee' element={<EmployeeRoutes />} />
+                            <Route path='/employee/*' element={<EmployeeRoutes />} />
                             <Route path='/*' element={<Navigate to='/employee' />} />
                         </>
                         :
