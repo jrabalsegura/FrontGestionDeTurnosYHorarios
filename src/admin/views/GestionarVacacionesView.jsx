@@ -1,7 +1,7 @@
 import { List, ListItem, Grid, Typography, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useState, useEffect } from "react";
-
+import { addDays } from "date-fns";
 import gestionApi from "../../api/gestionApi";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNotifications, removeNotificacion } from "../../store/admin/notificacionesSlice";
@@ -26,7 +26,7 @@ export const GestionarVacacionesView = () => {
             //Create JSon with values from name, username, password and sallary to send
             const body = {
                 startDate: holiday.startDate,
-                endDate: holiday.endDate,
+                endDate: addDays(holiday.endDate, 1),
                 employeeId: holiday.employeeId
             }
             const response = await gestionApi.post(`/holidays/new`, body);

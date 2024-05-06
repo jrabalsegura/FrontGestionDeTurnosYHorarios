@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 import { getUsers } from '../helpers';
 import gestionApi from '../../api/gestionApi';
+import { addDays } from 'date-fns';
 
 const initialForm = {
     turno: '',
@@ -42,12 +43,25 @@ export const AsignarTurnosView = () => {
 
         try {
             //Create JSon with values from name, username, password and sallary to send
+
+            //If the type is morning, start shoud be 08:00 and end 16:00
+            // else if the type is afternoon, start shoud be 16:00 and end 00:00
+            let start;
+            let end;
+            if (turno === 'morning') {
+                start = new Date(state[0].startDate.setHours(8, 0, 0, 0));
+                end = new Date(state[0].endDate.setHours(16, 0, 0, 0));
+            } else if (turno === 'afternoon') {
+                start = new Date(state[0].startDate.setHours(16, 0, 0, 0));
+                end = new Date(state[0].endDate.setHours(0, 0, 0, 0));
+            }
             const body = {
                 type: turno,
                 employeeId: empleado,
-                start: state[0].startDate,
-                end: state[0].endDate
+                start: start,
+                end: end
             }
+            console.log(body);
             const response = await gestionApi.post(`/shifts/new`, body);
             console.log(response);
             setIsSubmitted(true);
