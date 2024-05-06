@@ -8,7 +8,7 @@ const shifts = [{
     title: 'Shift 1',
     start: new Date(),
     end: addDays(new Date(), 2)
-}]
+}];
 
 const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {

@@ -28,7 +28,7 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
             >
                 <Toolbar>
                     <Typography variant="h6" noWrap component='div'>
-                        AdminPage
+                        Admin
                     </Typography>
                 </Toolbar>
 

@@ -29,7 +29,7 @@ export const NavBar = ({ drawerWidth = 240, setOpenSidebar }) => {
 
                 <Grid container direction='row' justifyContent='space-between' alignItems='center'>
                     <Grid item xs={8} md={4} container direction='row' justifyContent='space-between' alignItems='center'>
-                        <Typography variant="h6" noWrap component='div' sx={{cursor: 'pointer', display: { xs: 'none', mobile: 'block' }}} onClick={() => {dispatch(setNothingSelectedView())}}>EmployeePage</Typography>
+                        <Typography variant="h6" noWrap component='div' sx={{cursor: 'pointer', display: { xs: 'none', mobile: 'block' }}} onClick={() => {dispatch(setNothingSelectedView())}}>Home</Typography>
                         <Typography variant="p" noWrap component='div'>{user.name}</Typography>
                     </Grid>
                     <Grid item xs={4} mobile={3} md={2} xl={1} container direction='row' justifyContent='space-between' alignItems='center'>

@@ -1,6 +1,104 @@
 import { Button, Grid, TextField, Typography } from "@mui/material"
+import { useSelector } from "react-redux"
+import { useState, useEffect } from "react"
+import { useFocus } from "../../hooks/useFocus"
+import gestionApi from "../../api/gestionApi";
+import { useForm } from "../../hooks/useForm";
+
+const formValidations = {
+    name: [
+        value => value.trim().length > 0,
+        'Name is required'
+    ],
+    username: [
+        value => value.trim().length > 0, // Checks that the username is not empty
+        'Username is required'
+    ],
+    password: [
+        value => value.length >= 6, // Checks that the password has at least 6 characters
+        'Password must be at least 6 characters'
+    ]
+};
 
 export const EditUserView = () => {
+
+    //Get user from authSlice
+    const { user } = useSelector(state => state.auth);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+
+    const [nameRef, nameIsFocused] = useFocus();
+    const [usernameRef, usernameIsFocused] = useFocus();
+    const [passwordRef, passwordIsFocused] = useFocus();
+
+    const [fetchUser, setFetchUser] = useState({}); // State to hold fetched user data
+
+    //Get name info from api with the id
+    useEffect(() => {
+        async function fetchData() {
+            console.log(user.uid);
+            try {
+                const response = await gestionApi.get(`employees/${user.uid}`);
+                setFetchUser(response.data.employee); // Update state with fetched data
+                console.log(response.data.employee);
+            } catch (error) {
+                console.error('Failed to fetch user data:', error);
+            }
+        }
+        fetchData();
+    }, [user.uid]);
+
+    const [initialValues, setInitialValues] = useState({
+        name: '',
+        username: '',
+        password: ''
+    });
+
+    useEffect(() => {
+        setInitialValues({
+            name: fetchUser.name || '',
+            username: fetchUser.username || '',
+            password: ''
+        });
+    }, [fetchUser]); // Depend on fetchUser state
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        
+        try {
+            const body = {
+                name: name,
+                username: username,
+                password: password,
+                hourlySallary: fetchUser.hourlySallary
+            }
+            const response = await gestionApi.put(`/employees/${user.uid}`, body);
+            console.log(response);
+            setIsSubmitted(true);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const {
+        name,
+        username,
+        password,
+        onInputChange,
+        isFormValid,
+        nameValid,
+        usernameValid,
+        passwordValid
+    } = useForm(initialValues, formValidations);
+
+    if (isSubmitted) {
+        return (
+            <Typography variant="h5" sx={{ mt: 2 }}>
+                Thank you for submitting the information!
+            </Typography>
+        )
+    }
+
     return (
         <>
             
@@ -8,9 +106,9 @@ export const EditUserView = () => {
                 Edita tu Información
             </Typography>
 
-            <form>
+            <form onSubmit={onSubmit}>
 
-                <Grid container justifyContent="center">
+            <Grid container justifyContent="center">
                     <Grid item xs={12} sx={{ mt: 2 }}>
                         <TextField 
                             label="Nombre"
@@ -18,7 +116,14 @@ export const EditUserView = () => {
                             placeholder="nombre"
                             fullWidth
                             variant="standard"
+                            name="name"
+                            value={name}
+                            onChange={onInputChange}
+                            inputRef={nameRef}
                         />
+                        <div style={{ height: '24px' }}>
+                            {nameIsFocused && nameValid && <Typography variant="p" color="error">Name is required</Typography>}
+                        </div>
                     </Grid>
                     <Grid item xs={12} sx={{ mt: 5 }}>
                         <TextField 
@@ -27,7 +132,14 @@ export const EditUserView = () => {
                             placeholder="username"
                             fullWidth
                             variant="standard"
+                            name="username"
+                            value={username}
+                            onChange={onInputChange}
+                            inputRef={usernameRef}
                         />
+                        <div style={{ height: '24px' }}>
+                            {usernameIsFocused && usernameValid && <Typography variant="p" color="error">Username is required</Typography>}
+                        </div>
                     </Grid>
                     <Grid item xs={12} sx={{ mt: 5 }}>
                         <TextField 
@@ -36,12 +148,19 @@ export const EditUserView = () => {
                             placeholder="password"
                             fullWidth
                             variant="standard"
+                            name="password"
+                            value={password}
+                            onChange={onInputChange}
+                            inputRef={passwordRef}
                         />
+                        <div style={{ height: '24px' }}>
+                            {passwordIsFocused && passwordValid && <Typography variant="p" color="error">Password is required</Typography>}
+                        </div>
                     </Grid>
 
                     <Grid container spacing={2} sx={{ mb: 2, mt: 5 }} justifyContent="center"style={{ width: '30%' }}>
                         <Grid item xs={12}>
-                            <Button variant="contained" fullWidth>
+                            <Button variant="contained" fullWidth type="submit" disabled={!isFormValid}>
                                 <Typography>
                                     Guardar
                                 </Typography>

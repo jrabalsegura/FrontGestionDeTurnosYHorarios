@@ -41,7 +41,7 @@ export const ShowUsersView = () => {
 
                 {/* Map users to the listItems */}
                 {users.map(user => (
-                    <ListItem key={user.id} sx={{ 
+                    <ListItem key={user._id} sx={{ 
                         width: '100%', 
                         display: 'flex', 
                         justifyContent: 'space-between', 
