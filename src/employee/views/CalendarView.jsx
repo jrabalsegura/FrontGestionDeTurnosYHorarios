@@ -1,11 +1,11 @@
 import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { Typography } from "@mui/material";
-import { addDays } from 'date-fns';
 import { localizer, getMessagesEs } from '../helpers/';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import gestionApi from '../../api/gestionApi';
+import { Modal } from '../component/Modal';
+
 
 {/*
 const shifts = [{
@@ -34,9 +34,21 @@ const eventStyleGetter = (event, start, end, isSelected) => {
 export const CalendarView = () => {
 
     const { user } = useSelector(state => state.auth);
-    const dispatch = useDispatch();
+
     const [shifts, setShifts] = useState([]);
     const [holidays, setHolidays] = useState([]);
+
+    const [date, setDate] = useState(null);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    }
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    }
 
     useEffect(() => {
         const fetchShifts = async () => {
@@ -70,27 +82,64 @@ export const CalendarView = () => {
         fetchHolidays();
     }, [user.uid]);
 
+    {/*}
     const handleDoubleClickEvent = (event) => {
         // Check if the double-clicked event is of type 'morning' or 'afternoon'
         if (event.title === 'morning' || event.title === 'afternoon') {
             console.log('Double-clicked on a morning or afternoon event:', event);
+
+            
+
+            console.log(date);
             // Perform actions here based on the event
+            openModal();
+        }
+    };*/}
+
+    const handleSelectSlot = (slotInfo) => {
+        // slotInfo contains start and end date of the clicked slot
+        const clickedDate = slotInfo.start;
+        console.log('Slot selected:', clickedDate);
+        setDate(clickedDate);
+    
+        // Now check if this date falls within any of the existing events
+        const relevantEvent = shifts.concat(holidays).find(event => {
+            // Create a new Date object from clickedDate and add 16 hours
+            const adjustedClickedDate = new Date(clickedDate);
+            adjustedClickedDate.setHours(clickedDate.getHours() + 16);
+
+            return adjustedClickedDate >= event.start && adjustedClickedDate <= event.end &&
+                (event.title === 'morning' || event.title === 'afternoon');
+        });
+    
+        if (relevantEvent) {
+            console.log('Clicked within an event:', relevantEvent);
+            setDate(clickedDate); // Set the exact clicked date
+            openModal();
         }
     };
 
     return (
         <>
+            <Modal
+                isModalOpen={isModalOpen}
+                closeModal={closeModal}
+                id={user.uid}
+                username={user.name}
+                date={date}
+            />
             <Calendar
+                width='100%'
                 culture='es'
                 localizer={localizer}
                 //join shigts and holidays for events   
                 events={shifts.concat(holidays)}
                 startAccessor="start"
                 endAccessor="end"
-                style={{ height: 'calc(100vh - 180px)', backgroundColor: 'white', width: '100%', minWidth: '500' }}
+                style={{ opacity: isModalOpen ? 0.2 : 1, transition: 'opacity 0.5s', height: 'calc(100vh - 180px)', backgroundColor: 'white', width: '100%', minWidth: '500' }}
                 messages={getMessagesEs()}
                 eventPropGetter={eventStyleGetter}
-                onDoubleClickEvent={handleDoubleClickEvent}
+                onSelectSlot={handleSelectSlot}
                 selectable={true}
             />
         </>
