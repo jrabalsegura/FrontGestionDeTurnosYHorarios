@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { EmployeeLayout } from "../layout/EmployeeLayout";
-import { NothingSelectedView, EditUserView, NominasView, CalendarView, CalculadoraView, SolicitarVacacionesView } from "../views";
+import { NothingSelectedView, EditUserView, SeeNominaView, NominasView, CalendarView, CalculadoraView, SolicitarVacacionesView } from "../views";
 import { Modal } from "../component";
 import { useSelector } from "react-redux";
 
@@ -22,6 +22,8 @@ export const HomePage = () => {
                 return <CalculadoraView />;
             case 'solicitarVacacionesView':
                 return <SolicitarVacacionesView />;
+            case 'seeNominaView':
+                return <SeeNominaView />;
             default:
                 return <NothingSelectedView />;
         }

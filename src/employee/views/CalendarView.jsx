@@ -2,9 +2,10 @@ import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { localizer, getMessagesEs } from '../helpers/';
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useCallback, useState, useRef } from 'react';
 import gestionApi from '../../api/gestionApi';
 import { Modal } from '../component/Modal';
+import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 
 
 {/*
@@ -40,15 +41,19 @@ export const CalendarView = () => {
 
     const [date, setDate] = useState(null);
 
+    const ref = useRef(null);
+
+    
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
         setIsModalOpen(true);
     }
 
-    const closeModal = () => {
+    const closeModal = useCallback(() => {
         setIsModalOpen(false);
-    }
+    }, []);
 
     useEffect(() => {
         const fetchShifts = async () => {
@@ -119,15 +124,20 @@ export const CalendarView = () => {
         }
     };
 
+    useOnClickOutside(ref, closeModal);
+
     return (
         <>
-            <Modal
-                isModalOpen={isModalOpen}
-                closeModal={closeModal}
-                id={user.uid}
-                username={user.name}
-                date={date}
-            />
+            <div ref={ref}>
+                <Modal
+                    isModalOpen={isModalOpen}
+                    closeModal={closeModal}
+                    id={user.uid}
+                    username={user.name}
+                    date={date}
+                />
+            
+            </div>
             <Calendar
                 width='100%'
                 culture='es'
@@ -145,4 +155,6 @@ export const CalendarView = () => {
         </>
     )
 }
+
+
 

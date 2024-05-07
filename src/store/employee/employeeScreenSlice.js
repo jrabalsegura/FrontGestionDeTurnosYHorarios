@@ -30,6 +30,10 @@ export const employeeScreenSlice = createSlice({
         setSolicitarVacacionesView: (state) => {
             state.screen = 'solicitarVacacionesView';
             state.props = null;
+        },
+        setSeeNominaView: (state, {payload}) => {
+            state.screen = 'seeNominaView';
+            state.props = payload;
         }
     }
 });
@@ -40,6 +44,7 @@ export const {
     setCalendarView,
     setNominasView,
     setCalculadoraView,
-    setSolicitarVacacionesView
+    setSolicitarVacacionesView,
+    setSeeNominaView
 } = employeeScreenSlice.actions;
 
