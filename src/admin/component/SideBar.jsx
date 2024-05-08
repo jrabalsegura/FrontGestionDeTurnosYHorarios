@@ -1,4 +1,4 @@
-import { AppRegistration, Forest, FunctionsOutlined, PercentOutlined, Person,Schedule} from "@mui/icons-material"
+import { AppRegistration, Forest, FunctionsOutlined, PercentOutlined, Person,Schedule, AdminPanelSettings } from "@mui/icons-material"
 import { Box, Drawer, Toolbar, Typography, List, ListItem, ListItemText, ListItemButton, ListItemIcon, Grid } from "@mui/material"
 import { useDispatch } from "react-redux";
 import { setShowUsersView, setCalcularNominaView, setCalcularFiniquitoView, setAsignarTurnosView, setGestionarVacacionesView, setConsultarRegistroView } from "../../store/admin/adminScreenSlice";
@@ -27,8 +27,9 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                 }}
             >
                 <Toolbar>
-                    <Typography variant="h6" noWrap component='div'>
-                        Admin
+                    <Typography variant="h6" noWrap component='div' sx={{display: 'flex', alignItems: 'center'}}>
+                        <AdminPanelSettings sx={{fontSize: '30px', marginRight: '10px'}} />
+                        Administrador
                     </Typography>
                 </Toolbar>
 

@@ -1,4 +1,4 @@
-import { MenuOutlined, LogoutOutlined, NotificationsOutlined } from "@mui/icons-material";
+import { MenuOutlined, LogoutOutlined, NotificationsOutlined, Update } from "@mui/icons-material";
 import { AppBar, Toolbar, IconButton, Grid, Typography, Badge } from "@mui/material";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { useDispatch } from "react-redux";
@@ -37,8 +37,14 @@ export const NavBar = ({ drawerWidth = 240, setOpenSidebar }) => {
 
                 <Grid container direction='row' justifyContent='space-between' alignItems='center'>
                     <Grid item xs={8} md={4} container direction='row' justifyContent='space-between' alignItems='center'>
-                        <Typography variant="h6" noWrap component='div' sx={{cursor: 'pointer', display: { xs: 'none', mobile: 'block' }}} onClick={() => {dispatch(setNothingSelectedView())}}>Home</Typography>
-                        <Typography variant="p" noWrap component='div'>{user.name}</Typography>
+                        <IconButton
+                            color="inherit"
+                            onClick={() => {dispatch(setNothingSelectedView())}}
+                            sx={{ display: { xs: 'none', mobile: 'block' } }}
+                        >
+                            <Update fontSize="large" />
+                        </IconButton>
+                        <Typography variant="p" noWrap component='div' sx={{textTransform: 'capitalize'}}>{user.name}</Typography>
                     </Grid>
                     <Grid item xs={4} mobile={3} md={2} xl={1} container direction='row' justifyContent='space-between' alignItems='center'>
                         <Badge badgeContent={notifications.length} color="error" sx={{ '& .MuiBadge-badge': { right: 8, top: 13 }}}>

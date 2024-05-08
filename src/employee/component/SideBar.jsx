@@ -1,4 +1,4 @@
-import { Calculate, CalendarMonth, HolidayVillage, Paid, Person} from "@mui/icons-material"
+import { Calculate, CalendarMonth, HolidayVillage, Paid, Person, AccountCircle} from "@mui/icons-material"
 import { Box, Drawer, Toolbar, Typography, List, ListItem, ListItemText, ListItemButton, ListItemIcon, Grid } from "@mui/material"
 import { useDispatch } from "react-redux";
 import { setEditUserView, setCalendarView, setNominasView, setCalculadoraView, setSolicitarVacacionesView } from "../../store/employee/employeeScreenSlice";
@@ -23,8 +23,9 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                 }}
             >
                 <Toolbar>
-                    <Typography variant="h6" noWrap component='div'>
-                        Employee
+                    <Typography variant="h6" noWrap component='div' sx={{display: 'flex', alignItems: 'center'}}>
+                        <AccountCircle sx={{fontSize: '30px', marginRight: '10px'}} />
+                        Empleado
                     </Typography>
                 </Toolbar>
 

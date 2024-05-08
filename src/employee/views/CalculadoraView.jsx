@@ -1,6 +1,53 @@
 import { Grid, TextField, Button, Typography, InputAdornment } from "@mui/material"
+import { useForm } from "../../hooks/useForm";
+import { useState } from "react";
+import { calcNomina } from "../../helpers/calcNomina";
+
+const initialFormFields = {
+    hourlySallary: 15,
+    extraHours: 0
+}
+
+const formValidations = {
+    hourlySallary: [
+        value => value > 0,
+        'El salario base debe ser mayor que 0'
+    ],
+    extraHours: [
+        value => value >= 0,
+        'Las horas extra no pueden ser negativas'
+    ]
+}
 
 export const CalculadoraView = () => {
+
+    const now = new Date();
+    const currentMonth = now.getMonth() + 1; // January is 0, not 1
+    const currentYear = now.getFullYear();     
+    const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+
+    console.log(daysInMonth);
+
+    const { 
+        hourlySallary, 
+        extraHours, 
+        onInputChange, 
+        isFormValid, 
+        hourlySallaryValid, 
+        extraHoursValid 
+    } = useForm(initialFormFields, formValidations);
+
+    
+    let totalSallary = 0;
+    if (isFormValid) {
+        // Convert hourlySallary to float
+        const hourlySallaryFloat = parseFloat(hourlySallary);
+
+        const {baseSallary, socialSecurity, pago} = calcNomina(hourlySallaryFloat, extraHours, daysInMonth);
+        totalSallary = pago;
+    }
+
+
     return (
         <>
             <form>
@@ -16,7 +63,13 @@ export const CalculadoraView = () => {
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">€ / hora</InputAdornment>,
                             }}
+                            name="hourlySallary"
+                            value={hourlySallary}
+                            onChange={onInputChange}
                         />
+                        <div style={{ height: '24px' }}>
+                            {hourlySallaryValid && <Typography variant="p" color="error">The sallary must be greater than 0</Typography>}
+                        </div>
                     </Grid>
                     <Grid item xs={12} sx={{ mt: 5 }}>
                         <TextField 
@@ -28,7 +81,13 @@ export const CalculadoraView = () => {
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">horas</InputAdornment>,
                             }}
+                            name="extraHours"
+                            value={extraHours}
+                            onChange={onInputChange}
                         />
+                        <div style={{ height: '24px' }}>
+                            {extraHoursValid && <Typography variant="p" color="error">The hours cannot be less than 0</Typography>}
+                        </div>
                     </Grid>
                     
                 </Grid>
@@ -36,9 +95,8 @@ export const CalculadoraView = () => {
             </form>
 
             <Typography variant="h5" marginTop={10}>Salario estimado</Typography>
-            <Typography variant="h5" marginTop={2}>0,00 €</Typography>
+            <Typography variant="h3" marginTop={2}>{totalSallary.toFixed(2)} €</Typography>
         </>
     )
 }
-
 
