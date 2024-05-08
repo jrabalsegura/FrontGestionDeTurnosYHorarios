@@ -1,8 +1,9 @@
-import { Button, Typography, Grid, TextField } from "@mui/material";
+import { Button, Typography, Grid, TextField, Alert } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import { useFocus } from "../../hooks/useFocus";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { useEffect } from "react";
+
 import Swal from "sweetalert2";
 
 const loginFormFields = {
@@ -111,7 +112,7 @@ export const LoginPage = () => {
                                     inputRef={usernameRef}
                                 />
                                 <div style={{ height: '24px' }}>
-                                    {usernameIsFocused && usernameValid && <Typography variant="p" color="error">Username is required</Typography>}
+                                    {usernameIsFocused && usernameValid && <Alert severity="error">Username is required</Alert>}
                                 </div>
                             </Grid>
                             <Grid item xs={12} sx={{ mt: 5 }}>
@@ -127,7 +128,7 @@ export const LoginPage = () => {
                                     inputRef={passwordRef}
                                 />
                                 <div style={{ height: '24px' }}>
-                                    {passwordIsFocused && passwordValid && <Typography variant="p" color="error">Password must be at least 6 characters</Typography>}
+                                    {passwordIsFocused && passwordValid && <Alert severity="error">Password must be at least 6 characters</Alert>}
                                 </div>
                             </Grid>
 

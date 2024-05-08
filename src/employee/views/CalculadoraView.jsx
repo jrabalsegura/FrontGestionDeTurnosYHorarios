@@ -1,6 +1,5 @@
-import { Grid, TextField, Button, Typography, InputAdornment } from "@mui/material"
+import { Alert, Grid, TextField, Button, Typography, InputAdornment } from "@mui/material"
 import { useForm } from "../../hooks/useForm";
-import { useState } from "react";
 import { calcNomina } from "../../helpers/calcNomina";
 
 const initialFormFields = {
@@ -68,7 +67,7 @@ export const CalculadoraView = () => {
                             onChange={onInputChange}
                         />
                         <div style={{ height: '24px' }}>
-                            {hourlySallaryValid && <Typography variant="p" color="error">The sallary must be greater than 0</Typography>}
+                            {hourlySallaryValid && <Alert severity="error">The sallary must be greater than 0</Alert>}
                         </div>
                     </Grid>
                     <Grid item xs={12} sx={{ mt: 5 }}>
@@ -86,7 +85,7 @@ export const CalculadoraView = () => {
                             onChange={onInputChange}
                         />
                         <div style={{ height: '24px' }}>
-                            {extraHoursValid && <Typography variant="p" color="error">The hours cannot be less than 0</Typography>}
+                            {extraHoursValid && <Alert severity="error">The hours cannot be less than 0</Alert>}
                         </div>
                     </Grid>
                     

@@ -1,5 +1,4 @@
-import { Button, Grid, TextField, Typography } from "@mui/material"
-import { useSelector } from "react-redux"
+import { Alert, Button, Grid, TextField, Typography } from "@mui/material"
 import { useForm } from "../../hooks/useForm";
 import { useEffect, useState } from "react";
 import { useFocus } from "../../hooks/useFocus";
@@ -109,7 +108,7 @@ export const AddUserView = () => {
                             inputRef={nameRef}
                         />
                         <div style={{ height: '24px' }}>
-                            {nameIsFocused && nameValid && <Typography variant="p" color="error">Name is required</Typography>}
+                            {nameIsFocused && nameValid && <Alert severity="error">Name is required</Alert>}
                         </div>
                     </Grid>
                     <Grid item xs={12} sx={{ mt: 5 }}>
@@ -125,7 +124,7 @@ export const AddUserView = () => {
                             inputRef={usernameRef}
                         />
                         <div style={{ height: '24px' }}>
-                            {usernameIsFocused && usernameValid && <Typography variant="p" color="error">Username is required</Typography>}
+                            {usernameIsFocused && usernameValid && <Alert severity="error">Username is required</Alert>}
                         </div>
                     </Grid>
                     <Grid item xs={12} sx={{ mt: 5 }}>
@@ -141,7 +140,7 @@ export const AddUserView = () => {
                             inputRef={passwordRef}
                         />
                         <div style={{ height: '24px' }}>
-                            {passwordIsFocused && passwordValid && <Typography variant="p" color="error">Password is required</Typography>}
+                            {passwordIsFocused && passwordValid && <Alert severity="error">Password is required</Alert>}
                         </div>
                     </Grid>
 
