@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { useFocus } from "../../hooks/useFocus"
 import gestionApi from "../../api/gestionApi";
 import { useForm } from "../../hooks/useForm";
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 const formValidations = {
     name: [
@@ -23,30 +24,13 @@ const formValidations = {
 export const EditUserView = () => {
 
     //Get user from authSlice
-    const { user } = useSelector(state => state.auth);
+    const { user, onUpdate } = useAuthStore();
     const [isSubmitted, setIsSubmitted] = useState(false);
 
 
     const [nameRef, nameIsFocused] = useFocus();
     const [usernameRef, usernameIsFocused] = useFocus();
-    const [passwordRef, passwordIsFocused] = useFocus();
-
-    const [fetchUser, setFetchUser] = useState({}); // State to hold fetched user data
-
-    //Get name info from api with the id
-    useEffect(() => {
-        async function fetchData() {
-            console.log(user.uid);
-            try {
-                const response = await gestionApi.get(`employees/${user.uid}`);
-                setFetchUser(response.data.employee); // Update state with fetched data
-                console.log(response.data.employee);
-            } catch (error) {
-                console.error('Failed to fetch user data:', error);
-            }
-        }
-        fetchData();
-    }, [user.uid]);
+    const [passwordRef, passwordIsFocused] = useFocus();    
 
     const [initialValues, setInitialValues] = useState({
         name: '',
@@ -56,11 +40,11 @@ export const EditUserView = () => {
 
     useEffect(() => {
         setInitialValues({
-            name: fetchUser.name || '',
-            username: fetchUser.username || '',
+            name: user.name || '',
+            username: user.username || '',
             password: ''
         });
-    }, [fetchUser]); // Depend on fetchUser state
+    }, [user]); // Depend on fetchUser state
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -70,11 +54,12 @@ export const EditUserView = () => {
                 name: name,
                 username: username,
                 password: password,
-                hourlySallary: fetchUser.hourlySallary
+                hourlySallary: user.hourlySallary
             }
             const response = await gestionApi.put(`/employees/${user.uid}`, body);
             console.log(response);
             setIsSubmitted(true);
+            onUpdate(response.data.employee);
         } catch (error) {
             console.log(error);
         }

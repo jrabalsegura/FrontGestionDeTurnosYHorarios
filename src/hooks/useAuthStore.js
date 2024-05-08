@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import gestionApi from "../api/gestionApi"
-import { onChecking, onLogin, onLogout, clearErrorMessage } from "../store"
+import { onChecking, onLogin, onLogout, clearErrorMessage, onUpdateUser } from "../store"
 
 
 export const useAuthStore = () => {
@@ -52,13 +52,18 @@ export const useAuthStore = () => {
         dispatch(onLogout());
     }
 
+    const onUpdate = (user) => {
+        dispatch(onUpdateUser(user));
+    }
+
     return {
         status,
         user,
         errorMessage,
         startLogin,
         checkAuthToken,
-        startLogout
+        startLogout,
+        onUpdate
     }
 }
 

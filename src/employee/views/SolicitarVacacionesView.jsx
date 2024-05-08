@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { addDays, isAfter, formatISO } from "date-fns"
 import { useSelector } from "react-redux"
 import gestionApi from "../../api/gestionApi"
+import { useAuthStore } from "../../hooks/useAuthStore"
 
 
 export const SolicitarVacacionesView = () => {
@@ -17,23 +18,7 @@ export const SolicitarVacacionesView = () => {
     ]);
     const [error, setError] = useState('');
 
-    const [fetchUser, setFetchUser] = useState({}); // State to hold fetched user data
-
-    //Get user from authSlice
-    const { user } = useSelector(state => state.auth);
-
-    //Get name info from api with the id
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await gestionApi.get(`employees/${user.uid}`);
-                setFetchUser(response.data.employee); // Update state with fetched data
-            } catch (error) {
-                console.error('Failed to fetch user data:', error);
-            }
-        }
-        fetchData();
-    }, [user.uid]);
+    const { user } = useAuthStore();
 
     const handleSelect = (ranges) => {
         const { selection } = ranges;
@@ -54,7 +39,7 @@ export const SolicitarVacacionesView = () => {
             employeeId: user.uid,
             startDate: state[0].startDate,
             endDate: state[0].endDate,
-            name: fetchUser.name
+            name: user.name
         }
 
         try {

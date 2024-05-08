@@ -8,6 +8,7 @@ import gestionApi from '../../api/gestionApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setSeeNominaView } from '../../store/employee/employeeScreenSlice';
+import { useAuthStore } from '../../hooks/useAuthStore';
 
 dayjs.locale('es');
 
@@ -15,25 +16,8 @@ export const NominasView = () => {
     const [selectedDate, setSelectedDate] = useState(dayjs());
     const [nomina, setNomina] = useState(null);
 
-    const { user } = useSelector(state => state.auth);
+    const { user } = useAuthStore();
     const dispatch = useDispatch();
-
-    const [fetchUser, setFetchUser] = useState({}); // State to hold fetched user data
-
-    //Get name info from api with the id
-    useEffect(() => {
-        async function fetchData() {
-            console.log(user.uid);
-            try {
-                const response = await gestionApi.get(`employees/${user.uid}`);
-                setFetchUser(response.data.employee); // Update state with fetched data
-                console.log(response.data.employee);
-            } catch (error) {
-                console.error('Failed to fetch user data:', error);
-            }
-        }
-        fetchData();
-    }, [user.uid]);
 
     const handleDateChange = (newDate) => {
         
@@ -66,7 +50,7 @@ export const NominasView = () => {
         //Add fetchUser.name to nomina object
         const nominaWithName = {
             ...nomina,
-            name: fetchUser.name
+            name: user.name
         };
         dispatch(setSeeNominaView(nominaWithName));
     }

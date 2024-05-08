@@ -6,16 +6,7 @@ import { useEffect, useCallback, useState, useRef } from 'react';
 import gestionApi from '../../api/gestionApi';
 import { Modal } from '../component/Modal';
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
-
-
-{/*
-const shifts = [{
-    title: 'Shift 1',
-    start: new Date(),
-    end: addDays(new Date(), 2)
-}];
-*/}
-
+import { useAuthStore } from '../../hooks/useAuthStore';
 
 const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
@@ -34,7 +25,8 @@ const eventStyleGetter = (event, start, end, isSelected) => {
 
 export const CalendarView = () => {
 
-    const { user } = useSelector(state => state.auth);
+    //const { user } = useSelector(state => state.auth);
+    const { user } = useAuthStore();
 
     const [shifts, setShifts] = useState([]);
     const [holidays, setHolidays] = useState([]);
@@ -86,20 +78,6 @@ export const CalendarView = () => {
         }
         fetchHolidays();
     }, [user.uid]);
-
-    {/*}
-    const handleDoubleClickEvent = (event) => {
-        // Check if the double-clicked event is of type 'morning' or 'afternoon'
-        if (event.title === 'morning' || event.title === 'afternoon') {
-            console.log('Double-clicked on a morning or afternoon event:', event);
-
-            
-
-            console.log(date);
-            // Perform actions here based on the event
-            openModal();
-        }
-    };*/}
 
     const handleSelectSlot = (slotInfo) => {
         // slotInfo contains start and end date of the clicked slot

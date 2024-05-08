@@ -3,13 +3,14 @@ import { red, grey, green } from "@mui/material/colors"
 import { useSelector } from "react-redux"
 import { useState } from "react"
 import gestionApi from "../../api/gestionApi"
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 export const NothingSelectedView = () => {
 
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     //Get user from authSlice
-    const { user } = useSelector(state => state.auth)
+    const { user } = useAuthStore();
 
     const handleClick = async (event) => {
         const body = {
