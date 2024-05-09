@@ -32,7 +32,6 @@ export const AddUserView = () => {
 
     const [isSubmitted, setIsSubmitted] = useState(false);
     
-
     const [nameRef, nameIsFocused] = useFocus();
     const [usernameRef, usernameIsFocused] = useFocus();
     const [passwordRef, passwordIsFocused] = useFocus();
@@ -89,6 +88,7 @@ export const AddUserView = () => {
             </>
         )
     }
+    
     return (
         <>
             

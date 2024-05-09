@@ -15,9 +15,15 @@ export const ConsultarRegistroView = () => {
 
     return (
         <>
+
+            <Button variant="contained" sx={{ width: "30%", marginBottom: 5 }} disabled={events.length === 0} onClick={() => downloadFile('events.txt')}>
+                <Typography>
+                    Descargar
+                </Typography>
+            </Button>
             <List sx={{ width: '100%'}}>
                 {events.length > 0 ? (
-                    events.map(evento => (
+                    [...events].reverse().map(evento => (
                         <ListItem key={evento._id} sx={{ 
                             width: '100%', 
                             display: 'flex', 
@@ -40,11 +46,7 @@ export const ConsultarRegistroView = () => {
                 )}
             </List>
 
-            <Button variant="contained" sx={{ width: "30%" }} onClick={() => downloadFile('events.txt')}>
-                <Typography>
-                    Descargar
-                </Typography>
-            </Button>
+            
         </>
     )
 }

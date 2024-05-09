@@ -83,10 +83,6 @@ export const AsignarTurnosView = () => {
         )
     }
 
-    if (isLoading) {
-        return <CircularProgress size={80} />
-    }
-
     return (
         <Grid container sx={{display:'flex', flexDirection:{ sm: 'column', lg: 'row' }, alignItems:'center', justifyContent:'space-around'}}>
             <Grid container sx={{display:'flex', flexDirection:'column', alignItems:'center', width:{ xs: '100%', md: '70%', lg: '45%' }}}>
