@@ -22,7 +22,7 @@ export const ShowUsersView = () => {
             const response = await gestionApi.delete(`/employees/${user._id}`);
             console.log(response);
             // Update the users state to filter out the deleted user
-            setUsers(users.filter(u => u.id !== user.id));
+            setUsers(users.filter(u => u._id !== user._id));
         } catch (error) {
             console.log(error);
             Swal.fire('Error al intentar borrar al usuario', error.message, 'error')

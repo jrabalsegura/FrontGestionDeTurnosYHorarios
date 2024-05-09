@@ -50,42 +50,46 @@ export const GestionarVacacionesView = () => {
     return (
         <>
             <List sx={{ width: '100%'}}>
-
-                {/* Map notificacionts to the ListItems */}
-                {holidays.map(holiday => (
-                    <ListItem key={holiday._id} sx={{ 
-                        width: '100%', 
-                        display: 'flex', 
-                        flexDirection: { xs: 'column', md: 'row' },  // Change flex direction based on screen size
-                        justifyContent: 'space-between', 
-                        border: `3px solid ${theme.palette.primary.dark}`, 
-                        borderRadius: 3, 
-                        padding: 2,
-                        marginBottom: 2 
-                        }}>
-                        
-                        <Grid container  justifyContent="space-around">
-                            <Typography variant="h6">{holiday.name}</Typography>
-                            <Typography variant="h6">
-                                {new Date(holiday.startDate).toLocaleDateString('en-GB')} - 
-                                {new Date(holiday.endDate).toLocaleDateString('en-GB')}
-                            </Typography>
-                        </Grid>
-    
-                        <Grid container justifyContent="space-around">
-                            <Button variant="contained" sx={{mt: { xs: 2, md: 0 } }} onClick={() => handleApprove(holiday)}> 
-                                <Typography>
-                                    Aprobar
+                {holidays.length > 0 ? (
+                    holidays.map(holiday => (
+                        <ListItem key={holiday._id} sx={{ 
+                            width: '100%', 
+                            display: 'flex', 
+                            flexDirection: { xs: 'column', md: 'row' },  // Change flex direction based on screen size
+                            justifyContent: 'space-between', 
+                            border: `3px solid ${theme.palette.primary.dark}`, 
+                            borderRadius: 3, 
+                            padding: 2,
+                            marginBottom: 2 
+                            }}>
+                                
+                            <Grid container  justifyContent="space-around">
+                                <Typography variant="h6">{holiday.name}</Typography>
+                                <Typography variant="h6">
+                                    {new Date(holiday.startDate).toLocaleDateString('en-GB')} - 
+                                    {new Date(holiday.endDate).toLocaleDateString('en-GB')}
                                 </Typography>
-                            </Button>
-                            <Button variant="contained" color="error" sx={{mt: { xs: 2, md: 0 } }} onClick={() => deleteNotification(holiday._id)}>
-                                <Typography>
-                                    Declinar
-                                </Typography>
-                            </Button>
-                        </Grid>
-                    </ListItem>
-                ))}
+                            </Grid>
+        
+                            <Grid container justifyContent="space-around">
+                                <Button variant="contained" sx={{mt: { xs: 2, md: 0 } }} onClick={() => handleApprove(holiday)}> 
+                                    <Typography>
+                                        Aprobar
+                                    </Typography>
+                                </Button>
+                                <Button variant="contained" color="error" sx={{mt: { xs: 2, md: 0 } }} onClick={() => deleteNotification(holiday._id)}>
+                                    <Typography>
+                                        Declinar
+                                    </Typography>
+                                </Button>
+                            </Grid>
+                        </ListItem>
+                    ))
+                ) : (
+                    <Typography variant="h5" sx={{ mt: 2, textAlign: 'center' }}>
+                        No hay vacaciones que gestionar
+                    </Typography>
+                )}
             </List>
         </>
     )

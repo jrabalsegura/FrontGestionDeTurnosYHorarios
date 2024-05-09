@@ -37,6 +37,7 @@ export const CalcularNominaView = () => {
         fetchUsers();
     }, []);
 
+
     const handleSubmit = () => {
         dispatch(setSeeNominaView(user));
     }
