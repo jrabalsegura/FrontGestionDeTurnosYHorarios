@@ -1,4 +1,4 @@
-import { Button, Typography, Grid, TextField, Alert } from "@mui/material";
+import { Button, Typography, Grid, TextField, Alert, CircularProgress } from "@mui/material";
 import { useForm } from "../../hooks/useForm";
 import { useFocus } from "../../hooks/useFocus";
 import { useAuthStore } from "../../hooks/useAuthStore";
@@ -23,7 +23,7 @@ const formValidations = {
 
 export const LoginPage = () => {
 
-    const { username, password, onInputChange, isFormValid, usernameValid, passwordValid } = useForm(loginFormFields, formValidations);
+    const { username, password, onInputChange, isLoading, isFormValid, usernameValid, passwordValid } = useForm(loginFormFields, formValidations);
 
     const {startLogin, errorMessage } = useAuthStore();
 
@@ -40,6 +40,10 @@ export const LoginPage = () => {
             Swal.fire('Error en la autenticación', errorMessage, 'error')
         }
     }, [errorMessage])
+
+    if (isLoading) {
+        return <CircularProgress size={80} />
+    }
 
     return (
         <>

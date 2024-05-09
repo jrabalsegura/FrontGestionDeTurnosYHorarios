@@ -1,14 +1,17 @@
-import { Typography, List, ListItem, ListItemText, Button, ListItemIcon, Grid } from "@mui/material";
+import { Typography, List, ListItem, ListItemText, Button, CircularProgress } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useGetEventos } from "../../hooks/useGetEventos";
-import { format } from 'date-fns'; // Added import for date-fns format function
+import { format } from 'date-fns'; 
 import { downloadFile } from "../../helpers/downloadFile";
-import Swal from "sweetalert2";
 
 export const ConsultarRegistroView = () => {
     const theme = useTheme();
 
     const { events, setEvents, isLoading, hasError } = useGetEventos();
+
+    if (isLoading) {
+        return <CircularProgress size={80} />
+    }
 
     return (
         <>

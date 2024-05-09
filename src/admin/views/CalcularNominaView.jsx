@@ -1,5 +1,4 @@
-import { Grid, Typography, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material"
-import { useState, useEffect } from "react";
+import { Grid, Typography, FormControl, InputLabel, Select, MenuItem, Button, CircularProgress } from "@mui/material"
 import { useDispatch } from "react-redux";
 import { useForm } from "../../hooks/useForm";
 import { setSeeNominaView } from "../../store/admin/adminScreenSlice";
@@ -25,6 +24,10 @@ export const CalcularNominaView = () => {
 
     const handleSubmit = () => {
         dispatch(setSeeNominaView(user));
+    }
+
+    if (isLoading) {
+        return <CircularProgress size={80} />
     }
 
     return (

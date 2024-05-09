@@ -1,14 +1,13 @@
 import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { localizer, getMessagesEs } from '../helpers/';
-import { useEffect, useCallback, useState, useRef } from 'react';
-import gestionApi from '../../api/gestionApi';
+import { useCallback, useState, useRef } from 'react';
 import { Modal } from '../component/Modal';
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import { useAuthStore } from '../../hooks/useAuthStore';
-import Swal from "sweetalert2";
 import { useGetShifts } from '../../hooks/useGetShifts';
 import { useGetHolidays } from '../../hooks/useGetHolidays';
+import { CircularProgress } from '@mui/material';
 
 
 const eventStyleGetter = (event, start, end, isSelected) => {
@@ -70,6 +69,10 @@ export const CalendarView = () => {
     };
 
     useOnClickOutside(ref, closeModal);
+
+    if (isLoadingShifts || isLoadingHolidays) {
+        return <CircularProgress size={80} />
+    }
 
     return (
         <>

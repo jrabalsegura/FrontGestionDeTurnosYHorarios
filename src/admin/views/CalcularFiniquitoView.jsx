@@ -1,9 +1,7 @@
-import { Grid, Typography, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material"
-import { useState, useEffect } from "react";
+import { Grid, Typography, FormControl, InputLabel, Select, MenuItem, Button, CircularProgress } from "@mui/material"
 import { useDispatch } from "react-redux";
 import { setSeeFiniquitoView } from "../../store/admin/adminScreenSlice";
 import { useForm } from "../../hooks/useForm";
-import Swal from "sweetalert2";
 import { useGetUsers } from "../../hooks/useGetUsers";
 
 const initialForm = {
@@ -26,6 +24,10 @@ export const CalcularFiniquitoView = () => {
 
     const handleSubmit = () => {
         dispatch(setSeeFiniquitoView(user));
+    }
+
+    if (isLoading) {
+        return <CircularProgress size={80} />
     }
 
     return (

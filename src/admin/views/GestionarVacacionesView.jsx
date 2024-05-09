@@ -1,9 +1,8 @@
-import { List, ListItem, Grid, Typography, Button } from "@mui/material";
+import { List, ListItem, Grid, Typography, Button, CircularProgress } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { useState, useEffect } from "react";
 import { addDays } from "date-fns";
 import gestionApi from "../../api/gestionApi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { useGetNotificaciones } from "../../hooks/useGetNotificaciones";
 
@@ -12,14 +11,6 @@ export const GestionarVacacionesView = () => {
     const dispatch = useDispatch();
     const { notificaciones, filterNotificacion, isLoading, hasError } = useGetNotificaciones();
 
-    {/*
-
-    useEffect(() => {
-        dispatch(fetchNotifications());
-    }, [dispatch]);
-
-const notifications = useSelector(state => state.notificaciones.notificaciones);*/}
-    //Filter notifications because I just need the type: "holidays"
     const holidays = notificaciones.filter(notification => notification.type === 'holiday');
 
     const handleApprove = async (holiday) => {
@@ -49,6 +40,10 @@ const notifications = useSelector(state => state.notificaciones.notificaciones);
             console.log(error);
             Swal.fire('Error al intentar eliminar las vacaciones', error.message, 'error')
         }       
+    }
+
+    if (isLoading) {
+        return <CircularProgress size={80} />
     }
 
     return (

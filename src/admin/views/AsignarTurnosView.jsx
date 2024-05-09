@@ -1,4 +1,4 @@
-import { Grid, Typography, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material";
+import { Grid, Typography, FormControl, InputLabel, Select, MenuItem, Button, CircularProgress } from "@mui/material";
 import { DateRange } from "react-date-range";
 import { useState, useEffect } from 'react';
 import { useForm } from '../../hooks/useForm';
@@ -81,6 +81,10 @@ export const AsignarTurnosView = () => {
                 </Button>
             </>
         )
+    }
+
+    if (isLoading) {
+        return <CircularProgress size={80} />
     }
 
     return (

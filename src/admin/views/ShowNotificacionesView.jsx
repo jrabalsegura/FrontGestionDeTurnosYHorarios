@@ -1,4 +1,4 @@
-import { Typography, List, ListItem, Button, Grid } from "@mui/material";
+import { Typography, List, ListItem, Button, Grid, CircularProgress } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { downloadFile } from "../../helpers/downloadFile";
@@ -22,6 +22,10 @@ export const ShowNotificacionesView = () => {
             console.log(error);
             Swal.fire('Error al intentar eliminar la notificacion', error.message, 'error')
         }       
+    }
+
+    if (isLoading) {
+        return <CircularProgress size={80} />
     }
 
     return (
