@@ -11,7 +11,6 @@ export const AdminLayout = ({ children }) => {
     const [openSidebar, setOpenSidebar] = useState(false);
 
     const handleDrawerToggle = () => {
-        console.log('handleDrawerToggle');
         setOpenSidebar(!openSidebar);
     }
 

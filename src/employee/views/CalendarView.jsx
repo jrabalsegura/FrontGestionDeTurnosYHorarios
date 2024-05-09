@@ -7,6 +7,9 @@ import { Modal } from '../component/Modal';
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import { useAuthStore } from '../../hooks/useAuthStore';
 import Swal from "sweetalert2";
+import { useGetShifts } from '../../hooks/useGetShifts';
+import { useGetHolidays } from '../../hooks/useGetHolidays';
+
 
 const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
@@ -27,9 +30,8 @@ export const CalendarView = () => {
 
     const { user } = useAuthStore();
 
-    const [shifts, setShifts] = useState([]);
-    const [holidays, setHolidays] = useState([]);
-
+    const { shifts, isLoading: isLoadingShifts, hasError: hasErrorShifts, setShifts } = useGetShifts({ id: user.uid });
+    const { holidays, isLoading: isLoadingHolidays, hasError: hasErrorHolidays, setHolidays } = useGetHolidays({ id: user.uid });
     const [date, setDate] = useState(null);
 
     const ref = useRef(null);
@@ -44,43 +46,6 @@ export const CalendarView = () => {
         setIsModalOpen(false);
     }, []);
 
-    useEffect(() => {
-        const fetchShifts = async () => {
-            try {
-                const response = await gestionApi.get(`shifts/${user.uid}`);
-
-                //I have to map the shifts to the format of the calendar
-                const shifts = response.data.shifts.map(shift => ({
-                    title: shift.type,
-                    start: new Date(shift.start),
-                    end: new Date(shift.end),
-                }));
-                setShifts(shifts);
-            } catch (error) {
-                Swal.fire('Error al intentar obtener los turnos', error.message, 'error');
-            }          
-        }
-        fetchShifts();
-    }, [user.uid]);
-
-    useEffect(() => {
-        const fetchHolidays = async () => {
-            try {
-                const response = await gestionApi.get(`holidays/${user.uid}`);
-
-                //Map holidays to events format
-                const holidays = response.data.holidays.map(holiday => ({
-                    title: 'Holidays',
-                    start: new Date(holiday.startDate),
-                    end: new Date(holiday.endDate)
-                }));
-                setHolidays(holidays);
-            } catch (error) {
-                Swal.fire('Error al intentar obtener las vacaciones', error.message, 'error');
-            }
-        }
-        fetchHolidays();
-    }, [user.uid]);
 
     const handleSelectSlot = (slotInfo) => {
         // slotInfo contains start and end date of the clicked slot

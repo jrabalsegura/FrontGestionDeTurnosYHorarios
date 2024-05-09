@@ -19,8 +19,7 @@ export const NominasView = () => {
     const { user } = useAuthStore();
     const dispatch = useDispatch();
 
-    const handleDateChange = (newDate) => {
-        
+    const handleDateChange = (newDate) => {       
         setSelectedDate(newDate);
     };
 

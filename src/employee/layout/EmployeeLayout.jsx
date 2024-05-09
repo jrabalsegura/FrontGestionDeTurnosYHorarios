@@ -10,7 +10,6 @@ export const EmployeeLayout = ({ children }) => {
     const [openSidebar, setOpenSidebar] = useState(false);
 
     const handleDrawerToggle = () => {
-        console.log('handleDrawerToggle');
         setOpenSidebar(!openSidebar);
     }
 

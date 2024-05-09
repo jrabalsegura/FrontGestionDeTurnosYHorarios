@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from "react-redux"
 import gestionApi from "../api/gestionApi"
 import { onChecking, onLogin, onLogout, clearErrorMessage, onUpdateUser } from "../store"
+import { useState } from "react"
 
 
 export const useAuthStore = () => {
 
     const { status, user, errorMessage } = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false);
 
     const startLogin = async ({ username, password }) => {
         dispatch(onChecking())
@@ -14,6 +16,7 @@ export const useAuthStore = () => {
         //dispatch(login(username, password))
 
         try {
+            setIsLoading(true);
             const { data } = await gestionApi.post('/auth/', { username, password })
             console.log(data)
             localStorage.setItem('token', data.token);
@@ -25,6 +28,8 @@ export const useAuthStore = () => {
             setTimeout(() => {
                 dispatch(clearErrorMessage())
             }, 10);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -33,6 +38,7 @@ export const useAuthStore = () => {
         if(!token) return dispatch(onLogout());
 
         try {
+            setIsLoading(true);
             const { data } = await gestionApi.get('/auth/renew');
             if (data.ok) {
                 localStorage.setItem('token', data.token);
@@ -44,6 +50,8 @@ export const useAuthStore = () => {
         } catch (error) {
             localStorage.clear();
             dispatch(onLogout());
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -61,6 +69,7 @@ export const useAuthStore = () => {
         status,
         user,
         errorMessage,
+        isLoading,
         startLogin,
         checkAuthToken,
         startLogout,

@@ -7,20 +7,21 @@ import { onfetchedNotifications, removeNotificacion } from "../store/admin/notif
 export const useGetNotificaciones = () => {
     const { notificaciones } = useSelector((state) => state.notificaciones);
     const dispatch = useDispatch();
-
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
 
     useEffect(() => {
         const fetchNotificaciones = async () => {
             try {
+                setIsLoading(true);
                 const response = await gestionApi.get('/notificaciones');
                 dispatch(onfetchedNotifications(response.data.notifications));
             } catch (error) {
                 setHasError(true);
-                setIsLoading(false);
                 console.log(error);
                 Swal.fire('Error al intentar obtener las notificaciones', error.message, 'error')
+            } finally {
+                setIsLoading(false);
             }
         };
         fetchNotificaciones();

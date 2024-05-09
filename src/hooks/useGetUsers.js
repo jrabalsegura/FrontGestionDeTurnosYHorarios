@@ -4,19 +4,21 @@ import Swal from "sweetalert2";
 
 export const useGetUsers = () => {
     const [users, setUsers] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
+                setIsLoading(true);
                 const response = await gestionApi.get('/employees');
                 setUsers(response.data.employees);
             } catch (error) {
                 setHasError(true);
-                setIsLoading(false);
                 console.log(error);
                 Swal.fire('Error al intentar obtener los usuarios', error.message, 'error')
+            } finally {
+                setIsLoading(false);
             }
         };
         fetchUsers();

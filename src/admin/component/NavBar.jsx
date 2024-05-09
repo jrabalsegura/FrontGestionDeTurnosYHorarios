@@ -12,11 +12,6 @@ export const NavBar = ({ drawerWidth = 240, setOpenSidebar }) => {
 
     const { notificaciones, setNotificaciones, isLoading, hasError } = useGetNotificaciones();
 
-    // Debugging state changes
-    useEffect(() => {
-        console.log('Notificaciones updated:', notificaciones);
-    }, [notificaciones]);
-
     const { startLogout, user} = useAuthStore();
     return (
         <AppBar
