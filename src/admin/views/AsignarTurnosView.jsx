@@ -54,8 +54,7 @@ export const AsignarTurnosView = () => {
         } catch (error) {
             console.log(error);
             Swal.fire('Error al intentar crear el turno', error.response.data.msg, 'error')
-        }
-        
+        }     
     }    
 
     const [state, setState] = useState([
