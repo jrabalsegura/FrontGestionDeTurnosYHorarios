@@ -1,4 +1,4 @@
-import gestionApi from '../../api/gestionApi';
+import gestionApi from '../api/gestionApi';
 
 export const getUsers = async () => {
 

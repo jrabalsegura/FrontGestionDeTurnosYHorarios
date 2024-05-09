@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setSeeFiniquitoView } from "../../store/admin/adminScreenSlice";
 import { useForm } from "../../hooks/useForm";
-import { getUsers } from "../helpers";
 import Swal from "sweetalert2";
+import { useGetUsers } from "../../hooks/useGetUsers";
 
 const initialForm = {
     user: ''
@@ -19,23 +19,10 @@ const formValidation = {
 
 export const CalcularFiniquitoView = () => {
 
-    const [users, setUsers] = useState([]);
+    const { users, setUsers, isLoading, hasError } = useGetUsers();
     const dispatch = useDispatch();
 
     const {user, onInputChange, isFormValid, userValid} = useForm(initialForm, formValidation);
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const fetchedUsers = await getUsers();
-                setUsers(fetchedUsers);
-            } catch (error) {
-                console.log(error);
-                Swal.fire('Error al intentar obtener los usuarios', error.message, 'error')
-            }
-        };
-        fetchUsers();
-    }, []);
 
     const handleSubmit = () => {
         dispatch(setSeeFiniquitoView(user));

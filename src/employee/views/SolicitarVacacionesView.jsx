@@ -16,6 +16,7 @@ export const SolicitarVacacionesView = () => {
         }
     ]);
     const [error, setError] = useState('');
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const { user } = useAuthStore();
 
@@ -43,11 +44,30 @@ export const SolicitarVacacionesView = () => {
 
         try {
             const response = await gestionApi.post('notificaciones/new', body);
+            setIsSubmitted(true);
         } catch (error) {
             console.error('Failed to send notification:', error);
             Swal.fire('Error al intentar solicitar las vacaciones', error.message, 'error');
         }
     };
+
+    if (isSubmitted) {
+        return (
+            <>
+                <Typography variant="h5" sx={{ mt: 2, width: '80%', mx: 'auto' }}>
+                    {`Gracias por solicitar tus vacaciones ${user.name}!`}
+                </Typography>
+                <Button 
+                    variant="contained" 
+                    color="primary" 
+                    sx={{ mt: 2 }}
+                    onClick={() => setIsSubmitted(false)}
+                >
+                    Ok
+                </Button>
+            </>
+        )
+    }
 
     return (
         <>

@@ -1,19 +1,19 @@
 import { Add, Delete, Edit } from "@mui/icons-material"
 import { Fab, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material"
-import { useTheme } from "@mui/material/styles"
-import { getUsers } from "../helpers"
-import { useEffect, useState } from 'react';
+import { useTheme } from "@mui/material/styles";
 import { useDispatch } from 'react-redux';
 import { setEditUserView, setAddUserView } from "../../store/admin/adminScreenSlice";
 import gestionApi from "../../api/gestionApi";
 import Swal from "sweetalert2";
+import { useGetUsers } from "../../hooks/useGetUsers";
+
 
 
 
 export const ShowUsersView = () => {
-    const theme = useTheme()
-    const [users, setUsers] = useState([]);
+    const theme = useTheme();
     const dispatch = useDispatch();
+    const { users, setUsers, isLoading, hasError } = useGetUsers();
 
     const handleDelete = async (user) => {
         console.log(user._id)
@@ -28,19 +28,6 @@ export const ShowUsersView = () => {
             Swal.fire('Error al intentar borrar al usuario', error.message, 'error')
         }
     }
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const fetchedUsers = await getUsers();
-                setUsers(fetchedUsers);
-            } catch (error) {
-                console.log(error);
-                Swal.fire('Error al intentar obtener los usuarios', error.message, 'error')
-            }
-        };
-        fetchUsers();
-    }, []);
 
     return (
         <>
