@@ -3,19 +3,19 @@ import { AppBar, Toolbar, IconButton, Grid, Typography, Badge } from "@mui/mater
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { useDispatch } from "react-redux";
 import { setNothingSelectedView, setShowNotificacionesView } from "../../store/admin/adminScreenSlice";
+import { useGetNotificaciones } from "../../hooks/useGetNotificaciones";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { fetchNotifications } from "../../store/admin/notificacionesSlice";
 
 export const NavBar = ({ drawerWidth = 240, setOpenSidebar }) => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(fetchNotifications());
-    }, [dispatch]);
+    const { notificaciones, setNotificaciones, isLoading, hasError } = useGetNotificaciones();
 
-    const notifications = useSelector((state) => state.notificaciones.notificaciones);  
+    // Debugging state changes
+    useEffect(() => {
+        console.log('Notificaciones updated:', notificaciones);
+    }, [notificaciones]);
 
     const { startLogout, user} = useAuthStore();
     return (
@@ -47,7 +47,7 @@ export const NavBar = ({ drawerWidth = 240, setOpenSidebar }) => {
                         <Typography variant="p" noWrap component='div' sx={{textTransform: 'capitalize'}}>{user.name}</Typography>
                     </Grid>
                     <Grid item xs={4} mobile={3} md={2} xl={1} container direction='row' justifyContent='space-between' alignItems='center'>
-                        <Badge badgeContent={notifications.length} color="error" sx={{ '& .MuiBadge-badge': { right: 8, top: 13 }}}>
+                        <Badge badgeContent={notificaciones.length} color="error" sx={{ '& .MuiBadge-badge': { right: 8, top: 13 }}}>
                             <IconButton sx={{color: 'white'}} onClick={() => dispatch(setShowNotificacionesView())}>
                                 <NotificationsOutlined />                           
                             </IconButton>

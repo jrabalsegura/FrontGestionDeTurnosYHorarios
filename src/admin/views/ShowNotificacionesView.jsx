@@ -1,29 +1,23 @@
 import { Typography, List, ListItem, Button, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { fetchNotifications, removeNotificacion } from "../../store/admin/notificacionesSlice";
 import { downloadFile } from "../../helpers/downloadFile";
 import { setGestionarVacacionesView } from "../../store/admin/adminScreenSlice";
 import gestionApi from "../../api/gestionApi";
 import Swal from "sweetalert2";
+import { useGetNotificaciones } from "../../hooks/useGetNotificaciones";
 
 export const ShowNotificacionesView = () => {
     const theme = useTheme();
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(fetchNotifications());
-    }, [dispatch]);
-
-    const notifications = useSelector((state) => state.notificaciones.notificaciones);
+    const { notificaciones, filterNotificacion, isLoading, hasError } = useGetNotificaciones();
 
     const deleteNotification = async (id) => {
         try {
             const response = await gestionApi.delete(`/notificaciones/${id}`);
-            dispatch(removeNotificacion(id));
+            filterNotificacion(id);
         } catch (error) {
             console.log(error);
             Swal.fire('Error al intentar eliminar la notificacion', error.message, 'error')
@@ -33,8 +27,8 @@ export const ShowNotificacionesView = () => {
     return (
         <>
             <List sx={{ width: '100%'}}>
-                {notifications.length > 0 ? (
-                    notifications.map((notification) => (
+                {notificaciones.length > 0 ? (
+                    notificaciones.map((notification) => (
                         notification.type === 'holiday' ? (
                             <ListItem key={notification._id} sx={{ 
                                 width: '100%', 
