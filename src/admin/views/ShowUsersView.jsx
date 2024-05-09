@@ -1,5 +1,5 @@
 import { Add, Delete, Edit } from "@mui/icons-material"
-import { Fab, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material"
+import { Fab, Grid, List, ListItem, ListItemIcon, ListItemText, Typography, CircularProgress } from "@mui/material"
 import { useTheme } from "@mui/material/styles";
 import { useDispatch } from 'react-redux';
 import { setEditUserView, setAddUserView } from "../../store/admin/adminScreenSlice";
@@ -29,6 +29,9 @@ export const ShowUsersView = () => {
         }
     }
 
+    if (isLoading) {
+        return <CircularProgress size={80} />
+    }
     return (
         <>
             <List sx={{ width: '100%'}}>
