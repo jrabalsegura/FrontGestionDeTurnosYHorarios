@@ -2,15 +2,14 @@ import { Button, Grid, Typography } from "@mui/material"
 import { useSelector } from "react-redux"
 import { usePDF } from "react-to-pdf"
 import { calcFiniquito } from "../../helpers/calcFiniquito"
-
+import Swal from "sweetalert2";
 
 export const SeeFiniquitoView = () => {
 
-    const {props} = useSelector(state => state.adminScreen)
-    console.log(props)
-    const { toPDF, targetRef} = usePDF({filename: 'finiquito.pdf'})
+    const {props} = useSelector(state => state.adminScreen);
+    const { toPDF, targetRef} = usePDF({filename: 'finiquito.pdf'});
 
-    const {baseSallary, months, totalVacation, pago} = calcFiniquito(props.hourlySallary, props.startDate,props.holidays)
+    const {baseSallary, months, totalVacation, pago} = calcFiniquito(props.hourlySallary, props.startDate,props.holidays);
 
     return (
         <Grid width="70%" ref={targetRef}>

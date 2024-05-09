@@ -4,6 +4,7 @@ import { useForm } from "../../hooks/useForm";
 import { useEffect, useState } from "react";
 import { useFocus } from "../../hooks/useFocus";
 import gestionApi from "../../api/gestionApi";
+import Swal from "sweetalert2";
 
 const formValidations = {
     name: [
@@ -44,12 +45,11 @@ export const EditUserView = () => {
             password: '',
             salary: props.hourlySallary || ''
         });
-    }, [props.name, props.username, props.password, props.salary]); // Only update on changes to these props
+    }, [props.name, props.username, props.password, props.salary]);
 
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        console.log(props._id);
 
         try {
             //Create JSon with values from name, username, password and sallary to send
@@ -60,10 +60,10 @@ export const EditUserView = () => {
                 hourlySallary: salary
             }
             const response = await gestionApi.put(`/employees/${props._id}`, body);
-            console.log(response);
             setIsSubmitted(true);
         } catch (error) {
             console.log(error);
+            Swal.fire('Error al intentar actualizar al usuario', 'The cannot be admin', 'error')
         }
     }
 
@@ -83,7 +83,7 @@ export const EditUserView = () => {
     if (isSubmitted) {
         return (
             <Typography variant="h5" sx={{ mt: 2 }}>
-                Thank you for submitting the information!
+                {`Gracias por actualizar la información del usuario ${name}!`}
             </Typography>
         )
     }

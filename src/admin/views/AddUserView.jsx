@@ -3,6 +3,8 @@ import { useForm } from "../../hooks/useForm";
 import { useEffect, useState } from "react";
 import { useFocus } from "../../hooks/useFocus";
 import gestionApi from "../../api/gestionApi";
+import Swal from "sweetalert2";
+
 
 const formValidations = {
     name: [
@@ -19,6 +21,13 @@ const formValidations = {
     ]
 };
 
+const initialForm = {
+    name: '',
+    username: '',
+    password: '',
+    salary: ''
+}
+
 export const AddUserView = () => {
 
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -27,22 +36,6 @@ export const AddUserView = () => {
     const [nameRef, nameIsFocused] = useFocus();
     const [usernameRef, usernameIsFocused] = useFocus();
     const [passwordRef, passwordIsFocused] = useFocus();
-
-    const [initialValues, setInitialValues] = useState({
-        name: '',
-        username: '',
-        password: '',
-        salary: ''
-    });
-
-    useEffect(() => {
-        setInitialValues({
-            name: '',
-            username: '',
-            password: '',
-            salary: ''
-        });
-    }, []); // Only update on changes to these props
 
 
     const onSubmit = async (e) => {
@@ -58,10 +51,11 @@ export const AddUserView = () => {
                 hourlySallary: salary
             }
             const response = await gestionApi.post(`/employees/new`, body);
-            console.log(response);
+            
             setIsSubmitted(true);
         } catch (error) {
             console.log(error);
+            Swal.fire('Error al intentar crear el usuario', error.message, 'error')
         }
     }
 
@@ -75,13 +69,13 @@ export const AddUserView = () => {
         nameValid,
         usernameValid,
         passwordValid
-    } = useForm(initialValues, formValidations);
+    } = useForm(initialForm, formValidations);
     
     
     if (isSubmitted) {
         return (
             <Typography variant="h5" sx={{ mt: 2 }}>
-                Thank you for adding the new user!
+                {`Gracias por añadir al nuevo usuario ${name}!`}
             </Typography>
         )
     }

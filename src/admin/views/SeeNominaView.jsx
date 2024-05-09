@@ -5,13 +5,10 @@ import { useEffect } from "react";
 import gestionApi from "../../api/gestionApi";
 import { usePDF } from "react-to-pdf";
 
-
 export const SeeNominaView = () => {
 
     const {props} = useSelector(state => state.adminScreen);
-    console.log(props);
     const { toPDF, targetRef } = usePDF({filename: 'nomina.pdf'});
-
 
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -19,9 +16,7 @@ export const SeeNominaView = () => {
     const now = new Date();
     const currentMonth = now.getMonth() + 1; // January is 0, not 1
     const currentYear = now.getFullYear();
-
     const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
-
 
     const {baseSallary, socialSecurity, pago} = calcNomina(props.hourlySallary, props.extraHours, daysInMonth);
 
@@ -38,14 +33,14 @@ export const SeeNominaView = () => {
                     socialSecurity,
                     pago
                 });
-                console.log('Nomina created:', response.data);
             } catch (error) {
                 console.error('Error creating Nomina:', error);
+                //Swal.fire('Error al intentar crear la nomina', error.response.data.msg, 'error')
             }
         };
 
         createNomina();
-    }, [props.hourlySallary, props.extraHours, daysInMonth, props.name, baseSallary, socialSecurity, pago]);
+    }, []);
 
 
     return (

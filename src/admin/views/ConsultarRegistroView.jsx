@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import gestionApi from "../../api/gestionApi";
 import { format } from 'date-fns'; // Added import for date-fns format function
 import { downloadFile } from "../../helpers/downloadFile";
+import Swal from "sweetalert2";
 
 export const ConsultarRegistroView = () => {
     const theme = useTheme();
-
     const [eventos, setEventos] = useState([]);
 
     useEffect(() => {
@@ -19,6 +19,7 @@ export const ConsultarRegistroView = () => {
                 setEventos(events);
             } catch (error) {
                 console.log(error);
+                Swal.fire('Error al intentar obtener los eventos', error.message, 'error')
             }
         }
         getEvents();

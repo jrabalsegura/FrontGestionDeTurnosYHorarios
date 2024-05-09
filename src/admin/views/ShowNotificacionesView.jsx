@@ -7,6 +7,7 @@ import { fetchNotifications, removeNotificacion } from "../../store/admin/notifi
 import { downloadFile } from "../../helpers/downloadFile";
 import { setGestionarVacacionesView } from "../../store/admin/adminScreenSlice";
 import gestionApi from "../../api/gestionApi";
+import Swal from "sweetalert2";
 
 export const ShowNotificacionesView = () => {
     const theme = useTheme();
@@ -18,15 +19,14 @@ export const ShowNotificacionesView = () => {
     }, [dispatch]);
 
     const notifications = useSelector((state) => state.notificaciones.notificaciones);
-    console.log(notifications);
 
     const deleteNotification = async (id) => {
         try {
             const response = await gestionApi.delete(`/notificaciones/${id}`);
-            console.log(response);
             dispatch(removeNotificacion(id));
         } catch (error) {
             console.log(error);
+            Swal.fire('Error al intentar eliminar la notificacion', error.message, 'error')
         }       
     }
 
@@ -40,7 +40,7 @@ export const ShowNotificacionesView = () => {
                         <ListItem key={notification._id} sx={{ 
                             width: '100%', 
                             display: 'flex', 
-                            flexDirection: { xs: 'column', md: 'row' },  // Change flex direction based on screen size
+                            flexDirection: { xs: 'column', md: 'row' },
                             justifyContent: 'space-between', 
                             border: `3px solid ${theme.palette.primary.dark}`, 
                             borderRadius: 3, 

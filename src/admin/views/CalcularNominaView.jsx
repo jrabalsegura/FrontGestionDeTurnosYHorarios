@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { getUsers } from "../helpers";
 import { useForm } from "../../hooks/useForm";
 import { setSeeNominaView } from "../../store/admin/adminScreenSlice";
-
+import Swal from "sweetalert2";
 
 const initialForm = {
     user: ''
@@ -26,11 +26,15 @@ export const CalcularNominaView = () => {
 
     useEffect(() => {
         const fetchUsers = async () => {
-            const fetchedUsers = await getUsers();
-            setUsers(fetchedUsers);
+            try {
+                const fetchedUsers = await getUsers();
+                setUsers(fetchedUsers);
+            } catch (error) {
+                console.log(error);
+                Swal.fire('Error al intentar obtener los usuarios', error.message, 'error')
+            }
         };
         fetchUsers();
-        console.log(users);
     }, []);
 
     const handleSubmit = () => {

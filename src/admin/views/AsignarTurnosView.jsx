@@ -1,11 +1,10 @@
 import { Grid, Typography, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material";
 import { DateRange } from "react-date-range";
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 import { getUsers } from '../helpers';
 import gestionApi from '../../api/gestionApi';
-import { addDays } from 'date-fns';
+import Swal from "sweetalert2";
 
 const initialForm = {
     turno: '',
@@ -32,18 +31,20 @@ export const AsignarTurnosView = () => {
 
     useEffect(() => {
         const fetchUsers = async () => {
-            const fetchedUsers = await getUsers();
-            setUsers(fetchedUsers);
+            try {
+                const fetchedUsers = await getUsers();
+                setUsers(fetchedUsers);
+            } catch (error) {
+                console.log(error);
+                Swal.fire('Error al intentar obtener los usuarios', error.message, 'error')
+            }
         };
         fetchUsers();
-        console.log(users);
     }, []);
 
     const handleSubmit = async () => {
 
         try {
-            //Create JSon with values from name, username, password and sallary to send
-
             //If the type is morning, start shoud be 08:00 and end 16:00
             // else if the type is afternoon, start shoud be 16:00 and end 00:00
             let start;
@@ -61,12 +62,11 @@ export const AsignarTurnosView = () => {
                 start: start,
                 end: end
             }
-            console.log(body);
             const response = await gestionApi.post(`/shifts/new`, body);
-            console.log(response);
             setIsSubmitted(true);
         } catch (error) {
             console.log(error);
+            Swal.fire('Error al intentar crear el turno', error.response.data.msg, 'error')
         }
         
     }    
@@ -87,11 +87,10 @@ export const AsignarTurnosView = () => {
         )
     }
 
-
     return (
         <Grid container sx={{display:'flex', flexDirection:{ sm: 'column', lg: 'row' }, alignItems:'center', justifyContent:'space-around'}}>
             <Grid container sx={{display:'flex', flexDirection:'column', alignItems:'center', width:{ xs: '100%', md: '70%', lg: '45%' }}}>
-                <Typography variant="h5" marginTop={5} marginBottom={5}>Selecciona día</Typography>
+                <Typography variant="h5" marginTop={2} marginBottom={2}>Seleccione día</Typography>
                 <DateRange
                     editableDateInputs={true}
                     onChange={item => setState([item.selection])}
@@ -101,8 +100,8 @@ export const AsignarTurnosView = () => {
             </Grid>
 
             <Grid container sx={{display:'flex', flexDirection:'column', alignItems:'center', width:{ xs: '100%', md: '70%', lg: '45%' }}}>
-                <FormControl fullWidth sx={{marginTop: 8, minWidth: 240}}>
-                    <InputLabel id="demo-simple-select-label">Selecciona un turno</InputLabel>
+                <FormControl fullWidth sx={{marginTop: 4, minWidth: 240}}>
+                    <InputLabel id="demo-simple-select-label">Seleccione un turno</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
@@ -116,8 +115,8 @@ export const AsignarTurnosView = () => {
                     </Select>
                 </FormControl>
 
-                <FormControl fullWidth sx={{marginTop: 8, minWidth: 240}}>
-                    <InputLabel id="demo-simple-select-label">Selecciona un empleado</InputLabel>
+                <FormControl fullWidth sx={{marginTop: 4, minWidth: 240}}>
+                    <InputLabel id="demo-simple-select-label">Seleccione un empleado</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
@@ -132,7 +131,7 @@ export const AsignarTurnosView = () => {
                     </Select>
                 </FormControl>
 
-                <Grid container spacing={2} sx={{ mb: 2, mt: 8, width: '100%'}} justifyContent="center" alignItems="center">
+                <Grid container spacing={2} sx={{ mb: 2, mt: 4, width: '100%'}} justifyContent="center" alignItems="center">
                     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                         <Button variant="contained" sx={{ width: "50%" }} disabled={!isFormValid} onClick={handleSubmit}>
                             <Typography>

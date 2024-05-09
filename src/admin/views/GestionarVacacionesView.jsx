@@ -5,11 +5,10 @@ import { addDays } from "date-fns";
 import gestionApi from "../../api/gestionApi";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNotifications, removeNotificacion } from "../../store/admin/notificacionesSlice";
-
+import Swal from "sweetalert2";
 
 export const GestionarVacacionesView = () => {
     const theme = useTheme()
-
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -21,7 +20,6 @@ export const GestionarVacacionesView = () => {
     const holidays = notifications.filter(notification => notification.type === 'holiday');
 
     const handleApprove = async (holiday) => {
-        console.log(holiday);
         try {
             //Create JSon with values from name, username, password and sallary to send
             const body = {
@@ -30,22 +28,22 @@ export const GestionarVacacionesView = () => {
                 employeeId: holiday.employeeId
             }
             const response = await gestionApi.post(`/holidays/new`, body);
-            console.log(response);
 
             // Borrar notificacion
             deleteNotification(holiday._id);
         } catch (error) {
             console.log(error);
+            Swal.fire('Error al intentar aprobar las vacaciones', error.message, 'error')
         }
     }
 
     const deleteNotification = async (id) => {
         try {
             const response = await gestionApi.delete(`/notificaciones/${id}`);
-            console.log(response);
             dispatch(removeNotificacion(id));
         } catch (error) {
             console.log(error);
+            Swal.fire('Error al intentar eliminar las vacaciones', error.message, 'error')
         }       
     }
 

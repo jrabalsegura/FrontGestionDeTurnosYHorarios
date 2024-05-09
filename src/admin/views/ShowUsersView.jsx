@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setEditUserView, setAddUserView } from "../../store/admin/adminScreenSlice";
 import gestionApi from "../../api/gestionApi";
+import Swal from "sweetalert2";
 
 
 
@@ -24,13 +25,19 @@ export const ShowUsersView = () => {
             setUsers(users.filter(u => u.id !== user.id));
         } catch (error) {
             console.log(error);
+            Swal.fire('Error al intentar borrar al usuario', error.message, 'error')
         }
     }
 
     useEffect(() => {
         const fetchUsers = async () => {
-            const fetchedUsers = await getUsers();
-            setUsers(fetchedUsers);
+            try {
+                const fetchedUsers = await getUsers();
+                setUsers(fetchedUsers);
+            } catch (error) {
+                console.log(error);
+                Swal.fire('Error al intentar obtener los usuarios', error.message, 'error')
+            }
         };
         fetchUsers();
     }, []);
