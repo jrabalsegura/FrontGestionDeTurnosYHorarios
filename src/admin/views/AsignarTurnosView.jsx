@@ -81,9 +81,19 @@ export const AsignarTurnosView = () => {
 
     if (isSubmitted) {
         return (
-            <Typography variant="h5" sx={{ mt: 2 }}>
-                Turno asignado correctamente!
-            </Typography>
+            <>
+                <Typography variant="h5" sx={{ mt: 2, width: '80%', mx: 'auto' }}>
+                    {`Turno asignado correctamente!`}
+                </Typography>
+                <Button 
+                    variant="contained" 
+                    color="primary" 
+                    sx={{ mt: 2 }}
+                    onClick={() => setIsSubmitted(false)}
+                >
+                    Ok
+                </Button>
+            </>
         )
     }
 

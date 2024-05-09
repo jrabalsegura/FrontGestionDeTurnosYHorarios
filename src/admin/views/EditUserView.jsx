@@ -82,9 +82,19 @@ export const EditUserView = () => {
     
     if (isSubmitted) {
         return (
-            <Typography variant="h5" sx={{ mt: 2 }}>
-                {`Gracias por actualizar la información del usuario ${name}!`}
-            </Typography>
+            <>
+                <Typography variant="h5" sx={{ mt: 2, width: '80%', mx: 'auto' }}>
+                    {`Gracias por actualizar la información del usuario ${name}!`}
+                </Typography>
+                <Button 
+                    variant="contained" 
+                    color="primary" 
+                    sx={{ mt: 2 }}
+                    onClick={() => setIsSubmitted(false)}
+                >
+                    Ok
+                </Button>
+            </>
         )
     }
     return (

@@ -18,7 +18,7 @@ export const useAuthStore = () => {
             console.log(data)
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime());
-            dispatch(onLogin({name: data.name, uid: data.uid}))
+            dispatch(onLogin({name: data.name, uid: data.uid, username: data.username}))
 
         } catch (error) {
             dispatch(onLogout('Credenciales incorrectas'));
@@ -37,7 +37,7 @@ export const useAuthStore = () => {
             if (data.ok) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('token-init-date', new Date().getTime());
-                dispatch(onLogin({name: data.name, uid: data.uid}))
+                dispatch(onLogin({name: data.name, uid: data.uid, username: data.username}))
             } else {
                 dispatch(onLogout());
             }
@@ -52,8 +52,9 @@ export const useAuthStore = () => {
         dispatch(onLogout());
     }
 
-    const onUpdate = (user) => {
-        dispatch(onUpdateUser(user));
+    const onUpdate = async (updatedUser) => {
+        dispatch(onUpdateUser({name: updatedUser.name, uid: updatedUser._id, username: updatedUser.username})); // Update user details in the Redux store
+
     }
 
     return {
