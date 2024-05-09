@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material';
 import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { localizer, getMessagesEs } from '../helpers/';
@@ -7,7 +8,7 @@ import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import { useAuthStore } from '../../hooks/useAuthStore';
 import { useGetShifts } from '../../hooks/useGetShifts';
 import { useGetHolidays } from '../../hooks/useGetHolidays';
-import { CircularProgress } from '@mui/material';
+
 
 
 const eventStyleGetter = (event, start, end, isSelected) => {

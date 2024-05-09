@@ -12,7 +12,6 @@ export const useGetHolidays = ({ id }) => {
             try {
                 setIsLoading(true);
                 const response = await gestionApi.get(`/holidays/${id}`);
-                console.log(response)
 
                 const adaptedHolidays = response.data.holidays.map(holiday => ({
                     title: 'Holidays',

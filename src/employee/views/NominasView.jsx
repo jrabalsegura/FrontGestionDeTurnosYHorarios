@@ -9,12 +9,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setSeeNominaView } from '../../store/employee/employeeScreenSlice';
 import { useAuthStore } from '../../hooks/useAuthStore';
+import { useGetNomina } from '../../hooks/useGetNomina';
+import { CircularProgress } from '@mui/material';
 
 dayjs.locale('es');
 
 export const NominasView = () => {
     const [selectedDate, setSelectedDate] = useState(dayjs());
-    const [nomina, setNomina] = useState(null);
 
     const { user } = useAuthStore();
     const dispatch = useDispatch();
@@ -23,23 +24,13 @@ export const NominasView = () => {
         setSelectedDate(newDate);
     };
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const params = {
-                    employeeId: user.uid,
-                    month: selectedDate.month() + 1,
-                    year: selectedDate.year()
-                };
-                const response = await gestionApi.get(`/nominas`, { params });
-                setNomina(response.data.nomina[0]);
-            } catch (error) {
-                setNomina(null);
-            }
-        }
+    const params = {
+        employeeId: user.uid,
+        month: selectedDate.month() + 1,
+        year: selectedDate.year()
+    };
 
-        fetchData();
-    }, [user.uid, selectedDate]);
+    const { nomina, isLoading } = useGetNomina({params});
 
     const handleClick = () => {
         //Add fetchUser.name to nomina object
@@ -66,9 +57,16 @@ export const NominasView = () => {
             </LocalizationProvider>
 
             <Button variant="contained" sx={{width: '240px', height: '40px', mt: 5}} disabled={!nomina} onClick={() => handleClick()}>
-                <Typography>Ver</Typography>
-            </Button>
-            {!nomina && <Typography variant="h6">No hay nómina para el mes seleccionado</Typography>}
+                    <Typography>Ver</Typography>
+                </Button>
+
+            {isLoading ? (
+                <CircularProgress size={80} />
+            ) : (
+                <>                   
+                    {!nomina && <Typography variant="h6" marginTop={5}>No hay nómina para el mes seleccionado</Typography>}
+                </>
+            )}
         </>
     )
 }
