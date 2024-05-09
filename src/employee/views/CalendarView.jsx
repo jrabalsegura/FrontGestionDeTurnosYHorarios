@@ -1,12 +1,12 @@
 import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { localizer, getMessagesEs } from '../helpers/';
-import { useSelector } from 'react-redux';
 import { useEffect, useCallback, useState, useRef } from 'react';
 import gestionApi from '../../api/gestionApi';
 import { Modal } from '../component/Modal';
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import { useAuthStore } from '../../hooks/useAuthStore';
+import Swal from "sweetalert2";
 
 const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
@@ -25,7 +25,6 @@ const eventStyleGetter = (event, start, end, isSelected) => {
 
 export const CalendarView = () => {
 
-    //const { user } = useSelector(state => state.auth);
     const { user } = useAuthStore();
 
     const [shifts, setShifts] = useState([]);
@@ -34,8 +33,6 @@ export const CalendarView = () => {
     const [date, setDate] = useState(null);
 
     const ref = useRef(null);
-
-    
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -49,32 +46,38 @@ export const CalendarView = () => {
 
     useEffect(() => {
         const fetchShifts = async () => {
-            const response = await gestionApi.get(`shifts/${user.uid}`);
-            console.log(response);
+            try {
+                const response = await gestionApi.get(`shifts/${user.uid}`);
 
-            //I have to map the shifts to the format of the calendar
-            const shifts = response.data.shifts.map(shift => ({
-                title: shift.type,
-                start: new Date(shift.start),
-                end: new Date(shift.end),
-            }));
-            setShifts(shifts);
+                //I have to map the shifts to the format of the calendar
+                const shifts = response.data.shifts.map(shift => ({
+                    title: shift.type,
+                    start: new Date(shift.start),
+                    end: new Date(shift.end),
+                }));
+                setShifts(shifts);
+            } catch (error) {
+                Swal.fire('Error al intentar obtener los turnos', error.message, 'error');
+            }          
         }
         fetchShifts();
     }, [user.uid]);
 
     useEffect(() => {
         const fetchHolidays = async () => {
-            const response = await gestionApi.get(`holidays/${user.uid}`);
-            console.log(response);
+            try {
+                const response = await gestionApi.get(`holidays/${user.uid}`);
 
-            //Map holidays to events format
-            const holidays = response.data.holidays.map(holiday => ({
-                title: 'Holidays',
-                start: new Date(holiday.startDate),
-                end: new Date(holiday.endDate)
-            }));
-            setHolidays(holidays);
+                //Map holidays to events format
+                const holidays = response.data.holidays.map(holiday => ({
+                    title: 'Holidays',
+                    start: new Date(holiday.startDate),
+                    end: new Date(holiday.endDate)
+                }));
+                setHolidays(holidays);
+            } catch (error) {
+                Swal.fire('Error al intentar obtener las vacaciones', error.message, 'error');
+            }
         }
         fetchHolidays();
     }, [user.uid]);
@@ -96,7 +99,6 @@ export const CalendarView = () => {
         });
     
         if (relevantEvent) {
-            console.log('Clicked within an event:', relevantEvent);
             setDate(clickedDate); // Set the exact clicked date
             openModal();
         }

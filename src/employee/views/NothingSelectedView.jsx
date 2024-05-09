@@ -1,15 +1,14 @@
 import { Grid, Button, Typography } from "@mui/material"
 import { red, grey, green } from "@mui/material/colors"
-import { useSelector } from "react-redux"
 import { useState } from "react"
 import gestionApi from "../../api/gestionApi"
 import { useAuthStore } from "../../hooks/useAuthStore";
+import Swal from "sweetalert2";
 
 export const NothingSelectedView = () => {
 
     const [isSubmitted, setIsSubmitted] = useState(false);
 
-    //Get user from authSlice
     const { user } = useAuthStore();
 
     const handleClick = async (event) => {
@@ -22,9 +21,8 @@ export const NothingSelectedView = () => {
         try {
             const response = await gestionApi.post('/eventosTrabajo/new', body);
             setIsSubmitted(true);
-            console.log(response)
         } catch (error) {
-            console.log(error)
+            Swal.fire('Error al intentar registrar el evento', error.message, 'error');
         }
 
     }

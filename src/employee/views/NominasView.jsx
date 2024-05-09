@@ -22,7 +22,6 @@ export const NominasView = () => {
     const handleDateChange = (newDate) => {
         
         setSelectedDate(newDate);
-        console.log(newDate);
     };
 
     useEffect(() => {
@@ -33,12 +32,9 @@ export const NominasView = () => {
                     month: selectedDate.month() + 1,
                     year: selectedDate.year()
                 };
-                console.log(params);
                 const response = await gestionApi.get(`/nominas`, { params });
                 setNomina(response.data.nomina[0]);
-                console.log(response);
             } catch (error) {
-                console.error('Failed to fetch data:', error);
                 setNomina(null);
             }
         }
@@ -58,7 +54,7 @@ export const NominasView = () => {
     return (
         <>
             <Typography variant="h4" marginBottom={4}>
-                Seleccione nómina deseada..
+                Selecciona mes y año
             </Typography>
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -71,7 +67,7 @@ export const NominasView = () => {
             </LocalizationProvider>
 
             <Button variant="contained" sx={{width: '240px', height: '40px', mt: 5}} disabled={!nomina} onClick={() => handleClick()}>
-                <Typography>Descargar</Typography>
+                <Typography>Ver</Typography>
             </Button>
             {!nomina && <Typography variant="h6">No hay nómina para el mes seleccionado</Typography>}
         </>

@@ -2,10 +2,9 @@ import { Grid, Typography, Button, Alert } from "@mui/material"
 import { DateRange } from "react-date-range"
 import { useState, useEffect } from "react"
 import { addDays, isAfter, formatISO } from "date-fns"
-import { useSelector } from "react-redux"
 import gestionApi from "../../api/gestionApi"
 import { useAuthStore } from "../../hooks/useAuthStore"
-
+import Swal from "sweetalert2";
 
 export const SolicitarVacacionesView = () => {
 
@@ -44,9 +43,9 @@ export const SolicitarVacacionesView = () => {
 
         try {
             const response = await gestionApi.post('notificaciones/new', body);
-            console.log(response);
         } catch (error) {
             console.error('Failed to send notification:', error);
+            Swal.fire('Error al intentar solicitar las vacaciones', error.message, 'error');
         }
     };
 

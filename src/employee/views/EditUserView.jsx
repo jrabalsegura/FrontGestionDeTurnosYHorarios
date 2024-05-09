@@ -1,10 +1,10 @@
 import { Alert, Button, Grid, TextField, Typography } from "@mui/material"
-import { useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 import { useFocus } from "../../hooks/useFocus"
 import gestionApi from "../../api/gestionApi";
 import { useForm } from "../../hooks/useForm";
 import { useAuthStore } from "../../hooks/useAuthStore";
+import Swal from "sweetalert2";
 
 const formValidations = {
     name: [
@@ -57,11 +57,10 @@ export const EditUserView = () => {
                 hourlySallary: user.hourlySallary
             }
             const response = await gestionApi.put(`/employees/${user.uid}`, body);
-            console.log(response);
             setIsSubmitted(true);
             onUpdate(response.data.employee);
         } catch (error) {
-            console.log(error);
+            Swal.fire('Error al intentar actualizar al usuario', error.response.data.msg, 'error');
         }
     }
 
@@ -79,7 +78,7 @@ export const EditUserView = () => {
     if (isSubmitted) {
         return (
             <Typography variant="h5" sx={{ mt: 2 }}>
-                Thank you for submitting the information!
+                {`Gracias por actualizar tu informacion ${name} !`}
             </Typography>
         )
     }
