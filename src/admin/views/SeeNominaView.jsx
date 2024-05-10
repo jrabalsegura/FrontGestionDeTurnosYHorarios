@@ -3,12 +3,10 @@ import { useSelector } from "react-redux"
 import { calcNomina } from "../../helpers/calcNomina";
 import { useEffect } from "react";
 import gestionApi from "../../api/gestionApi";
-import { usePDF } from "react-to-pdf";
 
 export const SeeNominaView = () => {
 
     const {props} = useSelector(state => state.adminScreen);
-    const { toPDF, targetRef } = usePDF({filename: 'nomina.pdf'});
 
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -19,6 +17,8 @@ export const SeeNominaView = () => {
     const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
 
     const {baseSallary, socialSecurity, pago} = calcNomina(props.hourlySallary, props.extraHours, daysInMonth);
+
+    let fileName = '';
 
     //Creamos nomina cuando se calculan estos valores
     useEffect(() => {
@@ -34,6 +34,9 @@ export const SeeNominaView = () => {
                     socialSecurity,
                     pago
                 });
+                console.log(response);
+                fileName = response.data.nomina.fileName;
+                console.log(fileName);
             } catch (error) {
                 console.error('Error creating Nomina:', error);
                 //Swal.fire('Error al intentar crear la nomina', error.response.data.msg, 'error')
@@ -45,7 +48,7 @@ export const SeeNominaView = () => {
 
 
     return (
-        <Grid width="70%" ref={targetRef}>
+        <Grid width="70%">
             <Grid sx={{
                 display: 'flex',
                 flexDirection: 'row',
