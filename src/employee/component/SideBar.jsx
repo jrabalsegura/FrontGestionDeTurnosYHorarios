@@ -10,7 +10,12 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
     return (
         <Box
             component='nav'
-            sx={{ width: drawerWidth, flexShrink: {sm: 0}}}
+            sx={{ width: drawerWidth, 
+                flexShrink: {sm: 0}, 
+                display: { xs: openSidebar ? 'block' : 'none', tablet: 'block' },
+                position: 'relative',
+                zIndex: 900
+            }}
         >
             <Drawer
                 variant="permanent"

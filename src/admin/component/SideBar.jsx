@@ -13,7 +13,8 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
             sx={{ width: drawerWidth, 
                 flexShrink: {sm: 0}, 
                 display: { xs: openSidebar ? 'block' : 'none', tablet: 'block' },
-                position: 'relative'
+                position: 'relative',
+                zIndex: 900
             }}
         >
             <Drawer
