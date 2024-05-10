@@ -5,6 +5,7 @@ import { useForm } from '../../hooks/useForm';
 import gestionApi from '../../api/gestionApi';
 import Swal from "sweetalert2";
 import { useGetUsers } from "../../hooks/useGetUsers";
+import { es } from "date-fns/locale";
 
 const initialForm = {
     turno: '',
@@ -96,6 +97,7 @@ export const AsignarTurnosView = () => {
                     onChange={item => setState([item.selection])}
                     moveRangeOnFirstSelection={false}
                     ranges={state}
+                    locale={es}
                 />
             </Grid>
 

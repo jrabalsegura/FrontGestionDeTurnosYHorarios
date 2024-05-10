@@ -5,6 +5,7 @@ import { addDays, isAfter } from "date-fns"
 import gestionApi from "../../api/gestionApi"
 import { useAuthStore } from "../../hooks/useAuthStore"
 import Swal from "sweetalert2";
+import { es } from "date-fns/locale";
 
 export const SolicitarVacacionesView = () => {
 
@@ -79,6 +80,7 @@ export const SolicitarVacacionesView = () => {
                     onChange={handleSelect}
                     moveRangeOnFirstSelection={false}
                     ranges={state}
+                    locale={es}
                 />
                 <div style={{height: '24px', marginTop: '10px'}}>
                     {error && <Alert severity="error">{error}</Alert>}
