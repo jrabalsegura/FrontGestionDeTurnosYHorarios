@@ -26,6 +26,7 @@ export const SeeNominaView = () => {
             try {
                 const response = await gestionApi.post('/nominas/new', {
                     employeeId: props._id,
+                    employeeName: props.name,
                     month: currentMonth,
                     year: currentYear,
                     baseSallary,
