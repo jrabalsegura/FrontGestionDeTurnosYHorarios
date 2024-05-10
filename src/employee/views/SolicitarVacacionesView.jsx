@@ -1,7 +1,7 @@
-import { Grid, Typography, Button, Alert } from "@mui/material"
+import { Grid, Typography, Button, Alert, Box } from "@mui/material"
 import { DateRange } from "react-date-range"
-import { useState, useEffect } from "react"
-import { addDays, isAfter, formatISO } from "date-fns"
+import { useState } from "react"
+import { addDays, isAfter } from "date-fns"
 import gestionApi from "../../api/gestionApi"
 import { useAuthStore } from "../../hooks/useAuthStore"
 import Swal from "sweetalert2";
@@ -53,19 +53,19 @@ export const SolicitarVacacionesView = () => {
 
     if (isSubmitted) {
         return (
-            <>
-                <Typography variant="h5" sx={{ mt: 2, width: '80%', mx: 'auto' }}>
+            <Box sx={{ display: 'flex', width: '80%', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
+                <Typography variant="h5">
                     {`Gracias por solicitar tus vacaciones ${user.name}!`}
                 </Typography>
                 <Button 
                     variant="contained" 
                     color="primary" 
-                    sx={{ mt: 2 }}
+                    sx={{ mt: 5 }}
                     onClick={() => setIsSubmitted(false)}
                 >
                     Ok
                 </Button>
-            </>
+            </Box>
         )
     }
 
