@@ -1,13 +1,21 @@
 import { Button, Grid, Typography } from "@mui/material"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { downloadFile } from "../../helpers/downloadFile";
+import { useAuthStore } from "../../hooks/useAuthStore";
+import { setNominasView } from "../../store/employee/employeeScreenSlice";
 
 
 export const SeeNominaView = () => {
 
     const {props} = useSelector(state => state.employeeScreen);
+    const { user } = useAuthStore();
+    const dispatch = useDispatch();
     console.log(props);
 
+    //Ensure that the data we are disploying correspond to this user
+    if (props.name !== user.name) {
+        dispatch(setNominasView());
+    }
 
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
