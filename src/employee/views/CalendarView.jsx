@@ -14,7 +14,7 @@ import { useGetHolidays } from '../../hooks/useGetHolidays';
 const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
         //red for morning, blue for afternoon and green for holidays
-        backgroundColor: `${event.title === 'morning' ? 'red' : event.title === 'afternoon' ? 'blue' : 'green'}`,
+        backgroundColor: `${event.title === 'Mañana' ? 'red' : event.title === 'Tarde' ? 'blue' : 'green'}`,
         borderRadius: '2px',
         opacity: 0.8,
         color: 'white',

@@ -14,7 +14,7 @@ export const useGetShifts = ({ id }) => {
                 const response = await gestionApi.get(`/shifts/${id}`);
 
                 const adaptedShifts = response.data.shifts.map(shift => ({
-                    title: shift.type,
+                    title: shift.type === 'morning' ? 'Mañana' : shift.type === 'afternoon' ? 'Tarde' : shift.type,
                     start: new Date(shift.start),
                     end: new Date(shift.end),
                 }));
