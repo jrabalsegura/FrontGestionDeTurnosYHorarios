@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { Typography, Button } from "@mui/material"
+import { Typography, Button, CircularProgress } from "@mui/material"
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, DateCalendar } from '@mui/x-date-pickers';
-import gestionApi from '../../api/gestionApi';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { setSeeNominaView } from '../../store/employee/employeeScreenSlice';
 import { useAuthStore } from '../../hooks/useAuthStore';
 import { useGetNomina } from '../../hooks/useGetNomina';
-import { CircularProgress } from '@mui/material';
+
 
 dayjs.locale('es');
 
@@ -30,7 +28,7 @@ export const NominasView = () => {
         year: selectedDate.year()
     };
 
-    const { nomina, isLoading } = useGetNomina({params});
+    const { nomina, isLoading, hasError } = useGetNomina({params});
 
     const handleClick = () => {
         //Add fetchUser.name to nomina object
@@ -39,6 +37,10 @@ export const NominasView = () => {
             name: user.name
         };
         dispatch(setSeeNominaView(nominaWithName));
+    }
+
+    if (hasError) {
+        return <Typography variant="h5">No se ha podido realizar la conexión a la base de datos. Vuelva a intentarlo más tarde.</Typography>
     }
 
     return (
