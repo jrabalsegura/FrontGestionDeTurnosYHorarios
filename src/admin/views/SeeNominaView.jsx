@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import { calcNomina } from "../../helpers/calcNomina";
 import { useEffect } from "react";
 import gestionApi from "../../api/gestionApi";
+import { downloadFile } from "../../helpers/downloadFile";
 
 export const SeeNominaView = () => {
 
@@ -38,6 +39,7 @@ export const SeeNominaView = () => {
                 fileName = response.data.nomina.fileName;
                 console.log(fileName);
             } catch (error) {
+                fileName = error.response.data.existingNomina.fileName;
                 console.error('Error creating Nomina:', error);
                 //Swal.fire('Error al intentar crear la nomina', error.response.data.msg, 'error')
             }
@@ -122,7 +124,7 @@ export const SeeNominaView = () => {
             </Grid>
 
             <Grid container spacing={2} sx={{ mb: 2, mt: 8}} justifyContent="center" alignItems="center" width="100%">                
-                <Button variant="contained" sx={{width: '40%'}} onClick={toPDF}>
+                <Button variant="contained" sx={{width: '40%'}} onClick={() => downloadFile(fileName)}>
                     <Typography>
                         Descargar
                     </Typography>

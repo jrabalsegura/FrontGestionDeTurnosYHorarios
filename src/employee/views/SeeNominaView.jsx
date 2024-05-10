@@ -1,13 +1,12 @@
 import { Button, Grid, Typography } from "@mui/material"
 import { useSelector } from "react-redux"
-import { usePDF } from "react-to-pdf";
+import { downloadFile } from "../../helpers/downloadFile";
 
 
 export const SeeNominaView = () => {
 
     const {props} = useSelector(state => state.employeeScreen);
     console.log(props);
-    const { toPDF, targetRef } = usePDF({filename: 'nomina.pdf'});
 
 
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -17,7 +16,7 @@ export const SeeNominaView = () => {
     const currentYear = props.year;
 
     return (
-        <Grid width="70%" ref={targetRef}>
+        <Grid width="70%">
             <Grid sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -91,7 +90,7 @@ export const SeeNominaView = () => {
             </Grid>
 
             <Grid container spacing={2} sx={{ mb: 2, mt: 8}} justifyContent="center" alignItems="center" width="100%">                
-                <Button variant="contained" sx={{width: '40%'}} onClick={toPDF}>
+                <Button variant="contained" sx={{width: '40%'}} onClick={() => downloadFile(props.fileName)}>
                     <Typography>
                         Descargar
                     </Typography>

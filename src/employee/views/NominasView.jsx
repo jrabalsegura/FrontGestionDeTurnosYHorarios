@@ -39,10 +39,6 @@ export const NominasView = () => {
         dispatch(setSeeNominaView(nominaWithName));
     }
 
-    if (hasError) {
-        return <Typography variant="h5">No se ha podido realizar la conexión a la base de datos. Vuelva a intentarlo más tarde.</Typography>
-    }
-
     return (
         <>
             <Typography variant="h4" marginBottom={4}>
