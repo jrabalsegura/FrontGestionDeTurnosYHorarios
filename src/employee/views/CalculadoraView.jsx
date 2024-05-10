@@ -50,7 +50,6 @@ export const CalculadoraView = () => {
     return (
         <>
             <form>
-
                 <Grid container justifyContent="center">
                     <Grid item xs={12} sx={{ mt: 2 }}>
                         <TextField 

@@ -1,4 +1,4 @@
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { localizer, getMessagesEs } from '../helpers/';
@@ -73,6 +73,10 @@ export const CalendarView = () => {
 
     if (isLoadingShifts || isLoadingHolidays) {
         return <CircularProgress size={80} />
+    }
+
+    if (hasErrorShifts || hasErrorHolidays) {
+        return <Typography variant="h5">No se ha podido realizar la conexión a la base de datos. Vuelva a intentarlo más tarde.</Typography>
     }
 
     return (

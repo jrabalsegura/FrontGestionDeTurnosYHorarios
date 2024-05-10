@@ -1,14 +1,11 @@
 import { Add, Delete, Edit } from "@mui/icons-material"
-import { Fab, Grid, List, ListItem, ListItemIcon, ListItemText, CircularProgress } from "@mui/material"
+import { Fab, Grid, List, ListItem, ListItemIcon, ListItemText, CircularProgress, Typography } from "@mui/material"
 import { useTheme } from "@mui/material/styles";
 import { useDispatch } from 'react-redux';
 import { setEditUserView, setAddUserView } from "../../store/admin/adminScreenSlice";
 import gestionApi from "../../api/gestionApi";
 import Swal from "sweetalert2";
 import { useGetUsers } from "../../hooks/useGetUsers";
-
-
-
 
 export const ShowUsersView = () => {
     const theme = useTheme();
@@ -32,6 +29,11 @@ export const ShowUsersView = () => {
     if (isLoading) {
         return <CircularProgress size={80} />
     }
+
+    if (hasError) {
+        return <Typography variant="h5">No se ha podido realizar la conexión a la base de datos. Vuelva a intentarlo más tarde.</Typography>
+    }
+
     return (
         <>
             <List sx={{ width: '100%'}}>

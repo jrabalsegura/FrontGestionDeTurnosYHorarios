@@ -30,6 +30,10 @@ export const CalcularNominaView = () => {
         return <CircularProgress size={80} />
     }
 
+    if (hasError) {
+        return <Typography variant="h5">No se ha podido realizar la conexión a la base de datos. Vuelva a intentarlo más tarde.</Typography>
+    }
+
     return (
         <>
             <Grid item xs={12}>
