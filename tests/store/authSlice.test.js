@@ -2,6 +2,9 @@ import { authSlice, clearErrorMessage, onLogin, onLogout } from '../../src/store
 
 
 describe('Pruebas en authSlice', () => {
+
+    const initialState = { status: 'checking', user: {}, errorMessage: undefined };
+    const authenticatedState = { status: 'authenticated', user: { name: 'Test User', uid: '123' }, errorMessage: undefined };
     
     test('debe de regresar el estado inicial', () => {
         expect( authSlice.getInitialState() ).toEqual( initialState );
@@ -9,10 +12,10 @@ describe('Pruebas en authSlice', () => {
 
     test('debe de realizar un login', () => {
         
-        const state = authSlice.reducer( initialState, onLogin( testUserCredentials ) );
+        const state = authSlice.reducer( initialState, onLogin( { username: process.env.ADMIN_EMAIL, password: process.env.ADMIN_PASSWORD } ) );
         expect( state ).toEqual({
             status: 'authenticated',
-            user: testUserCredentials,
+            user: { username: process.env.ADMIN_EMAIL, password: process.env.ADMIN_PASSWORD },
             errorMessage: undefined
         })
     });
