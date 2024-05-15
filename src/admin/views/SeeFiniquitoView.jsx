@@ -1,6 +1,5 @@
 import { Button, Grid, Typography } from "@mui/material"
 import { useSelector } from "react-redux"
-import { usePDF } from "react-to-pdf"
 import { calcFiniquito } from "../../helpers/calcFiniquito"
 import Swal from "sweetalert2";
 
