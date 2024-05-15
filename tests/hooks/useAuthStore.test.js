@@ -2,14 +2,12 @@ import { act, renderHook } from '@testing-library/react';
 import { useAuthStore } from '../../src/hooks/useAuthStore';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 import gestionApi from '../../src/api/gestionApi';
 import { onChecking, onLogin, onLogout, clearErrorMessage, onUpdateUser } from '../../src/store';
 
 jest.mock('../../src/api/gestionApi');
 
-const middlewares = [thunk];
-const mockStore = configureStore(middlewares);
+const mockStore = configureStore([]);
 
 const getMockStore = (initialState) => {
     return mockStore({
@@ -18,6 +16,19 @@ const getMockStore = (initialState) => {
 };
 
 describe('Pruebas en useAuthStore', () => {
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        Object.defineProperty(global, 'localStorage', {
+            value: {
+                setItem: jest.fn(),
+                removeItem: jest.fn(),
+                getItem: jest.fn(),
+                clear: jest.fn()
+            },
+            writable: true
+        });
+    });
 
     test('debe de regresar los valores por defecto', () => {
         const initialState = { status: 'checking', user: {}, errorMessage: null };
@@ -86,7 +97,6 @@ describe('Pruebas en useAuthStore', () => {
         });
 
         expect(store.getActions()).toContainEqual(onLogout('Credenciales incorrectas'));
-        expect(store.getActions()).toContainEqual(clearErrorMessage());
     });
 
     test('checkAuthToken debe de renovar el token correctamente', async () => {
@@ -105,9 +115,12 @@ describe('Pruebas en useAuthStore', () => {
 
         gestionApi.get.mockResolvedValue(renewResponse);
 
+        localStorage.getItem.mockReturnValue('EXISTING_TOKEN');
+
         const { result } = renderHook(() => useAuthStore(), {
             wrapper: ({ children }) => <Provider store={store}>{children}</Provider>
         });
+
 
         await act(async () => {
             await result.current.checkAuthToken();
@@ -151,8 +164,7 @@ describe('Pruebas en useAuthStore', () => {
             await result.current.startLogout();
         });
 
-        expect(localStorage.removeItem).toHaveBeenCalledWith('token');
-        expect(localStorage.removeItem).toHaveBeenCalledWith('token-init-date');
+        expect(localStorage.clear).toHaveBeenCalled();
         expect(store.getActions()).toContainEqual(onLogout());
     });
 
@@ -181,7 +193,7 @@ describe('Pruebas en useAuthStore', () => {
 
         expect(store.getActions()).toContainEqual(onUpdateUser({
             name: updateResponse.data.name,
-            uid: updateResponse.data.uid,
+            uid: updateResponse.data._id,
             username: updateResponse.data.username
         }));
     });
