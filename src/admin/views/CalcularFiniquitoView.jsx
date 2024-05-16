@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { setSeeFiniquitoView } from "../../store/admin/adminScreenSlice";
 import { useForm } from "../../hooks/useForm";
 import { useGetUsers } from "../../hooks/useGetUsers";
-import { calcFiniquito } from "../../helpers/calcFiniquito";
 import gestionApi from "../../api/gestionApi";
 import { useState } from "react";
 
@@ -31,23 +30,15 @@ export const CalcularFiniquitoView = () => {
 
         setDispatchLoading(true);
 
-        const finiquito = calcFiniquito(user.hourlySallary, user.startDate, user.holidays);
-
-        let fileName = '';
+        let finiquito = '';
 
         try {
             const response = await gestionApi.post('/nominas/newFiniquito', {
-                employeeId: user._id,
-                employeeName: user.name,
-                baseSallary: finiquito.baseSallary,
-                months: finiquito.months,
-                totalVacation: finiquito.totalVacation,
-                pago: finiquito.pago
+                user
             });
-            fileName = response.data.fileName;
+            finiquito = response.data.finiquito;
 
-            //Add to finiquito fileName, user._id y user.name
-            finiquito.fileName = fileName;
+            //Add to finiquito user._id y user.name
             finiquito.userId = user._id;
             finiquito.name = user.name;
         } catch (error) {

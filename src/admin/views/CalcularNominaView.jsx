@@ -28,14 +28,7 @@ export const CalcularNominaView = () => {
     const handleSubmit = async () => {
 
         setDispatchLoading(true);
-
-        /* const now = new Date();
-        const currentMonth = now.getMonth() + 1; // January is 0, not 1
-        const currentYear = now.getFullYear();
-        const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
-
-        const {baseSallary, socialSecurity, pago} = calcNomina(user.hourlySallary, user.extraHours, daysInMonth); */
-
+        
         let nomina = '';
 
         try {
