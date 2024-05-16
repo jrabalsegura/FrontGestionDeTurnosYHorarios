@@ -1,37 +1,10 @@
 import { Button, Grid, Typography } from "@mui/material"
 import { useSelector } from "react-redux"
-import { calcFiniquito } from "../../helpers/calcFiniquito"
-import { useEffect } from "react";
-import gestionApi from "../../api/gestionApi";
 import { downloadFile } from "../../helpers/downloadFile";
 
 export const SeeFiniquitoView = () => {
 
     const {props} = useSelector(state => state.adminScreen);
-
-    const {baseSallary, months, totalVacation, pago} = calcFiniquito(props.hourlySallary, props.startDate,props.holidays);
-
-    let fileName = '';
-
-    useEffect(() => {
-        const createFiniquito = async () => {
-            try {
-                const response = await gestionApi.post('/nominas/newFiniquito', {
-                    employeeId: props._id,
-                    employeeName: props.name,
-                    baseSallary,
-                    months,
-                    totalVacation,
-                    pago
-                });
-                console.log(response);
-                fileName = response.data.fileName;
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        createFiniquito();
-    }, []);
 
     return (
         <Grid width="70%">
@@ -66,7 +39,7 @@ export const SeeFiniquitoView = () => {
                     justifyContent: 'space-around'
                 }}>
                     <Typography variant="h6" width="70%">Salario base: </Typography>
-                    <Typography variant="h6" width="30%" textAlign={'end'}>{baseSallary} €</Typography>
+                    <Typography variant="h6" width="30%" textAlign={'end'}>{props.baseSallary} €</Typography>
                 </Grid>
 
                 <Grid sx={{
@@ -78,7 +51,7 @@ export const SeeFiniquitoView = () => {
                     marginTop: 2
                 }}>
                     <Typography variant="h6" width="70%">Meses trabajados: </Typography>
-                    <Typography variant="h6" width="30%" textAlign={'end'}>{months} meses</Typography>
+                    <Typography variant="h6" width="30%" textAlign={'end'}>{props.months} meses</Typography>
                 </Grid>
 
                 <Grid sx={{
@@ -90,7 +63,7 @@ export const SeeFiniquitoView = () => {
                     marginTop: 2
                 }}>
                     <Typography variant="h6" width="70%">Liquidación vacaciones: </Typography>
-                    <Typography variant="h6" width="30%" textAlign={'end'}>{totalVacation} €</Typography>
+                    <Typography variant="h6" width="30%" textAlign={'end'}>{props.totalVacation} €</Typography>
                 </Grid>
 
                 <Grid sx={{
@@ -102,13 +75,13 @@ export const SeeFiniquitoView = () => {
                     marginTop: 5
                 }}>
                     <Typography variant="h6" width="70%">Pago: </Typography>
-                    <Typography variant="h6" width="30%" textAlign={'end'}>{pago} €</Typography>
+                    <Typography variant="h6" width="30%" textAlign={'end'}>{props.pago} €</Typography>
                 </Grid>
 
             </Grid>
 
             <Grid container spacing={2} sx={{ mb: 2, mt: 8}} justifyContent="center" alignItems="center" width="100%">                
-                <Button variant="contained" sx={{width: '40%'}} onClick={() => downloadFile(fileName)}>
+                <Button variant="contained" sx={{width: '40%'}} onClick={() => downloadFile(props.fileName)}>
                     <Typography>
                         Descargar
                     </Typography>

@@ -3,6 +3,9 @@ import { useDispatch } from "react-redux";
 import { setSeeFiniquitoView } from "../../store/admin/adminScreenSlice";
 import { useForm } from "../../hooks/useForm";
 import { useGetUsers } from "../../hooks/useGetUsers";
+import { calcFiniquito } from "../../helpers/calcFiniquito";
+import gestionApi from "../../api/gestionApi";
+import { useState } from "react";
 
 const initialForm = {
     user: ''
@@ -20,13 +23,42 @@ export const CalcularFiniquitoView = () => {
     const { users, setUsers, isLoading, hasError } = useGetUsers();
     const dispatch = useDispatch();
 
+    const [dispatchLoading, setDispatchLoading] = useState(false);
+
     const {user, onInputChange, isFormValid, userValid} = useForm(initialForm, formValidation);
 
-    const handleSubmit = () => {
-        dispatch(setSeeFiniquitoView(user));
+    const handleSubmit = async () => {
+
+        setDispatchLoading(true);
+
+        const finiquito = calcFiniquito(user.hourlySallary, user.startDate, user.holidays);
+
+        let fileName = '';
+
+        try {
+            const response = await gestionApi.post('/nominas/newFiniquito', {
+                employeeId: user._id,
+                employeeName: user.name,
+                baseSallary: finiquito.baseSallary,
+                months: finiquito.months,
+                totalVacation: finiquito.totalVacation,
+                pago: finiquito.pago
+            });
+            fileName = response.data.fileName;
+
+            //Add to finiquito fileName, user._id y user.name
+            finiquito.fileName = fileName;
+            finiquito.userId = user._id;
+            finiquito.name = user.name;
+        } catch (error) {
+            console.log(error);
+        }
+
+        setDispatchLoading(false);
+        dispatch(setSeeFiniquitoView(finiquito));
     }
 
-    if (isLoading) {
+    if (isLoading || dispatchLoading) {
         return <CircularProgress size={80} />
     }
 
