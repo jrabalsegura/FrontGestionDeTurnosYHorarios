@@ -25,8 +25,6 @@ export const CalculadoraView = () => {
     const currentYear = now.getFullYear();     
     const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
 
-    console.log(daysInMonth);
-
     const { 
         hourlySallary, 
         extraHours, 
@@ -45,7 +43,6 @@ export const CalculadoraView = () => {
         const {baseSallary, socialSecurity, pago} = calcNomina(hourlySallaryFloat, extraHours, daysInMonth);
         totalSallary = pago;
     }
-
 
     return (
         <>
