@@ -1,17 +1,40 @@
 import { Button, Grid, Typography } from "@mui/material"
 import { useSelector } from "react-redux"
 import { calcFiniquito } from "../../helpers/calcFiniquito"
-import Swal from "sweetalert2";
+import { useEffect } from "react";
+import gestionApi from "../../api/gestionApi";
+import { downloadFile } from "../../helpers/downloadFile";
 
 export const SeeFiniquitoView = () => {
 
     const {props} = useSelector(state => state.adminScreen);
-    const { toPDF, targetRef} = usePDF({filename: 'finiquito.pdf'});
 
     const {baseSallary, months, totalVacation, pago} = calcFiniquito(props.hourlySallary, props.startDate,props.holidays);
 
+    let fileName = '';
+
+    useEffect(() => {
+        const createFiniquito = async () => {
+            try {
+                const response = await gestionApi.post('/nominas/newFiniquito', {
+                    employeeId: props._id,
+                    employeeName: props.name,
+                    baseSallary,
+                    months,
+                    totalVacation,
+                    pago
+                });
+                console.log(response);
+                fileName = response.data.fileName;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        createFiniquito();
+    }, []);
+
     return (
-        <Grid width="70%" ref={targetRef}>
+        <Grid width="70%">
             <Grid sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -85,7 +108,7 @@ export const SeeFiniquitoView = () => {
             </Grid>
 
             <Grid container spacing={2} sx={{ mb: 2, mt: 8}} justifyContent="center" alignItems="center" width="100%">                
-                <Button variant="contained" sx={{width: '40%'}} onClick={toPDF}>
+                <Button variant="contained" sx={{width: '40%'}} onClick={() => downloadFile(fileName)}>
                     <Typography>
                         Descargar
                     </Typography>

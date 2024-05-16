@@ -1,8 +1,5 @@
-import { Button, Grid, Typography } from "@mui/material"
-import { useSelector } from "react-redux"
-import { calcNomina } from "../../helpers/calcNomina";
-import { useEffect } from "react";
-import gestionApi from "../../api/gestionApi";
+import { Button, Grid, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 import { downloadFile } from "../../helpers/downloadFile";
 
 export const SeeNominaView = () => {
@@ -10,44 +7,7 @@ export const SeeNominaView = () => {
     const {props} = useSelector(state => state.adminScreen);
 
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-
-    const now = new Date();
-    const currentMonth = now.getMonth() + 1; // January is 0, not 1
-    const currentYear = now.getFullYear();
-    const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
-
-    const {baseSallary, socialSecurity, pago} = calcNomina(props.hourlySallary, props.extraHours, daysInMonth);
-
-    let fileName = '';
-
-    //Creamos nomina cuando se calculan estos valores
-    useEffect(() => {
-        const createNomina = async () => {
-            try {
-                const response = await gestionApi.post('/nominas/new', {
-                    employeeId: props._id,
-                    employeeName: props.name,
-                    month: currentMonth,
-                    year: currentYear,
-                    baseSallary,
-                    horasExtra: props.extraHours,
-                    socialSecurity,
-                    pago
-                });
-                console.log(response);
-                fileName = response.data.nomina.fileName;
-                console.log(fileName);
-            } catch (error) {
-                fileName = error.response.data.existingNomina.fileName;
-                console.error('Error creating Nomina:', error);
-                //Swal.fire('Error al intentar crear la nomina', error.response.data.msg, 'error')
-            }
-        };
-
-        createNomina();
-    }, []);
-
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
     return (
         <Grid width="70%">
@@ -58,8 +18,8 @@ export const SeeNominaView = () => {
                 justifyContent: 'space-between',
                 marginTop: 5
             }}>
-                <Typography variant="h4">{props.name}</Typography>
-                <Typography variant="h6">{`${monthNames[currentMonth - 1]} ${currentYear}`}</Typography>
+                <Typography variant="h4">{props.employeeName}</Typography>
+                <Typography variant="h6">{`${monthNames[props.month - 1]} ${props.year}`}</Typography>
             </Grid>
 
             <Grid sx={{
@@ -82,7 +42,7 @@ export const SeeNominaView = () => {
                     justifyContent: 'space-around'
                 }}>
                     <Typography variant="h6" width="70%">Salario base: </Typography>
-                    <Typography variant="h6" width="30%" textAlign={'end'}>{`${baseSallary} €`}</Typography>
+                    <Typography variant="h6" width="30%" textAlign={'end'}>{`${props.baseSallary} €`}</Typography>
                 </Grid>
 
                 <Grid sx={{
@@ -94,7 +54,7 @@ export const SeeNominaView = () => {
                     marginTop: 2
                 }}>
                     <Typography variant="h6" width="70%">Horas Extra: </Typography>
-                    <Typography variant="h6" width="30%" textAlign={'end'}>{`${props.extraHours} horas`}</Typography>
+                    <Typography variant="h6" width="30%" textAlign={'end'}>{`${props.horasExtra} horas`}</Typography>
                 </Grid>
 
                 <Grid sx={{
@@ -106,7 +66,7 @@ export const SeeNominaView = () => {
                     marginTop: 2
                 }}>
                     <Typography variant="h6" width="70%">Seguridad Social: </Typography>
-                    <Typography variant="h6" width="30%" textAlign={'end'}>{`${socialSecurity} €`}</Typography>
+                    <Typography variant="h6" width="30%" textAlign={'end'}>{`${props.socialSecurity} €`}</Typography>
                 </Grid>
 
                 <Grid sx={{
@@ -118,13 +78,13 @@ export const SeeNominaView = () => {
                     marginTop: 5
                 }}>
                     <Typography variant="h6" width="70%">Pago: </Typography>
-                    <Typography variant="h6" width="30%" textAlign={'end'}>{`${pago} €`}</Typography>
+                    <Typography variant="h6" width="30%" textAlign={'end'}>{`${props.pago} €`}</Typography>
                 </Grid>
 
             </Grid>
 
             <Grid container spacing={2} sx={{ mb: 2, mt: 8}} justifyContent="center" alignItems="center" width="100%">                
-                <Button variant="contained" sx={{width: '40%'}} onClick={() => downloadFile(fileName)}>
+                <Button variant="contained" sx={{width: '40%'}} onClick={() => downloadFile(props.fileName)}>
                     <Typography>
                         Descargar
                     </Typography>

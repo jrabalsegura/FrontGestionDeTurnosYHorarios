@@ -3,6 +3,9 @@ import { useDispatch } from "react-redux";
 import { useForm } from "../../hooks/useForm";
 import { setSeeNominaView } from "../../store/admin/adminScreenSlice";
 import { useGetUsers } from "../../hooks/useGetUsers";
+import { calcNomina } from "../../helpers/calcNomina";
+import gestionApi from "../../api/gestionApi";
+import { useState } from "react";
 
 const initialForm = {
     user: ''
@@ -19,14 +22,47 @@ export const CalcularNominaView = () => {
 
     const { users, setUsers, isLoading, hasError } = useGetUsers();
     const dispatch = useDispatch();
+    const [dispatchLoading, setDispatchLoading] = useState(false);
 
     const {user, onInputChange, isFormValid, userValid} = useForm(initialForm, formValidation);
 
-    const handleSubmit = () => {
-        dispatch(setSeeNominaView(user));
+    const handleSubmit = async () => {
+
+        setDispatchLoading(true);
+
+        const now = new Date();
+        const currentMonth = now.getMonth() + 1; // January is 0, not 1
+        const currentYear = now.getFullYear();
+        const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+
+        const {baseSallary, socialSecurity, pago} = calcNomina(user.hourlySallary, user.extraHours, daysInMonth);
+
+        let nomina = '';
+
+        try {
+            const response = await gestionApi.post('/nominas/new', {
+                employeeId: user._id,
+                employeeName: user.name,
+                month: currentMonth,
+                year: currentYear,
+                baseSallary,
+                horasExtra: user.extraHours,
+                socialSecurity,
+                pago
+            });
+            console.log(response);
+            nomina = response.data.nomina;
+        } catch (error) {
+            nomina = error.response.data.existingNomina;
+            console.error('Error creating Nomina:', error);
+            //Swal.fire('Error al intentar crear la nomina', error.response.data.msg, 'error')
+        }
+
+        setDispatchLoading(false);
+        dispatch(setSeeNominaView(nomina));
     }
 
-    if (isLoading) {
+    if (isLoading || dispatchLoading) {
         return <CircularProgress size={80} />
     }
 
