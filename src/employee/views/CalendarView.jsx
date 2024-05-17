@@ -54,13 +54,14 @@ export const CalendarView = () => {
         setDate(clickedDate);
     
         // Now check if this date falls within any of the existing events
-        const relevantEvent = shifts.concat(holidays).find(event => {
+        const relevantEvent = shifts.find(event => {
             // Create a new Date object from clickedDate and add 16 hours
+            console.log(event)
             const adjustedClickedDate = new Date(clickedDate);
             adjustedClickedDate.setHours(clickedDate.getHours() + 16);
 
             return adjustedClickedDate >= event.start && adjustedClickedDate <= event.end &&
-                (event.title === 'morning' || event.title === 'afternoon');
+                (event.title === 'Mañana' || event.title === 'Tarde');
         });
     
         if (relevantEvent) {
