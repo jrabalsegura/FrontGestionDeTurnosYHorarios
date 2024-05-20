@@ -1,7 +1,7 @@
 {
     "AWSEBDockerrunVersion": "1",
     "Image": {
-      "Name": "your-docker-image-name",
+      "Name": "gallasmur/gestion-horarios:${{ github.sha }}",
       "Update": "true"
     },
     "Ports": [
