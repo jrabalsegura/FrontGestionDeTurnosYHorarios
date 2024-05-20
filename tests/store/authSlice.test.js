@@ -12,10 +12,10 @@ describe('Pruebas en authSlice', () => {
 
     test('debe de realizar un login', () => {
         
-        const state = authSlice.reducer( initialState, onLogin( { username: process.env.ADMIN_EMAIL, password: process.env.ADMIN_PASSWORD } ) );
+        const state = authSlice.reducer( initialState, onLogin( { username: 'admin@admin.com', password: '12345678' } ) );
         expect( state ).toEqual({
             status: 'authenticated',
-            user: { username: process.env.ADMIN_EMAIL, password: process.env.ADMIN_PASSWORD },
+            user: { username: 'admin@admin.com', password: '12345678' },
             errorMessage: undefined
         })
     });

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const gestionApi = axios.create({
-    baseURL: process.env.VITE_API_URL
+    baseURL: 'https://gestion-horarios-cd0d24b996c6.herokuapp.com'
 });
 
 // Add a request interceptor
