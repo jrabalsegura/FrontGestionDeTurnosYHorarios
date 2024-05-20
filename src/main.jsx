@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { GestionApp } from './GestionApp'
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import './styles.css'
 
 
@@ -15,8 +15,8 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <GestionApp />
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>,
 )
