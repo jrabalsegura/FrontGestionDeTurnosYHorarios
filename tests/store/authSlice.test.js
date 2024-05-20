@@ -11,15 +11,19 @@ describe('Pruebas en authSlice', () => {
     });
 
     test('debe de realizar un login', () => {
+        const mockUser = {
+            username: 'mock@example.com',
+            password: 'mockpassword'
+        };
         
-        const state = authSlice.reducer( initialState, onLogin( { username: 'admin@admin.com', password: '12345678' } ) );
-        expect( state ).toEqual({
+        const state = authSlice.reducer(initialState, onLogin(mockUser));
+        
+        expect(state).toEqual({
             status: 'authenticated',
-            user: { username: 'admin@admin.com', password: '12345678' },
+            user: mockUser,
             errorMessage: undefined
-        })
+        });
     });
-
     test('debe de realizar el logout', () => {
         const state = authSlice.reducer( authenticatedState, onLogout() );
         expect( state ).toEqual({
