@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build Docker image
-        run: docker build -t gallasmur/gestion-horarios:${{ github.sha }} .
+        run: docker build -t gallasmur/gestion-horarios:latest .
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v16
         with:
