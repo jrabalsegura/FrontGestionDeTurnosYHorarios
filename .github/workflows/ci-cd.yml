@@ -1,0 +1,45 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: Run tests
+        run: |
+          yarn install
+          yarn test --silent
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+
+  build-and-deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker image
+        run: docker build -t your-docker-registry/your-app-name:${{ github.sha }} .
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v16
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: your-eb-application-name
+          environment_name: your-eb-environment-name
+          version_label: ${{ github.sha }}
+          region: your-aws-region
+          deployment_package: ./Dockerrun.aws.json
