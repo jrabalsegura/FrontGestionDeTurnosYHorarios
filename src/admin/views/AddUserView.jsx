@@ -49,7 +49,7 @@ export const AddUserView = () => {
                 startDate: new Date(),
                 hourlySallary: salary
             }
-            const response = await gestionApi.post(`/employees/new`, body);
+            await gestionApi.post(`/employees/new`, body);
             
             setIsSubmitted(true);
         } catch (error) {
