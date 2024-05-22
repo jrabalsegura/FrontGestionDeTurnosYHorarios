@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 const gestionApi = axios.create({
-    baseURL: 'https://gestion-horarios-cd0d24b996c6.herokuapp.com'
+    baseURL: process.env.API ? process.env.API : 'https://gestion-horarios-cd0d24b996c6.herokuapp.com'
 });
+
 
 // Add a request interceptor
 gestionApi.interceptors.request.use(

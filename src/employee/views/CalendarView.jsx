@@ -33,9 +33,7 @@ export const CalendarView = () => {
     const { shifts, isLoading: isLoadingShifts, hasError: hasErrorShifts, setShifts } = useGetShifts({ id: user.uid });
     const { holidays, isLoading: isLoadingHolidays, hasError: hasErrorHolidays, setHolidays } = useGetHolidays({ id: user.uid });
     const [date, setDate] = useState(null);
-
-    console.log(shifts)
-
+    
     const ref = useRef(null);
 
     const [isModalOpen, setIsModalOpen] = useState(false);

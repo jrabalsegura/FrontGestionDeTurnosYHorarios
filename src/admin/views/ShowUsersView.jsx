@@ -11,9 +11,10 @@ export const ShowUsersView = () => {
     const theme = useTheme();
     const dispatch = useDispatch();
     const { users, setUsers, isLoading, hasError } = useGetUsers();
+    console.log(gestionApi)
 
     const handleDelete = async (user) => {
-        console.log(user._id)
+        
 
         try {
             const response = await gestionApi.delete(`/employees/${user._id}`);
