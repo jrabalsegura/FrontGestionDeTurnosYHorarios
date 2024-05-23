@@ -18,7 +18,7 @@ export const GestionarVacacionesView = () => {
             //Create JSon with values from name, username, password and sallary to send
             const body = {
                 startDate: holiday.startDate,
-                endDate: addDays(holiday.endDate, 1),
+                endDate: holiday.endDate,
                 employeeId: holiday.employeeId
             }
             const response = await gestionApi.post(`/holidays/new`, body);
