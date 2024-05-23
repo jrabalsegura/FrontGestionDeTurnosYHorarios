@@ -21,23 +21,20 @@ export const GestionarVacacionesView = () => {
                 endDate: holiday.endDate,
                 employeeId: holiday.employeeId
             }
-            const response = await gestionApi.post(`/holidays/new`, body);
+            await gestionApi.post(`/holidays/new`, body);
 
             // Borrar notificacion
             deleteNotification(holiday._id);
         } catch (error) {
-            console.log(error);
             Swal.fire('Error al intentar aprobar las vacaciones', error.message, 'error')
         }
     }
 
     const deleteNotification = async (id) => {
         try {
-            const response = await gestionApi.delete(`/notificaciones/${id}`);
-            //dispatch(removeNotificacion(id));
+            await gestionApi.delete(`/notificaciones/${id}`);
             filterNotificacion(id);
         } catch (error) {
-            console.log(error);
             Swal.fire('Error al intentar eliminar las vacaciones', error.message, 'error')
         }       
     }
@@ -58,7 +55,7 @@ export const GestionarVacacionesView = () => {
                         <ListItem key={holiday._id} sx={{ 
                             width: '100%', 
                             display: 'flex', 
-                            flexDirection: { xs: 'column', md: 'row' },  // Change flex direction based on screen size
+                            flexDirection: { xs: 'column', md: 'row' },
                             justifyContent: 'space-between', 
                             border: `3px solid ${theme.palette.primary.dark}`, 
                             borderRadius: 3, 

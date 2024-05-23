@@ -24,9 +24,7 @@ const formValidations = {
 export const LoginPage = () => {
 
     const { username, password, onInputChange, isLoading, isFormValid, usernameValid, passwordValid } = useForm(loginFormFields, formValidations);
-
     const {startLogin, errorMessage } = useAuthStore();
-
     const [usernameRef, usernameIsFocused] = useFocus();
     const [passwordRef, passwordIsFocused] = useFocus();
 
@@ -50,7 +48,7 @@ export const LoginPage = () => {
             <Grid
                 container
                 spacing={0}
-                direction={{ xs: 'column', md: 'row' }} // Stacks on small screens, side by side on medium and larger screens
+                direction={{ xs: 'column', md: 'row' }}
                 alignItems="center"
                 justifyContent="space-around"
                 sx={{ minHeight: '100vh', padding: 4 }}
@@ -58,10 +56,7 @@ export const LoginPage = () => {
 
                 <Grid item
                     className="box-shadow"
-                    //xs={12} // Full width on small screens
-                    //md={5} // Half width on medium and larger screens
-                    //lg={4}
-                    //xl={3}
+                    
                     sx={{ 
                         backgroundColor: "secondary.light", 
                         padding: 3, 
@@ -70,7 +65,7 @@ export const LoginPage = () => {
                         maxWidth: 450,
                         display: 'flex',
                         flexDirection: 'column',
-                        justifyContent: 'center', // Centers content vertically
+                        justifyContent: 'center', 
                         alignItems: 'center',
                         height: { xs:292 }
                     }}
@@ -90,9 +85,9 @@ export const LoginPage = () => {
                         width: {md: 350, lg: 350, xl: 350},
                         display: 'flex',
                         flexDirection: 'column',
-                        justifyContent: 'space-around', // Centers content vertically
+                        justifyContent: 'space-around',
                         alignItems: 'center',
-                        height: {md: 600} // Centers content horizontally
+                        height: {md: 600} 
                     }}
                 >
                     <Typography variant="h5" sx={{ mb: 1 }}>
@@ -100,7 +95,6 @@ export const LoginPage = () => {
                     </Typography>
 
                     <form onSubmit={onSubmit}>
-
                         <Grid container>
                             <Grid item xs={12} sx={{ mt: 2 }}>
                                 <TextField 
@@ -118,6 +112,7 @@ export const LoginPage = () => {
                                     {usernameIsFocused && usernameValid && <Alert severity="error">Username is required</Alert>}
                                 </div>
                             </Grid>
+
                             <Grid item xs={12} sx={{ mt: 5 }}>
                                 <TextField 
                                     label="Contraseña"
@@ -146,10 +141,8 @@ export const LoginPage = () => {
                                 
                             </Grid>
                         </Grid>
-
                     </form>
                 </Grid>
-
             </Grid>
         </>
     );

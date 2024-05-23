@@ -12,13 +12,11 @@ export const useAuthStore = () => {
 
     const startLogin = async ({ username, password }) => {
         dispatch(onChecking())
-        console.log(username, password)
-        //dispatch(login(username, password))
 
         try {
             setIsLoading(true);
             const { data } = await gestionApi.post('/auth/', { username, password })
-            console.log(data)
+            
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime());
             dispatch(onLogin({name: data.name, uid: data.uid, username: data.username}))
@@ -61,8 +59,7 @@ export const useAuthStore = () => {
     }
 
     const onUpdate = async (updatedUser) => {
-        dispatch(onUpdateUser({name: updatedUser.name, uid: updatedUser._id, username: updatedUser.username})); // Update user details in the Redux store
-
+        dispatch(onUpdateUser({name: updatedUser.name, uid: updatedUser._id, username: updatedUser.username})); 
     }
 
     return {

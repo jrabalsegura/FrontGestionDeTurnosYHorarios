@@ -9,7 +9,6 @@ import { setSeeNominaView } from '../../store/employee/employeeScreenSlice';
 import { useAuthStore } from '../../hooks/useAuthStore';
 import { useGetNomina } from '../../hooks/useGetNomina';
 
-
 dayjs.locale('es');
 
 export const NominasView = () => {
@@ -28,7 +27,7 @@ export const NominasView = () => {
         year: selectedDate.year()
     };
 
-    const { nomina, isLoading, hasError } = useGetNomina({params});
+    const { nomina, isLoading } = useGetNomina({params});
 
     const handleClick = () => {
         //Add fetchUser.name to nomina object

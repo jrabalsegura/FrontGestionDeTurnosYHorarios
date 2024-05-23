@@ -41,7 +41,7 @@ export const SideBar = ({ drawerWidth = 240, openSidebar, setOpenSidebar }) => {
                                 <Person />
                             </ListItemIcon>
                             <Grid container>
-                                <ListItemText primary={'Gestionar Usuarios'} />                                        
+                                <ListItemText primary={'Gestionar usuarios'} />                                        
                             </Grid>
                         </ListItemButton>                      
                     </ListItem>

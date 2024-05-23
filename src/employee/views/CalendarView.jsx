@@ -48,15 +48,13 @@ export const CalendarView = () => {
 
 
     const handleSelectSlot = (slotInfo) => {
-        // slotInfo contains start and end date of the clicked slot
+
         const clickedDate = slotInfo.start;
-        console.log('Slot selected:', clickedDate);
         setDate(clickedDate);
     
         // Now check if this date falls within any of the existing events
         const relevantEvent = shifts.find(event => {
             // Create a new Date object from clickedDate and add 16 hours
-            console.log(event)
             const adjustedClickedDate = new Date(clickedDate);
             adjustedClickedDate.setHours(clickedDate.getHours() + 16);
 
@@ -65,7 +63,7 @@ export const CalendarView = () => {
         });
     
         if (relevantEvent) {
-            setDate(clickedDate); // Set the exact clicked date
+            setDate(clickedDate);
             openModal();
         }
     };

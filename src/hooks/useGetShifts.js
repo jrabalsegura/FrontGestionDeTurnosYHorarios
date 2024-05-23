@@ -21,7 +21,6 @@ export const useGetShifts = ({ id }) => {
                 setShifts(adaptedShifts);
             } catch (error) {
                 setHasError(true);
-                console.log(error);
                 Swal.fire('Error al intentar obtener los turnos', error.message, 'error')
             } finally {
                 setIsLoading(false);

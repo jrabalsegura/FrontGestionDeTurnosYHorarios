@@ -1,9 +1,7 @@
 import gestionApi from "../api/gestionApi";
 
-
-
 function apihelperdownload (filename) {
-    const fileType = filename.split('.').pop(); // Extracts the file extension as type
+    const fileType = filename.split('.').pop();
     return gestionApi.post(`/download`, { name: filename, type: fileType }, { responseType: 'blob' }).then(function (response) {
         return response;
     })

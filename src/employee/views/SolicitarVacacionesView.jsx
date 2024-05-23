@@ -16,9 +16,9 @@ export const SolicitarVacacionesView = () => {
           key: 'selection'
         }
     ]);
+
     const [error, setError] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
-
     const { user } = useAuthStore();
 
     const handleSelect = (ranges) => {
@@ -33,8 +33,6 @@ export const SolicitarVacacionesView = () => {
     };
 
     const handleSubmit = async () => {
-        console.log(state[0]);
-
         const body = {
             type: 'holiday',
             employeeId: user.uid,
@@ -44,10 +42,9 @@ export const SolicitarVacacionesView = () => {
         }
 
         try {
-            const response = await gestionApi.post('notificaciones/new', body);
+            await gestionApi.post('notificaciones/new', body);
             setIsSubmitted(true);
         } catch (error) {
-            console.error('Failed to send notification:', error);
             Swal.fire('Error al intentar solicitar las vacaciones', error.message, 'error');
         }
     };

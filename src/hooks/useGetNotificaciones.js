@@ -18,7 +18,6 @@ export const useGetNotificaciones = () => {
                 dispatch(onfetchedNotifications(response.data.notifications));
             } catch (error) {
                 setHasError(true);
-                console.log(error);
                 Swal.fire('Error al intentar obtener las notificaciones', error.message, 'error')
             } finally {
                 setIsLoading(false);

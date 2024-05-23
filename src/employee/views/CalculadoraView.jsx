@@ -66,6 +66,7 @@ export const CalculadoraView = () => {
                             {hourlySallaryValid && <Alert severity="error">The sallary must be greater than 0</Alert>}
                         </div>
                     </Grid>
+                    
                     <Grid item xs={12} sx={{ mt: 5 }}>
                         <TextField 
                             label="Horas Extra"

@@ -15,7 +15,6 @@ export const useGetUsers = () => {
                 setUsers(response.data.employees);
             } catch (error) {
                 setHasError(true);
-                console.log(error);
                 Swal.fire('Error al intentar obtener los usuarios', error.message, 'error')
             } finally {
                 setIsLoading(false);

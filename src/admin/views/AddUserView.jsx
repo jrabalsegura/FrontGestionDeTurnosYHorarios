@@ -12,11 +12,11 @@ const formValidations = {
         'Name is required'
     ],
     username: [
-        value => value.trim().length > 0, // Checks that the username is not empty
+        value => value.trim().length > 0,
         'Username is required'
     ],
     password: [
-        value => value.length >= 6, // Checks that the password has at least 6 characters
+        value => value.length >= 6,
         'Password must be at least 6 characters'
     ]
 };
@@ -30,8 +30,7 @@ const initialForm = {
 
 export const AddUserView = () => {
 
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    
+    const [isSubmitted, setIsSubmitted] = useState(false);   
     const [nameRef, nameIsFocused] = useFocus();
     const [usernameRef, usernameIsFocused] = useFocus();
     const [passwordRef, passwordIsFocused] = useFocus();
@@ -41,7 +40,6 @@ export const AddUserView = () => {
         e.preventDefault();
 
         try {
-            //Create JSon with values from name, username, password and sallary to send
             const body = {
                 name: name,
                 username: username,
@@ -53,7 +51,6 @@ export const AddUserView = () => {
             
             setIsSubmitted(true);
         } catch (error) {
-            console.log(error);
             Swal.fire('Error al intentar crear el usuario', error.message, 'error')
         }
     }
@@ -90,14 +87,12 @@ export const AddUserView = () => {
     }
     
     return (
-        <>
-            
+        <>           
             <Typography variant="h5" sx={{ mb: 1 }}>
                 Añadir Usuario
             </Typography>
 
             <form onSubmit={onSubmit}>
-
                 <Grid container justifyContent="center">
                     <Grid item xs={12} sx={{ mt: 2 }}>
                         <TextField 
@@ -115,6 +110,7 @@ export const AddUserView = () => {
                             {nameIsFocused && nameValid && <Alert severity="error">Name is required</Alert>}
                         </div>
                     </Grid>
+
                     <Grid item xs={12} sx={{ mt: 5 }}>
                         <TextField 
                             label="Username"
@@ -131,6 +127,7 @@ export const AddUserView = () => {
                             {usernameIsFocused && usernameValid && <Alert severity="error">Username is required</Alert>}
                         </div>
                     </Grid>
+
                     <Grid item xs={12} sx={{ mt: 5 }}>
                         <TextField 
                             label="Contraseña"
@@ -172,9 +169,7 @@ export const AddUserView = () => {
                         
                     </Grid>
                 </Grid>
-
-            </form>
-                
+            </form>               
         </>
     )
 }

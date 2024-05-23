@@ -6,7 +6,6 @@ import { downloadFile } from "../../helpers/downloadFile";
 
 export const ConsultarRegistroView = () => {
     const theme = useTheme();
-
     const { events, setEvents, isLoading, hasError } = useGetEventos();
 
     if (isLoading) {
@@ -19,12 +18,12 @@ export const ConsultarRegistroView = () => {
 
     return (
         <>
-
             <Button variant="contained" sx={{ width: "30%", marginBottom: 5 }} disabled={events.length === 0} onClick={() => downloadFile('events.txt')}>
                 <Typography>
                     Descargar
                 </Typography>
             </Button>
+
             <List sx={{ width: '100%'}}>
                 {events.length > 0 ? (
                     [...events].reverse().map(evento => (
@@ -45,12 +44,10 @@ export const ConsultarRegistroView = () => {
                     ))
                 ) : (
                     <Typography sx={{ mt: 2, textAlign: 'center' }}>
-                        No hay eventos para mostrar
+                        No hay eventos que mostrar
                     </Typography>
                 )}
-            </List>
-
-            
+            </List>           
         </>
     )
 }

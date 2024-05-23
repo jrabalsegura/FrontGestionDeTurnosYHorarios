@@ -16,7 +16,6 @@ export const useGetEventos = () => {
                 setEvents(events);
             } catch (error) {
                 setHasError(true);
-                console.log(error);
                 Swal.fire('Error al intentar obtener los eventos', error.message, 'error')
             } finally {
                 setIsLoading(false);

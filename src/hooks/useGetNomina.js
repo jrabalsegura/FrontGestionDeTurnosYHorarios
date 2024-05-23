@@ -11,13 +11,10 @@ export const useGetNomina = ( {params} ) => {
         const fetchNomina = async () => {
             try {
                 setIsLoading(true);
-                console.log(params)
                 const response = await gestionApi.get(`/nominas`, {params});
-                console.log(response)
                 setNomina(response.data.nomina[0]);
             } catch (error) {
                 setHasError(true);
-                console.log(error);
                 setNomina(null);
             } finally {
                 setIsLoading(false);

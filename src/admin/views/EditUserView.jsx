@@ -25,8 +25,6 @@ export const EditUserView = () => {
 
     const {props} = useSelector(state => state.adminScreen);
     const [isSubmitted, setIsSubmitted] = useState(false);
-    
-
     const [nameRef, nameIsFocused] = useFocus();
     const [usernameRef, usernameIsFocused] = useFocus();
     const [passwordRef, passwordIsFocused] = useFocus();
@@ -59,7 +57,7 @@ export const EditUserView = () => {
                 password: password,
                 hourlySallary: salary
             }
-            const response = await gestionApi.put(`/employees/${props._id}`, body);
+            await gestionApi.put(`/employees/${props._id}`, body);
             setIsSubmitted(true);
         } catch (error) {
             console.log(error);
@@ -105,7 +103,6 @@ export const EditUserView = () => {
             </Typography>
 
             <form onSubmit={onSubmit}>
-
                 <Grid container justifyContent="center">
                     <Grid item xs={12} sx={{ mt: 2 }}>
                         <TextField 
@@ -123,6 +120,7 @@ export const EditUserView = () => {
                             {nameIsFocused && nameValid && <Alert severity="error">Name is required</Alert>}
                         </div>
                     </Grid>
+
                     <Grid item xs={12} sx={{ mt: 5 }}>
                         <TextField 
                             label="Username"
@@ -139,6 +137,7 @@ export const EditUserView = () => {
                             {usernameIsFocused && usernameValid && <Alert severity="error">Username is required</Alert>}
                         </div>
                     </Grid>
+
                     <Grid item xs={12} sx={{ mt: 5 }}>
                         <TextField 
                             label="Contraseña"
@@ -180,9 +179,7 @@ export const EditUserView = () => {
                         
                     </Grid>
                 </Grid>
-
-            </form>
-                
+            </form>               
         </>
     )
 }

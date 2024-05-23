@@ -13,11 +13,11 @@ export const useFocus = () => {
       element?.addEventListener('focus', toggle)
       element?.addEventListener('blur', toggle)
   
-      return () => {// callback/cleanup to run every render. It's not a big deal ...
+      return () => {
         element?.removeEventListener('focus', toggle)
         element?.removeEventListener('blur', toggle)
       }
-    }) // ... function on every render that will cause this effect ...
+    }) 
   
     return [ref, isFocused]
   }

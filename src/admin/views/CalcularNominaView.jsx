@@ -22,8 +22,7 @@ export const CalcularNominaView = () => {
     const { users, setUsers, isLoading, hasError } = useGetUsers();
     const dispatch = useDispatch();
     const [dispatchLoading, setDispatchLoading] = useState(false);
-
-    const {user, onInputChange, isFormValid, userValid} = useForm(initialForm, formValidation);
+    const {user, onInputChange, isFormValid} = useForm(initialForm, formValidation);
 
     const handleSubmit = async () => {
 
@@ -35,14 +34,9 @@ export const CalcularNominaView = () => {
             const response = await gestionApi.post('/nominas/new', {
                 user
             });
-            console.log(response);
             nomina = response.data.nomina;
-            console.log(nomina);
         } catch (error) {
             nomina = error.response.data.existingNomina;
-
-            console.error('Error creating Nomina:', error);
-            //Swal.fire('Error al intentar crear la nomina', error.response.data.msg, 'error')
         }
         nomina.employeeName = user.name;
         setDispatchLoading(false);
@@ -87,8 +81,7 @@ export const CalcularNominaView = () => {
                                 Calcular
                             </Typography>
                         </Button>
-                    </Grid>
-                    
+                    </Grid>                   
                 </Grid>
             </Grid>
         </>

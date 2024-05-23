@@ -23,10 +23,8 @@ const formValidations = {
 
 export const EditUserView = () => {
 
-    //Get user from authSlice
     const { user, onUpdate } = useAuthStore();
     const [isSubmitted, setIsSubmitted] = useState(false);
-
 
     const [nameRef, nameIsFocused] = useFocus();
     const [usernameRef, usernameIsFocused] = useFocus();
@@ -44,7 +42,7 @@ export const EditUserView = () => {
             username: user.username || '',
             password: ''
         });
-    }, [user]); // Depend on fetchUser state
+    }, [user]); 
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -94,8 +92,7 @@ export const EditUserView = () => {
     }
 
     return (
-        <>
-            
+        <>           
             <Typography variant="h5" sx={{ mb: 1 }}>
                 Edita tu Información
             </Typography>
@@ -119,6 +116,7 @@ export const EditUserView = () => {
                             {nameIsFocused && nameValid && <Alert severity="error">Name is required</Alert>}
                         </div>
                     </Grid>
+
                     <Grid item xs={12} sx={{ mt: 5 }}>
                         <TextField 
                             label="Username"
@@ -135,6 +133,7 @@ export const EditUserView = () => {
                             {usernameIsFocused && usernameValid && <Alert severity="error">Username is required</Alert>}
                         </div>
                     </Grid>
+
                     <Grid item xs={12} sx={{ mt: 5 }}>
                         <TextField 
                             label="Contraseña"
@@ -163,9 +162,7 @@ export const EditUserView = () => {
                         
                     </Grid>
                 </Grid>
-
-            </form>
-                
+            </form>               
         </>
     )
 }

@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 export const NothingSelectedView = () => {
 
     const [isSubmitted, setIsSubmitted] = useState(false);
-
     const { user } = useAuthStore();
 
     const handleClick = async (event) => {
@@ -18,8 +17,9 @@ export const NothingSelectedView = () => {
             date: new Date(),
             name: user.name,
         }
+
         try {
-            const response = await gestionApi.post('/eventosTrabajo/new', body);
+            await gestionApi.post('/eventosTrabajo/new', body);
             setIsSubmitted(true);
         } catch (error) {
             Swal.fire('Error al intentar registrar el evento', error.response.data.msg, 'error');
@@ -33,6 +33,7 @@ export const NothingSelectedView = () => {
             </Typography>
         )
     }
+    
     return (
         <>
             <Grid container flexDirection='column' alignItems='center'>

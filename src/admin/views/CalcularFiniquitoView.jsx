@@ -21,15 +21,12 @@ export const CalcularFiniquitoView = () => {
 
     const { users, setUsers, isLoading, hasError } = useGetUsers();
     const dispatch = useDispatch();
-
     const [dispatchLoading, setDispatchLoading] = useState(false);
-
-    const {user, onInputChange, isFormValid, userValid} = useForm(initialForm, formValidation);
+    const {user, onInputChange, isFormValid} = useForm(initialForm, formValidation);
 
     const handleSubmit = async () => {
 
         setDispatchLoading(true);
-
         let finiquito = '';
 
         try {
@@ -42,9 +39,8 @@ export const CalcularFiniquitoView = () => {
             finiquito.userId = user._id;
             finiquito.name = user.name;
         } catch (error) {
-            console.log(error);
+            Swal.fire('Error al intentar crear el turno', error, 'error')
         }
-
         setDispatchLoading(false);
         dispatch(setSeeFiniquitoView(finiquito));
     }
@@ -87,8 +83,7 @@ export const CalcularFiniquitoView = () => {
                                 Calcular
                             </Typography>
                         </Button>
-                    </Grid>
-                    
+                    </Grid>                   
                 </Grid>
             </Grid>
         </>

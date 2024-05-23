@@ -10,7 +10,6 @@ export const SeeNominaView = () => {
     const {props} = useSelector(state => state.employeeScreen);
     const { user } = useAuthStore();
     const dispatch = useDispatch();
-    console.log(props);
 
     //Ensure that the data we are disploying correspond to this user
     if (props.name !== user.name) {

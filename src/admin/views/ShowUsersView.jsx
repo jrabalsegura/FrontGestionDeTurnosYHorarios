@@ -11,18 +11,12 @@ export const ShowUsersView = () => {
     const theme = useTheme();
     const dispatch = useDispatch();
     const { users, setUsers, isLoading, hasError } = useGetUsers();
-    console.log(gestionApi)
 
     const handleDelete = async (user) => {
-        
-
         try {
-            const response = await gestionApi.delete(`/employees/${user._id}`);
-            console.log(response);
-            // Update the users state to filter out the deleted user
+            await gestionApi.delete(`/employees/${user._id}`);            
             setUsers(users.filter(u => u._id !== user._id));
         } catch (error) {
-            console.log(error);
             Swal.fire('Error al intentar borrar al usuario', error.message, 'error')
         }
     }
@@ -60,9 +54,7 @@ export const ShowUsersView = () => {
                             </ListItemIcon>
                         </Grid>
                     </ListItem>
-                ))}
-
-                
+                ))}               
             </List>
 
             <Fab color="primary" aria-label="add" sx={{ marginTop: 4 }} onClick={() => {dispatch(setAddUserView())}}>

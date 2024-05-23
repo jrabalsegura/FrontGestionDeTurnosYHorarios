@@ -27,7 +27,6 @@ export const AsignarTurnosView = () => {
 
     const { users, setUsers, isLoading, hasError } = useGetUsers();
     const [isSubmitted, setIsSubmitted] = useState(false);
-
     const {empleado, turno, onInputChange, isFormValid} = useForm(initialForm, formValidation);
 
     const handleSubmit = async () => {
@@ -37,6 +36,7 @@ export const AsignarTurnosView = () => {
             // else if the type is afternoon, start shoud be 16:00 and end 00:00
             let start;
             let end;
+
             if (turno === 'morning') {
                 start = new Date(state[0].startDate.setHours(8, 0, 0, 0));
                 end = new Date(state[0].endDate.setHours(16, 0, 0, 0));
@@ -50,10 +50,9 @@ export const AsignarTurnosView = () => {
                 start: start,
                 end: end
             }
-            const response = await gestionApi.post(`/shifts/new`, body);
+            await gestionApi.post(`/shifts/new`, body);
             setIsSubmitted(true);
         } catch (error) {
-            console.log(error);
             Swal.fire('Error al intentar crear el turno', error.response.data.msg, 'error')
         }     
     }    
@@ -143,7 +142,6 @@ export const AsignarTurnosView = () => {
                     </Grid>
                 </Grid>
             </Grid>
-
         </Grid>
     )
 }

@@ -10,7 +10,7 @@ export const NavBar = ({ drawerWidth = 240, setOpenSidebar }) => {
 
     const dispatch = useDispatch();
 
-    const { notificaciones, setNotificaciones, isLoading, hasError } = useGetNotificaciones();
+    const { notificaciones } = useGetNotificaciones();
 
     const { startLogout, user} = useAuthStore();
     return (

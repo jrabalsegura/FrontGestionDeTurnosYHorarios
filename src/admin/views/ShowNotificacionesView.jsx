@@ -9,9 +9,7 @@ import { useGetNotificaciones } from "../../hooks/useGetNotificaciones";
 
 export const ShowNotificacionesView = () => {
     const theme = useTheme();
-
     const dispatch = useDispatch();
-
     const { notificaciones, filterNotificacion, isLoading, hasError } = useGetNotificaciones();
 
     const deleteNotification = async (id) => {
@@ -19,7 +17,6 @@ export const ShowNotificacionesView = () => {
             const response = await gestionApi.delete(`/notificaciones/${id}`);
             filterNotificacion(id);
         } catch (error) {
-            console.log(error);
             Swal.fire('Error al intentar eliminar la notificacion', error.message, 'error')
         }       
     }
@@ -66,7 +63,7 @@ export const ShowNotificacionesView = () => {
                             <ListItem key={notification._id} sx={{ 
                                 width: '100%', 
                                     display: 'flex', 
-                                    flexDirection: { xs: 'column', md: 'row' },  // Change flex direction based on screen size
+                                    flexDirection: { xs: 'column', md: 'row' },
                                     justifyContent: 'space-between', 
                                     border: `3px solid ${theme.palette.primary.dark}`, 
                                     borderRadius: 3, 
