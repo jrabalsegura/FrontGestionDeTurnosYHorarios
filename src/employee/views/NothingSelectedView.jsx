@@ -22,7 +22,7 @@ export const NothingSelectedView = () => {
             const response = await gestionApi.post('/eventosTrabajo/new', body);
             setIsSubmitted(true);
         } catch (error) {
-            Swal.fire('Error al intentar registrar el evento', error.message, 'error');
+            Swal.fire('Error al intentar registrar el evento', error.response.data.msg, 'error');
         }
 
     }
