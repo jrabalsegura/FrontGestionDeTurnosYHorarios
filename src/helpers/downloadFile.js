@@ -12,6 +12,7 @@ export const downloadFile = (filename) => {
         (res) => {
             const url = window.URL.createObjectURL(new Blob([res.data]));
             const link = document.createElement('a');
+            console.log(url);
             link.href = url;
             if (typeof window.navigator.msSaveBlob === 'function') {
                 window.navigator.msSaveBlob(

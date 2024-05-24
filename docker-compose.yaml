@@ -1,0 +1,19 @@
+
+version: "3.8"
+services:
+  frontend:
+    build: ./
+    container_name: frontend_c
+    ports:
+      - '3010:80'
+    env_file:
+      - ./.env
+  backend:
+    build: ../GestionDeTurnosYHorarios
+    container_name: backend_c
+    ports:
+      - '4014:4014'
+    stdin_open: true
+    tty: true
+    env_file:
+      - ../GestionDeTurnosYHorarios/.env
