@@ -42,7 +42,9 @@ export const AsignarTurnosView = () => {
                 end = new Date(state[0].endDate.setHours(16, 0, 0, 0));
             } else if (turno === 'afternoon') {
                 start = new Date(state[0].startDate.setHours(16, 0, 0, 0));
-                end = new Date(state[0].endDate.setHours(23, 59, 0, 0));
+                //Add one day to date
+                end = new Date(state[0].endDate.setHours(22, 0, 0, 0));
+                end.setDate(end.getDate() + 1);
             }
             const body = {
                 type: turno,
